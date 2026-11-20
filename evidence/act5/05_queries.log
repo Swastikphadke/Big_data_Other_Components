@@ -1,0 +1,353 @@
+### 2026-11-03 22:06:21 India Standard Time | $ python activity5_bigquery\run_queries.py --log evidence\act5\05_queries.log
+project=bigdatasla location=asia-south1 table=bigdatasla.weblogs.access_logs
+table rows=774,130 logical bytes=173,190,667 partitioning=TimePartitioning(expiration_ms=5184000000,field='ts',type_='DAY') clustering=['endpoint', 'status']
+
+### q01_overview  job=q01_overview_c7ff66a0-887d-4702-aff4-a1b0fde06502
+    rows=1  processed=45.95 MiB  billed=46.00 MiB  slot=868 ms  elapsed=298 ms  cache_hit=False
+ requests  unique_ips  distinct_endpoints first_request_ist    last_request_ist  gib_sent  avg_response_ms  client_errors_4xx  server_errors_5xx  error_pct
+   774130       22313                  30        2026-10-26 2026-11-01 23:59:58     25.03            130.7              21728               4201      3.349
+
+### q02_status_codes  job=q02_status_codes_7c60a1e5-3150-491f-8a72-dcf5d221b37b
+    rows=13  processed=5.91 MiB  billed=10.00 MiB  slot=77 ms  elapsed=180 ms  cache_hit=False
+ status status_class  requests  pct_of_all
+    200          2xx    684930      88.477
+    304          3xx     48654       6.285
+    201          2xx     10406       1.344
+    429          4xx      8733       1.128
+    401          4xx      6741       0.871
+    404          4xx      5580       0.721
+    302          3xx      4211       0.544
+    500          5xx      2538       0.328
+    503          5xx      1647       0.213
+    403          4xx       297       0.038
+    400          4xx       198       0.026
+    402          4xx       179       0.023
+    504          5xx        16       0.002
+
+### q03_top_endpoints  job=q03_top_endpoints_00d1d752-dd91-499f-a462-1f1206e6fddc
+    rows=20  processed=34.14 MiB  billed=35.00 MiB  slot=4975 ms  elapsed=685 ms  cache_hit=False
+                 endpoint  requests  pct_of_traffic  unique_ips  errors_4xx  errors_5xx  p50_ms  p95_ms
+           /products/{id}    206225           26.64       16980       13605         891     118     249
+                /products     74819            9.66       13034           0         369     140     295
+/images/products/{id}.jpg     67437            8.71       12435           0         645      25      53
+                  /search     67246            8.69       12511           0         656     261     556
+                        /     59890            7.74       11809           0         277     110     232
+        /static/js/app.js     52305            6.76       11120           0           0      11      24
+     /static/css/main.css     44794            5.79       10327           0           0       9      20
+  /api/v1/recommendations     41624            5.38       10103           0         242     181     382
+                    /cart     34785            4.49        9324           0         165      89     189
+                /cart/add     27922            3.61        8287           0         279     110     236
+                   /login     27172            3.51        7090        6741          79     119     260
+                 /account     13847            1.79        5456           0         143     131     278
+                /checkout     13634            1.76        5398           0         148     182     389
+           /api/v1/orders     10525            1.36        4521           0         119     302     641
+                /wishlist     10412            1.34        4516           0         110     120     253
+         /api/v1/payments      8398            1.08        3909         179          68     416     878
+             /favicon.ico      7671            0.99        3585           0           0       4      10
+                  /logout      4221            0.55        2333           0          10      39      84
+            /wp-login.php       117            0.02           1         117           0      15      29
+           /server-status       114            0.01           1         114           0      14      29
+
+### q04_errors_by_endpoint  job=q04_errors_by_endpoint_55ab175f-94b9-4f37-9fed-a6a48097c409
+    rows=26  processed=16.78 MiB  billed=17.00 MiB  slot=92 ms  elapsed=192 ms  cache_hit=False
+                 endpoint  requests  errors  error_rate_pct  s401  s403  s404  s429  s500  s502_503_504
+           /products/{id}    206225   14496            7.03     0     0  4872  8733   532           359
+                   /login     27172    6820           25.10  6741     0     0     0    46            33
+                  /search     67246     656            0.98     0     0     0     0   378           278
+/images/products/{id}.jpg     67437     645            0.96     0     0     0     0   394           251
+                /products     74819     369            0.49     0     0     0     0   232           137
+                /cart/add     27922     279            1.00     0     0     0     0   167           112
+                        /     59890     277            0.46     0     0     0     0   167           110
+         /api/v1/payments      8398     247            2.94     0     0     0     0    29            39
+  /api/v1/recommendations     41624     242            0.58     0     0     0     0   197            45
+                    /cart     34785     165            0.47     0     0     0     0   102            63
+                /checkout     13634     148            1.09     0     0     0     0    62            86
+                 /account     13847     143            1.03     0     0     0     0    77            66
+           /api/v1/orders     10525     119            1.13     0     0     0     0    72            47
+            /wp-login.php       117     117          100.00     0     0   117     0     0             0
+           /server-status       114     114          100.00     0   114     0     0     0             0
+                /wishlist     10412     110            1.06     0     0     0     0    75            35
+                   /admin       108     108          100.00     0   108     0     0     0             0
+              /xmlrpc.php       105     105          100.00     0     0   105     0     0             0
+            /api/v1/users       104     104          100.00     0     0     0     0     0             0
+                    /.env       100     100          100.00     0     0   100     0     0             0
+            /actuator/env       100     100          100.00     0     0   100     0     0             0
+              /backup.zip       100     100          100.00     0     0   100     0     0             0
+             /phpmyadmin/        96      96          100.00     0     0    96     0     0             0
+/cgi-bin/../../etc/passwd        94      94          100.00     0     0     0     0     0             0
+             /.git/config        90      90          100.00     0     0    90     0     0             0
+
+### q05_hourly_volume  job=q05_hourly_volume_82529fdb-fa69-4888-aa94-c70c9d605e76
+    rows=168  processed=29.17 MiB  billed=30.00 MiB  slot=863 ms  elapsed=164 ms  cache_hit=False
+           hour_ist  requests  unique_ips  errors_4xx  errors_5xx  avg_response_ms
+2026-10-26 00:00:00      2363        1476          20           7            130.0
+2026-10-26 01:00:00      1576        1075          12           8            137.7
+2026-10-26 02:00:00       931         692           7           8            130.1
+2026-10-26 03:00:00       642         492           5           5            131.2
+2026-10-26 04:00:00       571         432           2           3            131.8
+2026-10-26 05:00:00       729         552           5           5            130.7
+2026-10-26 06:00:00      1362         930          19           6            126.4
+2026-10-26 07:00:00      2392        1487          14          13            128.7
+2026-10-26 08:00:00      3788        2140          23          22            126.0
+2026-10-26 09:00:00      4569        2461          40          19            130.4
+2026-10-26 10:00:00      5133        2654          34          27            132.9
+2026-10-26 11:00:00      5780        2937          60          26            133.7
+2026-10-26 12:00:00      6236        3078          51          42            133.5
+2026-10-26 13:00:00      5888        3041          50          34            133.5
+2026-10-26 14:00:00      5273        2736          33          29            132.4
+2026-10-26 15:00:00      5246        2720          33          26            133.3
+2026-10-26 16:00:00      5248        2767          36          23            128.7
+2026-10-26 17:00:00      5350        2838          47          38            131.1
+2026-10-26 18:00:00      6035        3043          40          31            129.4
+2026-10-26 19:00:00      7035        3429          54          46            128.2
+2026-10-26 20:00:00      7776        3635          69          40            132.4
+2026-10-26 21:00:00      7932        3726          42          40            132.7
+2026-10-26 22:00:00      6418        3153          50          31            131.3
+2026-10-26 23:00:00      4149        2282          33          25            131.0
+2026-10-27 00:00:00      2465        1525          18           8            127.5
+
+### q06_daily_summary  job=q06_daily_summary_40f35e26-06fd-4727-b2bf-d5a83c772ae6
+    rows=7  processed=29.17 MiB  billed=30.00 MiB  slot=1509 ms  elapsed=197 ms  cache_hit=False
+   day_ist weekday  requests  unique_ips  pct_4xx  pct_5xx  gib_sent
+2026-10-26     Mon    102422       14708     0.76    0.541      3.39
+2026-10-27     Tue    103548       14664     1.87    0.581      3.41
+2026-10-28     Wed    101544       14752     0.77    0.591      3.37
+2026-10-29     Thu    108169       14608     6.05    0.491      3.39
+2026-10-30     Fri    113031       15043     0.78    0.647      3.77
+2026-10-31     Sat    136288       14874     7.33    0.427      4.07
+2026-11-01     Sun    109128       14998     0.74    0.551      3.62
+
+### q07_hour_of_day_profile  job=q07_hour_of_day_profile_f94a7965-2c74-4fb2-952b-2c123081996d
+    rows=168  processed=5.91 MiB  billed=10.00 MiB  slot=1573 ms  elapsed=244 ms  cache_hit=False
+weekday  hour_of_day  requests
+  1-Mon            0      2363
+  1-Mon            1      1576
+  1-Mon            2       931
+  1-Mon            3       642
+  1-Mon            4       571
+  1-Mon            5       729
+  1-Mon            6      1362
+  1-Mon            7      2392
+  1-Mon            8      3788
+  1-Mon            9      4569
+  1-Mon           10      5133
+  1-Mon           11      5780
+  1-Mon           12      6236
+  1-Mon           13      5888
+  1-Mon           14      5273
+  1-Mon           15      5246
+  1-Mon           16      5248
+  1-Mon           17      5350
+  1-Mon           18      6035
+  1-Mon           19      7035
+  1-Mon           20      7776
+  1-Mon           21      7932
+  1-Mon           22      6418
+  1-Mon           23      4149
+  2-Tue            0      2465
+
+### q08_peak_5min_windows  job=q08_peak_5min_windows_d2a316fb-d5d5-4879-9692-1544e8d157c8
+    rows=10  processed=26.38 MiB  billed=27.00 MiB  slot=1059 ms  elapsed=233 ms  cache_hit=False
+   window_start_ist  requests  requests_per_second  unique_ips  scripted_requests
+2026-10-30 21:55:00      1198                 3.99         809                  0
+2026-10-30 21:15:00      1195                 3.98         853                  0
+2026-10-30 20:55:00      1159                 3.86         822                  0
+2026-10-30 21:35:00      1142                 3.81         810                  0
+2026-10-30 21:40:00      1137                 3.79         785                  0
+2026-10-30 21:20:00      1133                 3.78         805                  0
+2026-10-30 20:05:00      1130                 3.77         781                  0
+2026-10-30 20:10:00      1118                 3.73         780                  0
+2026-10-30 20:40:00      1117                 3.72         795                  0
+2026-10-30 21:00:00      1108                 3.69         773                  0
+
+### q09_top_ips  job=q09_top_ips_5706a30c-4dd6-488c-acb6-215eccfd4a51
+    rows=20  processed=43.16 MiB  billed=44.00 MiB  slot=1770 ms  elapsed=297 ms  cache_hit=False
+      client_ip  requests  distinct_endpoints  error_pct       ua_class      first_seen_ist       last_seen_ist  max_requests_per_minute
+  106.138.13.36     27549                   8        1.9     search_bot 2026-10-26 00:01:57 2026-11-01 23:59:31                       15
+  198.51.100.77     27017                   1       33.9 script_or_tool 2026-10-31 06:00:00 2026-10-31 17:59:59                       41
+   157.14.62.20     20644                  18        1.5     mobile_app 2026-10-26 00:00:28 2026-11-01 23:59:06                       15
+ 106.125.25.171      9507                  18        1.2 mobile_browser 2026-10-26 00:00:00 2026-11-01 23:59:32                        7
+223.227.252.210      6575                  18        1.4 mobile_browser 2026-10-26 00:00:55 2026-11-01 23:57:50                        5
+   171.214.3.30      5656                  18        1.1     mobile_app 2026-10-26 00:00:21 2026-11-01 23:59:51                        6
+   103.90.86.21      5129                  18        1.3 mobile_browser 2026-10-26 00:00:31 2026-11-01 23:57:55                        6
+223.218.111.190      4619                  18        1.3        browser 2026-10-26 00:02:18 2026-11-01 23:55:32                        6
+  157.77.38.169      4602                  18        1.3        browser 2026-10-26 00:07:34 2026-11-01 23:58:06                        5
+   117.70.29.19      4491                  18        1.4        browser 2026-10-26 00:02:43 2026-11-01 23:59:31                        7
+ 49.153.208.166      3878                  18        1.2        browser 2026-10-26 00:07:28 2026-11-01 23:59:54                        5
+ 223.133.93.224      3605                  18        1.2     mobile_app 2026-10-26 00:01:47 2026-11-01 23:58:10                        5
+ 223.250.30.219      3588                  18        1.1 mobile_browser 2026-10-26 00:03:21 2026-11-01 23:57:02                        5
+182.163.174.176      3477                  18        1.3 mobile_browser 2026-10-26 00:00:02 2026-11-01 23:56:58                        5
+ 103.200.187.35      3138                  18        1.5     mobile_app 2026-10-26 00:01:19 2026-11-01 23:57:47                        5
+223.147.106.109      2739                  18        1.4        browser 2026-10-26 00:06:01 2026-11-01 23:56:33                        5
+  49.222.207.56      2629                  18        1.1     mobile_app 2026-10-26 00:06:50 2026-11-01 23:57:58                        5
+   49.76.217.72      2512                  18        1.1        browser 2026-10-26 00:05:34 2026-11-01 23:58:33                        5
+  157.216.1.155      2477                  18        1.5        browser 2026-10-26 00:09:19 2026-11-01 23:54:29                        4
+ 157.140.33.216      2359                  18        1.3        browser 2026-10-26 00:00:49 2026-11-01 23:55:58                        4
+
+### q10_5min_failures_series  job=q10_5min_failures_series_00fc77f7-33d4-4a64-a16f-3678eebdc464
+    rows=2016  processed=11.81 MiB  billed=12.00 MiB  slot=173 ms  elapsed=182 ms  cache_hit=False
+         bucket_ist  requests  failures  baseline_mean  baseline_sd
+2026-10-26 00:00:00       200         1            NaN          NaN
+2026-10-26 00:05:00       199         0           1.00          NaN
+2026-10-26 00:10:00       195         0           0.50         0.71
+2026-10-26 00:15:00       194         1           0.33         0.58
+2026-10-26 00:20:00       184         0           0.50         0.58
+2026-10-26 00:25:00       175         1           0.40         0.55
+2026-10-26 00:30:00       204         1           0.50         0.55
+2026-10-26 00:35:00       216         0           0.57         0.53
+2026-10-26 00:40:00       211         1           0.50         0.53
+2026-10-26 00:45:00       198         2           0.56         0.53
+2026-10-26 00:50:00       178         0           0.70         0.67
+2026-10-26 00:55:00       209         0           0.64         0.67
+2026-10-26 01:00:00       133         0           0.58         0.67
+2026-10-26 01:05:00       152         2           0.50         0.67
+2026-10-26 01:10:00       139         0           0.67         0.78
+2026-10-26 01:15:00       116         1           0.67         0.78
+2026-10-26 01:20:00       126         0           0.67         0.78
+2026-10-26 01:25:00       120         1           0.67         0.78
+2026-10-26 01:30:00       130         1           0.67         0.78
+2026-10-26 01:35:00       139         1           0.67         0.78
+2026-10-26 01:40:00       128         1           0.75         0.75
+2026-10-26 01:45:00       123         0           0.75         0.75
+2026-10-26 01:50:00       127         1           0.58         0.67
+2026-10-26 01:55:00       143         0           0.67         0.65
+2026-10-26 02:00:00        59         1           0.67         0.65
+
+### q11_failure_spikes  job=q11_failure_spikes_e0146048-5272-43e7-a3c8-f92a3f426ea3
+    rows=4  processed=22.69 MiB  billed=23.00 MiB  slot=27991 ms  elapsed=776 ms  cache_hit=False
+ incident_no     spike_start_ist       spike_end_ist  flagged_buckets  failed_requests_in_flagged_buckets  expected_failures  max_z_score                                                      top_failing_endpoints
+           1 2026-10-28 14:10:00 2026-10-28 14:35:00                4                                  69               10.9         12.8       /checkout (43), /api/v1/payments (19), /images/products/{id}.jpg (3)
+           2 2026-10-29 15:45:00 2026-10-29 15:50:00                1                                   8                2.1          4.1           /products/{id} (3), /images/products/{id}.jpg (2), /cart/add (1)
+           3 2026-10-30 09:10:00 2026-10-30 09:30:00                4                                  38                8.2          6.1                         /api/v1/recommendations (26), / (3), /cart/add (2)
+           4 2026-10-30 09:40:00 2026-10-30 10:25:00                6                                  77               13.6         11.5 /api/v1/recommendations (74), /products (4), /images/products/{id}.jpg (4)
+
+### q12_suspicious_bruteforce  job=q12_suspicious_bruteforce_90184d73-7de5-47a9-a960-f5381eb73d98
+    rows=3  processed=110.41 MiB  billed=111.00 MiB  slot=193 ms  elapsed=189 ms  cache_hit=False
+   client_ip            hour_ist  failed_logins  successful_logins  attempts_per_minute             user_agent
+203.0.113.17 2026-10-29 02:00:00           1931                 52                 33.0 python-requests/2.31.0
+203.0.113.18 2026-10-29 02:00:00           1930                 53                 33.0 python-requests/2.31.0
+203.0.113.19 2026-10-29 02:00:00           1928                 55                 33.0 python-requests/2.31.0
+
+### q13_suspicious_scanners  job=q13_suspicious_scanners_2d98d9b4-d258-46a3-b656-20a6766a71ff
+    rows=1  processed=109.24 MiB  billed=110.00 MiB  slot=308 ms  elapsed=315 ms  cache_hit=False
+     client_ip  probe_requests  distinct_probe_paths  pct_4xx_5xx      first_seen_ist       last_seen_ist                                      user_agent                                                            sample_paths
+198.51.100.200            1203                    12        100.0 2026-10-27 22:00:00 2026-10-27 22:19:59 Mozilla/5.0 (compatible; Nmap Scripting Engine) /.env /.git/config /actuator/env /admin /admin/config.php /api/v1/users
+
+### q14_suspicious_high_rate  job=q14_suspicious_high_rate_8cbfa684-3493-438f-802a-f43e43551919
+    rows=4  processed=126.77 MiB  billed=127.00 MiB  slot=947 ms  elapsed=259 ms  cache_hit=False
+    client_ip  requests  max_rpm  minutes_at_20plus_rpm  distinct_paths  pct_product_pages  rate_limited_429       ua_class                                                           user_agent
+198.51.100.77     27017       41                    720           27017              100.0              8733 script_or_tool Mozilla/5.0 (compatible; DataHarvester/2.1; +http://bot.example.net)
+ 203.0.113.17      1983       37                     60               1                0.0                 0 script_or_tool                                               python-requests/2.31.0
+ 203.0.113.18      1983       37                     60               1                0.0                 0 script_or_tool                                               python-requests/2.31.0
+ 203.0.113.19      1983       37                     60               1                0.0                 0 script_or_tool                                               python-requests/2.31.0
+
+### q15_user_agent_classes  job=q15_user_agent_classes_1b745cac-32f7-4195-ac43-d12216ef5630
+    rows=5  processed=26.38 MiB  billed=27.00 MiB  slot=298 ms  elapsed=191 ms  cache_hit=False
+      ua_class  requests  pct_of_traffic  unique_ips  error_pct
+       browser    330794           42.73       11135       1.26
+mobile_browser    256652           33.15        8278       1.27
+    mobile_app     98633           12.74        2443       1.34
+    search_bot     53882            6.96         452       1.84
+script_or_tool     34169            4.41           5      47.31
+
+====================================================================================================
+PARTITION / CLUSTER PRUNING (same aggregate, less data scanned)
+
+### p1_full_table_1col  job=p1_full_table_1col_10a1368d-ee6b-46c8-9a89-764112f4904a
+    rows=1  processed=5.91 MiB  billed=10.00 MiB  slot=66 ms  elapsed=190 ms  cache_hit=False
+ failures
+     4201
+
+### p2_one_utc_day  job=p2_one_utc_day_007c5ef4-9b2d-4219-ab99-fc9355f60e4d
+    rows=1  processed=1.64 MiB  billed=10.00 MiB  slot=26 ms  elapsed=182 ms  cache_hit=False
+ failures
+      598
+
+### p3_one_ist_day  job=p3_one_ist_day_8f30e472-67a5-416b-87a6-1dc22c204ebb
+    rows=1  processed=3.22 MiB  billed=10.00 MiB  slot=69 ms  elapsed=188 ms  cache_hit=False
+ failures
+      600
+
+### p4_full_table_wide_col  job=p4_full_table_wide_col_c88bb034-e374-45e8-90b6-c82445c0cd5c
+    rows=1  processed=78.43 MiB  billed=79.00 MiB  slot=156 ms  elapsed=172 ms  cache_hit=False
+ failures  agents
+     4201      12
+
+### p5_ist_day_plus_cluster  job=p5_ist_day_plus_cluster_cb48eaae-2206-45b8-83a9-ea0e18ba0312
+    rows=1  processed=6.15 MiB  billed=10.00 MiB  slot=39 ms  elapsed=160 ms  cache_hit=False
+ failures
+       26
+
+====================================================================================================
+JOB HISTORY from INFORMATION_SCHEMA.JOBS_BY_USER (this activity's labelled query jobs)
+                                                        job_id statement_type  total_bytes_processed  total_bytes_billed  total_slot_ms  cache_hit  elapsed_ms
+             q01_overview_cec28292-95af-46e6-b2d1-96d5604bab56         SELECT               48183519            48234496           1004      False         328
+         q02_status_codes_1c91db19-c33e-4647-a98e-89a3e5c314f7         SELECT                6193040            10485760             57      False         188
+        q03_top_endpoints_5554c960-f97a-4bba-b4e0-b6584da4f794         SELECT               35797439            36700160           4807      False         648
+   q04_errors_by_endpoint_d571be2b-88f4-47b4-bc0e-9ae48dfcd85e         SELECT               17594566            17825792             96      False         209
+        q05_hourly_volume_b946708f-c30e-4cfa-89cf-fb2eacd47788         SELECT               30588953            31457280            936      False         256
+        q06_daily_summary_8e256f3d-5ca6-43bb-b48d-74638503995b         SELECT               30588953            31457280           1416      False         246
+  q07_hour_of_day_profile_83c5fcf1-9964-4da6-8f19-2b297ca0fa07         SELECT                6193040            10485760           1725      False         236
+    q08_peak_5min_windows_0269eebc-e062-4dd3-abd4-ee0d45e9f10f         SELECT               27663335            28311552           1113      False         230
+              q09_top_ips_8bcccc91-3e9d-4edc-ae13-e006587e6607         SELECT               45257901            46137344           2056      False         339
+ q10_5min_failures_series_5f8f8058-37e6-49d0-8820-436d2d1f96b8         SELECT               12386080            12582912            168      False         191
+             q01_overview_5c8a8ce8-30a3-400b-bbc8-ae9573d608e4         SELECT               48183519            48234496            985      False         229
+         q02_status_codes_8d5785ac-45a6-480a-8140-921a1d6ec8d8         SELECT                6193040            10485760             68      False         172
+        q03_top_endpoints_da805508-4369-478e-926d-45a4849a9c7e         SELECT               35797439            36700160           5337      False         885
+   q04_errors_by_endpoint_756d076e-bc4a-4ae1-8869-0f4b39ba5061         SELECT               17594566            17825792             83      False         156
+        q05_hourly_volume_32831516-52bd-441b-91e5-2bd4e3c40e4a         SELECT               30588953            31457280           1299      False         256
+        q06_daily_summary_0ec2a9c2-076a-4b90-af22-7e08b48f1298         SELECT               30588953            31457280           1523      False         248
+  q07_hour_of_day_profile_eadf363b-b5c5-4ff9-9cad-b5396c993af6         SELECT                6193040            10485760           2175      False         269
+    q08_peak_5min_windows_e3201f77-e22b-476a-a2ff-eee39debdff1         SELECT               27663335            28311552           1021      False         216
+              q09_top_ips_f2c22b3c-3b9d-4cdd-954d-5d58f3ec7aed         SELECT               45257901            46137344           1882      False         301
+ q10_5min_failures_series_17fae1ee-5f09-4be1-b490-7e73eaca6aeb         SELECT               12386080            12582912            158      False         182
+       q11_failure_spikes_9e50a81a-779c-493e-8390-ad793b675382         SELECT               23787606            24117248          27735      False         703
+q12_suspicious_bruteforce_54af6663-41a5-40aa-809f-c1b0037eefd3         SELECT              115775788           116391936            181      False         457
+  q13_suspicious_scanners_47f7aa4f-6844-42fe-8afb-983840c815f2         SELECT              114545533           115343360            337      False         262
+ q14_suspicious_high_rate_9568a654-2c67-4e3a-8115-935a8c96a482         SELECT              132930924           133169152            960      False         241
+   q15_user_agent_classes_6e4914e7-0261-4562-bf5f-36d1063c788c         SELECT               27663335            28311552            242      False         191
+            p1_full_table_050ef4f5-bdc0-4a0e-8dbe-345dc3d61c31         SELECT                6193040            10485760             50      False         168
+               p2_one_day_e4f94fb8-b072-48e1-bf71-51338e3de1c7         SELECT                3378240            10485760             52      False         170
+  p3_one_day_one_endpoint_ca084415-8d90-4587-8367-d3dff0d47a75         SELECT                6451595            10485760             42      False         173
+             q01_overview_e8c31065-d629-41c7-b7d7-7a1924d2600b         SELECT               48183519            48234496           1006      False         241
+         q02_status_codes_c234ef15-b15a-4794-9522-cc6f0d46b9b5         SELECT                6193040            10485760             77      False         172
+        q03_top_endpoints_eda49b95-9bb7-4cc2-9549-398cab73087f         SELECT               35797439            36700160           5508      False         741
+   q04_errors_by_endpoint_35c85e90-ba07-41b1-9870-4fb09b25cfab         SELECT               17594566            17825792             85      False         167
+        q05_hourly_volume_b99fa024-59e8-4617-9bb4-79a70ad52386         SELECT               30588953            31457280           1031      False         230
+        q06_daily_summary_154f257d-30d0-40ff-8b17-df5e847ae0cf         SELECT               30588953            31457280           1185      False         224
+  q07_hour_of_day_profile_bf603b02-13ad-464a-b843-626c3f4d3da3         SELECT                6193040            10485760           1820      False         242
+    q08_peak_5min_windows_7a6ee019-d50e-4676-8f4a-11fc4f942a73         SELECT               27663335            28311552           1429      False         244
+              q09_top_ips_81befdad-fcd4-41a1-961b-8a97e33941e6         SELECT               45257901            46137344           2131      False         325
+ q10_5min_failures_series_444f3f85-3456-4cc0-b5ee-a547736d4563         SELECT               12386080            12582912            178      False         182
+       q11_failure_spikes_37ba52a8-0083-458b-91f9-2f17aa1f0e81         SELECT               23787606            24117248          29982      False         877
+q12_suspicious_bruteforce_582f9725-6f59-408a-8661-111dc726fb58         SELECT              115775788           116391936            153      False         219
+  q13_suspicious_scanners_83754bf4-77c1-45a9-aa45-8410623da7cc         SELECT              114545533           115343360            349      False         301
+ q14_suspicious_high_rate_e5ced9da-d1cc-4a8d-be1c-aa1fb5ff96ad         SELECT              132930924           133169152            913      False         322
+   q15_user_agent_classes_873a4ddc-3715-43bc-b2cb-076e9c408f36         SELECT               27663335            28311552            418      False         225
+       p1_full_table_1col_2ff1d645-10f5-4fc7-ad38-dfc9ac542f42         SELECT                6193040            10485760             55      False         121
+           p2_one_utc_day_90224bfe-708e-4127-b718-0f8d16f179fa         SELECT                1723888            10485760             34      False         172
+           p3_one_ist_day_f13af732-4788-4451-953e-13821196d401         SELECT                3378240            10485760             52      False         190
+   p4_full_table_wide_col_26a06d12-16ff-4ad7-ac4c-b2ed5dc30c88         SELECT               82237780            82837504            146      False         182
+  p5_ist_day_plus_cluster_d323f8a6-786f-4da7-a7a5-827dbfb21833         SELECT                6451595            10485760             36      False         166
+             q01_overview_c7ff66a0-887d-4702-aff4-a1b0fde06502         SELECT               48183519            48234496            868      False         298
+         q02_status_codes_7c60a1e5-3150-491f-8a72-dcf5d221b37b         SELECT                6193040            10485760             77      False         180
+        q03_top_endpoints_00d1d752-dd91-499f-a462-1f1206e6fddc         SELECT               35797439            36700160           4975      False         685
+   q04_errors_by_endpoint_55ab175f-94b9-4f37-9fed-a6a48097c409         SELECT               17594566            17825792             92      False         192
+        q05_hourly_volume_82529fdb-fa69-4888-aa94-c70c9d605e76         SELECT               30588953            31457280            863      False         164
+        q06_daily_summary_40f35e26-06fd-4727-b2bf-d5a83c772ae6         SELECT               30588953            31457280           1509      False         197
+  q07_hour_of_day_profile_f94a7965-2c74-4fb2-952b-2c123081996d         SELECT                6193040            10485760           1573      False         244
+    q08_peak_5min_windows_d2a316fb-d5d5-4879-9692-1544e8d157c8         SELECT               27663335            28311552           1059      False         233
+              q09_top_ips_5706a30c-4dd6-488c-acb6-215eccfd4a51         SELECT               45257901            46137344           1770      False         297
+ q10_5min_failures_series_00fc77f7-33d4-4a64-a16f-3678eebdc464         SELECT               12386080            12582912            173      False         182
+       q11_failure_spikes_e0146048-5272-43e7-a3c8-f92a3f426ea3         SELECT               23787606            24117248          27991      False         776
+q12_suspicious_bruteforce_90184d73-7de5-47a9-a960-f5381eb73d98         SELECT              115775788           116391936            193      False         189
+  q13_suspicious_scanners_2d98d9b4-d258-46a3-b656-20a6766a71ff         SELECT              114545533           115343360            308      False         315
+ q14_suspicious_high_rate_8cbfa684-3493-438f-802a-f43e43551919         SELECT              132930924           133169152            947      False         259
+   q15_user_agent_classes_1b745cac-32f7-4195-ac43-d12216ef5630         SELECT               27663335            28311552            298      False         191
+       p1_full_table_1col_10a1368d-ee6b-46c8-9a89-764112f4904a         SELECT                6193040            10485760             66      False         190
+           p2_one_utc_day_007c5ef4-9b2d-4219-ab99-fc9355f60e4d         SELECT                1723888            10485760             26      False         182
+           p3_one_ist_day_8f30e472-67a5-416b-87a6-1dc22c204ebb         SELECT                3378240            10485760             69      False         188
+   p4_full_table_wide_col_c88bb034-e374-45e8-90b6-c82445c0cd5c         SELECT               82237780            82837504            156      False         172
+  p5_ist_day_plus_cluster_cb48eaae-2206-45b8-83a9-ea0e18ba0312         SELECT                6451595            10485760             39      False         160
+
+TOTAL for 20 queries: processed 739.2 MiB, billed 778.0 MiB (sandbox: first 1 TiB per month free; no billing account)

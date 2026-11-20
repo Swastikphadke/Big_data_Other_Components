@@ -1,0 +1,51 @@
+### 2026-11-03 20:17:30 India Standard Time | $ python activity3_flink/evaluate.py --log evidence/act3/09_evaluation.log
+EDUCATIONAL DEMONSTRATION ONLY. All patient data is synthetic and these thresholds are illustrative teaching values, NOT clinical diagnostic criteria. This system must not be used for patient care.
+
+=== 1. INGESTION AND READING-LEVEL ALERTS
+readings generated=14,400  delivered to Kafka=14,400  per partition={0: 7200, 1: 7200}
+abnormal readings expected=1240  reading alerts emitted=1240  matched=1240  missing=0  extra=0  duplicates=0
+very-late abnormal readings: 6, of which alerted: 6 (stateless filter needs no watermark, so late data is still alerted)
+reading alerts by planted label: {'SUSTAINED': 1214, 'TRANSIENT': 14, 'ISOLATED': 10, 'NORMAL': 2}
+
+=== 2. EVENT TIME AND LATE DATA (watermark = max event time - 30 s, min over 2 partitions)
+delivery classes: {'ON_TIME': 12914, 'OUT_OF_ORDER': 1420, 'VERY_LATE': 66}
+predicted late for row-ordered ops (OVER/MATCH_RECOGNIZE): 66   for 5-min windows: 13   for 15-min windows: 4
+predicted late by delivery class: {'ON_TIME': {'late_row': 0, 'late_w5': 0, 'late_w15': 0}, 'OUT_OF_ORDER': {'late_row': 0, 'late_w5': 0, 'late_w15': 0}, 'VERY_LATE': {'late_row': 66, 'late_w5': 13, 'late_w15': 4}}
+
+=== 3. WINDOW SUMMARIES
+patient windows: flink=240  expected=240  (10 patients x 24 windows)
+readings counted by flink windows=14,388  all readings=14,400  => dropped as late=12  (predicted 13)
+windows whose count == count-without-predicted-late: 239/240  windows == all readings: 228/240
+window_status distribution: {'STABLE': 204, 'ATTENTION': 20, 'REVIEW': 16}
+ward windows: flink=8  counted=14,396  all=14,400  dropped=4  (predicted 4)
+
+=== 4. EPISODE DETECTION (score = abnormal readings in last 12; onset >= 9, resolved <= 3)
+flink episode events=12 (onsets=6, resolved=6)   reference=12   identical (type, patient, vital, timestamp): 12/12  flink-only=0  reference-only=0
+     kind patient_id       vital          true_start            true_end  onset_alert            onset_at  onset_delay_s         resolved_at  resolve_delay_s
+ ISOLATED        P01        spo2 2025-11-03 11:42:30 2025-11-03 11:42:30        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P02        spo2 2025-11-03 11:12:40 2025-11-03 11:12:40        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P03  heart_rate 2025-11-03 10:05:35 2025-11-03 10:05:35        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P03        spo2 2025-11-03 11:33:15 2025-11-03 11:33:15        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P05 temperature 2025-11-03 10:27:45 2025-11-03 10:27:45        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P07        spo2 2025-11-03 10:40:10 2025-11-03 10:40:10        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P07  heart_rate 2025-11-03 11:50:05 2025-11-03 11:50:05        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P09  heart_rate 2025-11-03 10:52:10 2025-11-03 10:52:10        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P10  heart_rate 2025-11-03 10:15:20 2025-11-03 10:15:20        False                 NaT            NaN                 NaT              NaN
+ ISOLATED        P10 temperature 2025-11-03 11:05:50 2025-11-03 11:05:50        False                 NaT            NaN                 NaT              NaN
+SUSTAINED        P02  heart_rate 2025-11-03 10:20:00 2025-11-03 10:32:00         True 2025-11-03 10:20:40           40.0 2025-11-03 10:32:40             40.0
+SUSTAINED        P04        spo2 2025-11-03 10:45:00 2025-11-03 10:55:00         True 2025-11-03 10:45:40           40.0 2025-11-03 10:55:40             40.0
+SUSTAINED        P06 temperature 2025-11-03 10:50:00 2025-11-03 11:48:20         True 2025-11-03 10:51:30           90.0 2025-11-03 11:48:55             35.0
+SUSTAINED        P08  heart_rate 2025-11-03 11:15:00 2025-11-03 11:30:00         True 2025-11-03 11:15:45           45.0 2025-11-03 11:30:40             40.0
+SUSTAINED        P08        spo2 2025-11-03 11:15:00 2025-11-03 11:30:00         True 2025-11-03 11:15:40           40.0 2025-11-03 11:30:40             40.0
+SUSTAINED        P09  heart_rate 2025-11-03 11:00:00 2025-11-03 11:08:00         True 2025-11-03 11:00:45           45.0 2025-11-03 11:08:35             35.0
+TRANSIENT        P01  heart_rate 2025-11-03 10:10:00 2025-11-03 10:10:30        False                 NaT            NaN                 NaT              NaN
+TRANSIENT        P05        spo2 2025-11-03 11:20:00 2025-11-03 11:20:40        False                 NaT            NaN                 NaT              NaN
+SUSTAINED detected 6/6  mean onset delay 50 s  mean resolve delay 38 s (event time)
+TRANSIENT with episode alert: 0/2   ISOLATED with episode alert: 0/10
+false episode onsets (not inside a planted sustained episode): 0
+
+=== 5. LATENCY (wall clock, Kafka timestamp in -> Kafka timestamp of Flink output), ms
+reading alert (stateless)                          n= 1240  p50=     45  p95=     95  max=    529
+episode alert (OVER + CEP, waits for watermark)    n=   12  p50=   1304  p95=   2703  max=   3861
+5-min patient summary (from last input)            n=  240  p50=   1352  p95=   1499  max=   2348
+(1 s of wall time = 30 s of simulated event time at --speed 30; watermark bound 30 s event time = 1 s wall)

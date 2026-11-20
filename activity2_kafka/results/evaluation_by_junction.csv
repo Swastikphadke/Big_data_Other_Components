@@ -1,0 +1,13 @@
+junction_id,junction_name,class,true_congested_min,alerted_min,tp_min,fp_min,fn_min,alerts_opened
+J01,Silk Board,heavy,239,267,238,29,1,2
+J02,Hebbal Flyover,heavy,209,224,205,19,4,2
+J03,KR Puram,heavy,209,229,206,23,3,2
+J04,Marathahalli,medium,188,205,179,26,9,3
+J05,Electronic City,medium,101,122,98,24,3,2
+J06,Mekhri Circle,medium,147,174,144,30,3,2
+J07,Richmond Circle,light,0,0,0,0,0,0
+J08,Banashankari,light,0,0,0,0,0,0
+J09,Yeshwanthpur,light,0,16,0,16,0,1
+J10,Goraguntepalya,light,0,0,0,0,0,0
+J11,Sony World Signal,light,0,0,0,0,0,0
+J12,Trinity Circle,light,0,0,0,0,0,0

@@ -1,0 +1,122 @@
+﻿{
+  "clustering": {
+    "fields": [
+      "endpoint",
+      "status"
+    ]
+  },
+  "creationTime": "1793723713339",
+  "description": "Parsed access logs of shop.example.in (synthetic)",
+  "etag": "hiT2OO6KASd25yS9Ngp0+w==",
+  "id": "bigdatasla:weblogs.access_logs",
+  "kind": "bigquery#table",
+  "lastModifiedTime": "1793723728930",
+  "location": "asia-south1",
+  "numActiveLogicalBytes": "173190667",
+  "numBytes": "173190667",
+  "numLongTermBytes": "0",
+  "numLongTermLogicalBytes": "0",
+  "numRows": "774130",
+  "numTotalLogicalBytes": "173190667",
+  "partitionDefinition": {
+    "partitionedColumn": [
+      {
+        "field": "ts"
+      }
+    ]
+  },
+  "schema": {
+    "fields": [
+      {
+        "description": "Request time. Source logs use +05:30 (IST); BigQuery stores TIMESTAMP in UTC",
+        "mode": "REQUIRED",
+        "name": "ts",
+        "type": "TIMESTAMP"
+      },
+      {
+        "description": "Client IPv4 address",
+        "mode": "REQUIRED",
+        "name": "client_ip",
+        "type": "STRING"
+      },
+      {
+        "description": "HTTP method",
+        "mode": "REQUIRED",
+        "name": "method",
+        "type": "STRING"
+      },
+      {
+        "description": "Path template, numeric ids replaced by {id}",
+        "mode": "REQUIRED",
+        "name": "endpoint",
+        "type": "STRING"
+      },
+      {
+        "description": "Requested path without query string",
+        "mode": "NULLABLE",
+        "name": "path",
+        "type": "STRING"
+      },
+      {
+        "description": "Query string (after ?)",
+        "mode": "NULLABLE",
+        "name": "query_string",
+        "type": "STRING"
+      },
+      {
+        "description": "HTTP protocol version",
+        "mode": "NULLABLE",
+        "name": "protocol",
+        "type": "STRING"
+      },
+      {
+        "description": "HTTP status code",
+        "mode": "REQUIRED",
+        "name": "status",
+        "type": "INTEGER"
+      },
+      {
+        "description": "Response body size in bytes",
+        "mode": "NULLABLE",
+        "name": "bytes_sent",
+        "type": "INTEGER"
+      },
+      {
+        "description": "Server response time in milliseconds",
+        "mode": "NULLABLE",
+        "name": "response_ms",
+        "type": "INTEGER"
+      },
+      {
+        "description": "HTTP referrer (empty if none)",
+        "mode": "NULLABLE",
+        "name": "referrer",
+        "type": "STRING"
+      },
+      {
+        "description": "Raw User-Agent header",
+        "mode": "NULLABLE",
+        "name": "user_agent",
+        "type": "STRING"
+      },
+      {
+        "description": "browser / mobile_browser / mobile_app / search_bot / script_or_tool",
+        "mode": "NULLABLE",
+        "name": "ua_class",
+        "type": "STRING"
+      }
+    ]
+  },
+  "selfLink": "https://bigquery.googleapis.com/bigquery/v2/projects/bigdatasla/datasets/weblogs/tables/access_logs",
+  "tableReference": {
+    "datasetId": "weblogs",
+    "projectId": "bigdatasla",
+    "tableId": "access_logs"
+  },
+  "timePartitioning": {
+    "expirationMs": "5184000000",
+    "field": "ts",
+    "type": "DAY"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,36 @@
+﻿{
+  "access": [
+    {
+      "role": "WRITER",
+      "specialGroup": "projectWriters"
+    },
+    {
+      "role": "OWNER",
+      "specialGroup": "projectOwners"
+    },
+    {
+      "role": "OWNER",
+      "userByEmail": "swastikphadke098@gmail.com"
+    },
+    {
+      "role": "READER",
+      "specialGroup": "projectReaders"
+    }
+  ],
+  "creationTime": "1793723699863",
+  "datasetReference": {
+    "datasetId": "weblogs",
+    "projectId": "bigdatasla"
+  },
+  "defaultPartitionExpirationMs": "5184000000",
+  "defaultTableExpirationMs": "5184000000",
+  "description": "Synthetic web-server logs (24CI51 Activity 5)",
+  "etag": "xOyCOKpMJRJDxOHHJp4Eqw==",
+  "id": "bigdatasla:weblogs",
+  "kind": "bigquery#dataset",
+  "lastModifiedTime": "1793723699863",
+  "location": "asia-south1",
+  "maxTimeTravelHours": "168",
+  "selfLink": "https://bigquery.googleapis.com/bigquery/v2/projects/bigdatasla/datasets/weblogs",
+  "type": "DEFAULT"
+}

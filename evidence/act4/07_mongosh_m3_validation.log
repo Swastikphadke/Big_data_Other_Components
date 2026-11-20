@@ -1,0 +1,19 @@
+﻿### 2026-11-03 21:30:02 | docker exec mongodb mongosh --quiet /scripts/m3_validation.js
+validationLevel=strict  validationAction=error
+required: ["sku","name","brand","category","price","mrp","currency","inventory","status","created_at"]
+cross-field rule: {"$expr":{"$gte":["$mrp","$price"]}}
+
+insert with price = -5 -> REJECTED, code 121: Document failed validation
+{
+  propertyName: 'price',
+  details: [
+    {
+      operatorName: 'minimum',
+      specifiedAs: {
+        minimum: 0
+      },
+      reason: 'comparison failed',
+      consideredValue: -5
+    }
+  ]
+}

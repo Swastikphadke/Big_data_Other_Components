@@ -1,0 +1,4 @@
+output,n,p50_ms,p95_ms,max_ms
+reading alert (stateless),1240,45.0,95.04999999999995,529
+"episode alert (OVER + CEP, waits for watermark)",12,1303.5,2703.2499999999986,3861
+5-min patient summary (from last input),240,1352.5,1499.1499999999999,2348

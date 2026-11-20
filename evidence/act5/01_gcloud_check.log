@@ -1,0 +1,34 @@
+﻿### 2026-11-03 22:02:58 | gcloud environment check
+
+> gcloud --version
+Google Cloud SDK 592.0.0
+bq 2.1.41
+core 2026.10.30
+gcloud-crc32c 1.0.0
+gsutil 5.38
+
+> gcloud auth list
+      Credentialed Accounts
+ACTIVE  ACCOUNT
+*       swastikphadke098@gmail.com
+To set the active account, run:
+    $ gcloud config set account `ACCOUNT`
+
+> gcloud config list
+[accessibility]
+screen_reader = False
+[core]
+account = swastikphadke098@gmail.com
+disable_usage_reporting = True
+project = bigdatasla
+Your active configuration is: [default]
+
+> gcloud projects describe bigdatasla --format="table(projectId,name,projectNumber,lifecycleState)"
+PROJECT_ID  NAME        PROJECT_NUMBER  LIFECYCLE_STATE
+bigdatasla  BigDataSLA  113388681801    ACTIVE
+
+> gcloud billing projects describe bigdatasla --format="value(billingEnabled)"
+False
+
+> gcloud services list --enabled --project bigdatasla --filter="config.name:bigquery.googleapis.com" --format="value(config.name)"
+bigquery.googleapis.com

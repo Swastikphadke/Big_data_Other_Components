@@ -1,0 +1,13 @@
+﻿
+GROUP               TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID
+congestion-detector traffic-readings 1          440             444             4               detector-A-e338e029-1602-468e-b6d6-458f16bc492c /172.18.0.1     detector-A
+congestion-detector traffic-readings 2          2640            2664            24              detector-A-e338e029-1602-468e-b6d6-458f16bc492c /172.18.0.1     detector-A
+congestion-detector traffic-readings 0          2200            2220            20              detector-A-e338e029-1602-468e-b6d6-458f16bc492c /172.18.0.1     detector-A
+
+GROUP              TOPIC             PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                         HOST            CLIENT-ID
+operator-dashboard congestion-alerts 0          25              25              0               control-room-1-a2828912-dd8d-48bc-b0ee-0634652ee4ff /172.18.0.1     control-room-1
+
+GROUP            TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                             HOST            CLIENT-ID
+traffic-archiver traffic-readings 1          424             444             20              traffic-archiver-1-a5f72793-3815-4af7-a2f5-a089f8f6b4fd /172.18.0.1     traffic-archiver-1
+traffic-archiver traffic-readings 2          2544            2664            120             traffic-archiver-1-a5f72793-3815-4af7-a2f5-a089f8f6b4fd /172.18.0.1     traffic-archiver-1
+traffic-archiver traffic-readings 0          2120            2220            100             traffic-archiver-1-a5f72793-3815-4af7-a2f5-a089f8f6b4fd /172.18.0.1     traffic-archiver-1

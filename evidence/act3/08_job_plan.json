@@ -1,0 +1,121 @@
+﻿{
+    "plan":  {
+                 "jid":  "44b55d695062ff14b55c4451995be0ce",
+                 "name":  "patient-vitals-monitor",
+                 "type":  "STREAMING",
+                 "nodes":  [
+                               {
+                                   "id":  "5fa85b189dbff8074f62c5439cb0efef",
+                                   "parallelism":  2,
+                                   "operator":  "",
+                                   "operator_strategy":  "",
+                                   "description":  "[13]:StreamRecordTimestampInserter(rowtime field: 2)\u003cbr/\u003e+- [13]:Match(partitionBy=[patient_id, vital], orderBy=[event_time ASC], measures=[FINAL(FIRST(CAST(M.event_time AS TIMESTAMP(3)), 0)) AS rising_since, FINAL(CAST(S.event_time AS TIMESTAMP(3))) AS confirmed_at, FINAL(S.score) AS score, FINAL(S.val) AS trigger_value, FINAL(S.kafka_ts) AS trigger_kafka_ts, FINAL(S.bed) AS bed], rowsPerMatch=[ONE ROW PER MATCH], after=[SKIP PAST LAST ROW], pattern=[((_UTF-16LE\u0027L\u0027, PATTERN_QUANTIFIER(_UTF-16LE\u0027M\u0027, 0, -1, false)), _UTF-16LE\u0027S\u0027)], define=[{L=\u0026lt;=(PREV(L.$7, 0), 3), M=AND(\u0026gt;(PREV(M.$7, 0), 3), \u0026lt;(PREV(M.$7, 0), 9)), S=\u0026gt;=(PREV(S.$7, 0), 9)}])\u003cbr/\u003e   +- [14]:Calc(select=[\u0027EPISODE_ONSET\u0027 AS EXPR$0, patient_id, bed, vital, rising_since, confirmed_at, null:TIMESTAMP(3) AS EXPR$6, score, trigger_value, null:DOUBLE AS EXPR$9, null:DOUBLE AS EXPR$10, trigger_kafka_ts])\u003cbr/\u003e      +- episode_alerts[15]: Writer\u003cbr/\u003e         +- episode_alerts[15]: Committer\u003cbr/\u003e",
+                                   "inputs":  [
+                                                  {
+                                                      "num":  0,
+                                                      "id":  "951bb41c1aeedae768ce35f823a7b93b",
+                                                      "ship_strategy":  "HASH",
+                                                      "exchange":  "pipelined_bounded"
+                                                  }
+                                              ],
+                                   "optimizer_properties":  {
+
+                                                            }
+                               },
+                               {
+                                   "id":  "01b85ce9ec124156b4cb585fb91eaa18",
+                                   "parallelism":  2,
+                                   "operator":  "",
+                                   "operator_strategy":  "",
+                                   "description":  "[16]:StreamRecordTimestampInserter(rowtime field: 2)\u003cbr/\u003e+- [16]:Match(partitionBy=[patient_id, vital], orderBy=[event_time ASC], measures=[FINAL(FIRST(CAST(M.event_time AS TIMESTAMP(3)), 0)) AS rising_since, FINAL(CAST(S.event_time AS TIMESTAMP(3))) AS confirmed_at, FINAL(CAST(R.event_time AS TIMESTAMP(3))) AS resolved_at, FINAL(R.score) AS score, FINAL(R.val) AS trigger_value, FINAL(MIN(X.val)) AS min_val, FINAL(MAX(X.val)) AS max_val, FINAL(R.kafka_ts) AS trigger_kafka_ts, FINAL(R.bed) AS bed], rowsPerMatch=[ONE ROW PER MATCH], after=[SKIP PAST LAST ROW], pattern=[((((_UTF-16LE\u0027L\u0027, PATTERN_QUANTIFIER(_UTF-16LE\u0027M\u0027, 0, -1, false)), _UTF-16LE\u0027S\u0027), PATTERN_QUANTIFIER(_UTF-16LE\u0027X\u0027, 0, -1, false)), _UTF-16LE\u0027R\u0027)], define=[{L=\u0026lt;=(PREV(L.$7, 0), 3), M=AND(\u0026gt;(PREV(M.$7, 0), 3), \u0026lt;(PREV(M.$7, 0), 9)), S=\u0026gt;=(PREV(S.$7, 0), 9), X=\u0026gt;(PREV(X.$7, 0), 3), R=\u0026lt;=(PREV(R.$7, 0), 3)}])\u003cbr/\u003e   +- [17]:Calc(select=[\u0027EPISODE_RESOLVED\u0027 AS EXPR$0, patient_id, bed, vital, rising_since, confirmed_at, resolved_at, score, trigger_value, min_val, max_val, trigger_kafka_ts])\u003cbr/\u003e      +- episode_alerts[18]: Writer\u003cbr/\u003e         +- episode_alerts[18]: Committer\u003cbr/\u003e",
+                                   "inputs":  [
+                                                  {
+                                                      "num":  0,
+                                                      "id":  "951bb41c1aeedae768ce35f823a7b93b",
+                                                      "ship_strategy":  "HASH",
+                                                      "exchange":  "pipelined_bounded"
+                                                  }
+                                              ],
+                                   "optimizer_properties":  {
+
+                                                            }
+                               },
+                               {
+                                   "id":  "951bb41c1aeedae768ce35f823a7b93b",
+                                   "parallelism":  2,
+                                   "operator":  "",
+                                   "operator_strategy":  "",
+                                   "description":  "[10]:OverAggregate(partitionBy=[patient_id, vital], orderBy=[event_time ASC], window=[ ROWS BETWEEN 11 PRECEDING AND CURRENT ROW], select=[patient_id, bed, event_time, kafka_ts, vital, val, abnormal, COUNT(abnormal) AS w0$o0, $SUM0(abnormal) AS w0$o1])\u003cbr/\u003e+- [11]:Calc(select=[patient_id, bed, event_time, kafka_ts, vital, val, abnormal, CASE((w0$o0 \u0026gt; 0), w0$o1, null:INTEGER) AS score])\u003cbr/\u003e",
+                                   "inputs":  [
+                                                  {
+                                                      "num":  0,
+                                                      "id":  "587fdcdfae7cef1ad77583e805baf432",
+                                                      "ship_strategy":  "HASH",
+                                                      "exchange":  "pipelined_bounded"
+                                                  },
+                                                  {
+                                                      "num":  1,
+                                                      "id":  "587fdcdfae7cef1ad77583e805baf432",
+                                                      "ship_strategy":  "HASH",
+                                                      "exchange":  "pipelined_bounded"
+                                                  },
+                                                  {
+                                                      "num":  2,
+                                                      "id":  "587fdcdfae7cef1ad77583e805baf432",
+                                                      "ship_strategy":  "HASH",
+                                                      "exchange":  "pipelined_bounded"
+                                                  }
+                                              ],
+                                   "optimizer_properties":  {
+
+                                                            }
+                               },
+                               {
+                                   "id":  "76ca0ea45de54a9d928990e97b5ff601",
+                                   "parallelism":  2,
+                                   "operator":  "",
+                                   "operator_strategy":  "",
+                                   "description":  "[22]:GlobalWindowAggregate(groupBy=[patient_id], window=[TUMBLE(slice_end=[$slice_end], size=[5 min])], select=[patient_id, COUNT(count1$0) AS EXPR$3, AVG((sum$1, count$2)) AS $f2, MIN(min$3) AS EXPR$5, MAX(max$4) AS EXPR$6, AVG((sum$5, count$6)) AS $f5, MIN(min$7) AS EXPR$8, AVG((sum$8, count$9)) AS $f7, MAX(max$10) AS EXPR$10, SUM(sum$11) AS EXPR$11, SUM(sum$12) AS EXPR$12, SUM(sum$13) AS EXPR$13, SUM(sum$14) AS EXPR$14, MAX(max$15) AS EXPR$16, start(\u0027w$) AS window_start, end(\u0027w$) AS window_end])\u003cbr/\u003e+- [23]:Calc(select=[patient_id, window_start, window_end, EXPR$3, ROUND($f2, 1) AS EXPR$4, EXPR$5, EXPR$6, ROUND($f5, 2) AS EXPR$7, EXPR$8, ROUND($f7, 2) AS EXPR$9, EXPR$10, EXPR$11, EXPR$12, EXPR$13, EXPR$14, CASE((EXPR$14 = 0), \u0027STABLE\u0027, ((EXPR$14 * 2) \u0026gt;= EXPR$3), \u0027ATTENTION\u0027, \u0027REVIEW\u0027) AS EXPR$15, EXPR$16])\u003cbr/\u003e   +- patient_summaries[24]: Writer\u003cbr/\u003e      +- patient_summaries[24]: Committer\u003cbr/\u003e",
+                                   "inputs":  [
+                                                  {
+                                                      "num":  0,
+                                                      "id":  "587fdcdfae7cef1ad77583e805baf432",
+                                                      "ship_strategy":  "HASH",
+                                                      "exchange":  "pipelined_bounded"
+                                                  }
+                                              ],
+                                   "optimizer_properties":  {
+
+                                                            }
+                               },
+                               {
+                                   "id":  "5953027988b27bdc8f638e415a31693b",
+                                   "parallelism":  1,
+                                   "operator":  "",
+                                   "operator_strategy":  "",
+                                   "description":  "[28]:GlobalWindowAggregate(window=[TUMBLE(slice_end=[$slice_end], size=[15 min])], select=[COUNT(count1$0) AS EXPR$2, COUNT(distinct$0 count$1) AS EXPR$3, SUM(sum$2) AS EXPR$4, COUNT(distinct$1 count$3) AS EXPR$5, MAX(max$4) AS EXPR$7, start(\u0027w$) AS window_start, end(\u0027w$) AS window_end])\u003cbr/\u003e+- [29]:Calc(select=[CAST(window_start AS TIMESTAMP(3)) AS window_start, CAST(window_end AS TIMESTAMP(3)) AS window_end, CAST(EXPR$2 AS BIGINT) AS readings, CAST(EXPR$3 AS BIGINT) AS patients, CAST(EXPR$4 AS INTEGER) AS abnormal_readings, CAST(EXPR$5 AS BIGINT) AS patients_with_abnormal, CAST(ROUND(((100.0 * EXPR$4) / EXPR$2), 2) AS DOUBLE) AS pct_abnormal, EXPR$7 AS last_input_kafka_ts])\u003cbr/\u003e   +- ward_summaries[30]: Writer\u003cbr/\u003e      +- ward_summaries[30]: Committer\u003cbr/\u003e",
+                                   "inputs":  [
+                                                  {
+                                                      "num":  0,
+                                                      "id":  "587fdcdfae7cef1ad77583e805baf432",
+                                                      "ship_strategy":  "GLOBAL",
+                                                      "exchange":  "pipelined_bounded"
+                                                  }
+                                              ],
+                                   "optimizer_properties":  {
+
+                                                            }
+                               },
+                               {
+                                   "id":  "587fdcdfae7cef1ad77583e805baf432",
+                                   "parallelism":  2,
+                                   "operator":  "",
+                                   "operator_strategy":  "",
+                                   "description":  "[1]:TableSourceScan(table=[[default_catalog, default_database, vitals_raw, metadata=[partition, offset, timestamp], watermark=[-(event_time, 30000:INTERVAL SECOND)], watermarkEmitStrategy=[on-periodic]]], fields=[patient_id, bed, event_time, heart_rate, spo2, temperature, seq, kafka_partition, kafka_offset, kafka_ts])\u003cbr/\u003e:- [2]:Calc(select=[patient_id, bed, Reinterpret(event_time) AS event_time, heart_rate, spo2, temperature, TRIM(BOTH, \u0027 \u0027, CONCAT(CASE((heart_rate \u0026gt; 120), \u0027HR_HIGH \u0027, (heart_rate \u0026lt; 50), \u0027HR_LOW \u0027, \u0027\u0027), CASE((spo2 \u0026lt; 92), \u0027SPO2_LOW \u0027, \u0027\u0027), CASE((temperature \u0026gt; 38.0), \u0027TEMP_HIGH \u0027, (temperature \u0026lt; 35.5), \u0027TEMP_LOW \u0027, \u0027\u0027))) AS EXPR$6, ((CASE(SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]), 1, 0) + CASE((spo2 \u0026lt; 92), 1, 0)) + CASE(SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)]), 1, 0)) AS n_abn, CASE((((CASE(SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]), 1, 0) + CASE((spo2 \u0026lt; 92), 1, 0)) + CASE(SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)]), 1, 0)) \u0026gt;= 2), \u0027MULTI_VITAL\u0027, \u0027SINGLE_VITAL\u0027) AS EXPR$8, seq, CAST(kafka_ts AS TIMESTAMP_WITH_LOCAL_TIME_ZONE(3)) AS kafka_ts, CAST(kafka_partition AS INTEGER) AS kafka_partition, CAST(kafka_offset AS BIGINT) AS kafka_offset], where=[((patient_id \u0026lt;\u0026gt; \u0027__EOS__\u0027) AND (((CASE(SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]), 1, 0) + CASE((spo2 \u0026lt; 92), 1, 0)) + CASE(SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)]), 1, 0)) \u0026gt; 0))])\u003cbr/\u003e:  +- [3]:StreamRecordTimestampInserter(rowtime field: 2)\u003cbr/\u003e:     +- reading_alerts[3]: Writer\u003cbr/\u003e:        +- reading_alerts[3]: Committer\u003cbr/\u003e:- [4]:Calc(select=[patient_id, bed, Reinterpret(event_time) AS event_time, CAST(kafka_ts AS TIMESTAMP_WITH_LOCAL_TIME_ZONE(3)) AS kafka_ts, \u0027heart_rate\u0027 AS vital, CAST(heart_rate AS DOUBLE) AS val, CASE(SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]), 1, 0) AS abnormal], where=[(patient_id \u0026lt;\u0026gt; \u0027__EOS__\u0027)])\u003cbr/\u003e:- [5]:Calc(select=[patient_id, bed, Reinterpret(event_time) AS event_time, CAST(kafka_ts AS TIMESTAMP_WITH_LOCAL_TIME_ZONE(3)) AS kafka_ts, \u0027spo2\u0027 AS vital, spo2 AS val, CASE((spo2 \u0026lt; 92), 1, 0) AS abnormal], where=[(patient_id \u0026lt;\u0026gt; \u0027__EOS__\u0027)])\u003cbr/\u003e:- [7]:Calc(select=[patient_id, bed, Reinterpret(event_time) AS event_time, CAST(kafka_ts AS TIMESTAMP_WITH_LOCAL_TIME_ZONE(3)) AS kafka_ts, \u0027temperature\u0027 AS EXPR$4, temperature, CASE(SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)]), 1, 0) AS EXPR$6], where=[(patient_id \u0026lt;\u0026gt; \u0027__EOS__\u0027)])\u003cbr/\u003e:- [19]:Calc(select=[patient_id, CAST(heart_rate AS DOUBLE) AS $f3, heart_rate, spo2, temperature, CASE(SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]), 1, 0) AS $f7, CASE((spo2 \u0026lt; 92), 1, 0) AS $f8, CASE(SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)]), 1, 0) AS $f9, CASE((SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]) OR (spo2 \u0026lt; 92) OR SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)])), 1, 0) AS $f10, CAST(kafka_ts AS TIMESTAMP_WITH_LOCAL_TIME_ZONE(3)) AS kafka_ts, Reinterpret(event_time) AS event_time], where=[(patient_id \u0026lt;\u0026gt; \u0027__EOS__\u0027)])\u003cbr/\u003e:  +- [20]:LocalWindowAggregate(groupBy=[patient_id], window=[TUMBLE(time_col=[event_time], size=[5 min])], select=[patient_id, COUNT(*) AS count1$0, AVG($f3) AS (sum$1, count$2), MIN(heart_rate) AS min$3, MAX(heart_rate) AS max$4, AVG(spo2) AS (sum$5, count$6), MIN(spo2) AS min$7, AVG(temperature) AS (sum$8, count$9), MAX(temperature) AS max$10, SUM($f7) AS sum$11, SUM($f8) AS sum$12, SUM($f9) AS sum$13, SUM($f10) AS sum$14, MAX(kafka_ts) AS max$15, slice_end(\u0027w$) AS $slice_end])\u003cbr/\u003e+- [25]:Calc(select=[patient_id, CASE((SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]) OR (spo2 \u0026lt; 92) OR SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)])), 1, 0) AS $f3, CASE((SEARCH(heart_rate, Sarg[(-\u0026infin;..50), (120..+\u0026infin;)]) OR (spo2 \u0026lt; 92) OR SEARCH(temperature, Sarg[(-\u0026infin;..35.5), (38.0..+\u0026infin;)])), patient_id, null:VARCHAR(2147483647)) AS $f4, CAST(kafka_ts AS TIMESTAMP_WITH_LOCAL_TIME_ZONE(3)) AS kafka_ts, Reinterpret(event_time) AS event_time], where=[(patient_id \u0026lt;\u0026gt; \u0027__EOS__\u0027)])\u003cbr/\u003e   +- [26]:LocalWindowAggregate(window=[TUMBLE(time_col=[event_time], size=[15 min])], select=[COUNT(*) AS count1$0, COUNT(distinct$0 patient_id) AS count$1, SUM($f3) AS sum$2, COUNT(distinct$1 $f4) AS count$3, MAX(kafka_ts) AS max$4, DISTINCT(patient_id) AS distinct$0, DISTINCT($f4) AS distinct$1, slice_end(\u0027w$) AS $slice_end])\u003cbr/\u003e",
+                                   "optimizer_properties":  {
+
+                                                            }
+                               }
+                           ]
+             }
+}

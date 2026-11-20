@@ -1,0 +1,175 @@
+﻿{
+  "configuration": {
+    "jobType": "LOAD",
+    "load": {
+      "destinationTable": {
+        "datasetId": "weblogs",
+        "projectId": "bigdatasla",
+        "tableId": "access_logs"
+      },
+      "schema": {
+        "fields": [
+          {
+            "description": "Request time. Source logs use +05:30 (IST); BigQuery stores TIMESTAMP in UTC",
+            "mode": "REQUIRED",
+            "name": "ts",
+            "type": "TIMESTAMP"
+          },
+          {
+            "description": "Client IPv4 address",
+            "mode": "REQUIRED",
+            "name": "client_ip",
+            "type": "STRING"
+          },
+          {
+            "description": "HTTP method",
+            "mode": "REQUIRED",
+            "name": "method",
+            "type": "STRING"
+          },
+          {
+            "description": "Path template, numeric ids replaced by {id}",
+            "mode": "REQUIRED",
+            "name": "endpoint",
+            "type": "STRING"
+          },
+          {
+            "description": "Requested path without query string",
+            "mode": "NULLABLE",
+            "name": "path",
+            "type": "STRING"
+          },
+          {
+            "description": "Query string (after ?)",
+            "mode": "NULLABLE",
+            "name": "query_string",
+            "type": "STRING"
+          },
+          {
+            "description": "HTTP protocol version",
+            "mode": "NULLABLE",
+            "name": "protocol",
+            "type": "STRING"
+          },
+          {
+            "description": "HTTP status code",
+            "mode": "REQUIRED",
+            "name": "status",
+            "type": "INTEGER"
+          },
+          {
+            "description": "Response body size in bytes",
+            "mode": "NULLABLE",
+            "name": "bytes_sent",
+            "type": "INTEGER"
+          },
+          {
+            "description": "Server response time in milliseconds",
+            "mode": "NULLABLE",
+            "name": "response_ms",
+            "type": "INTEGER"
+          },
+          {
+            "description": "HTTP referrer (empty if none)",
+            "mode": "NULLABLE",
+            "name": "referrer",
+            "type": "STRING"
+          },
+          {
+            "description": "Raw User-Agent header",
+            "mode": "NULLABLE",
+            "name": "user_agent",
+            "type": "STRING"
+          },
+          {
+            "description": "browser / mobile_browser / mobile_app / search_bot / script_or_tool",
+            "mode": "NULLABLE",
+            "name": "ua_class",
+            "type": "STRING"
+          }
+        ]
+      },
+      "skipLeadingRows": 1,
+      "sourceFormat": "CSV"
+    }
+  },
+  "etag": "NPygPPfUKsuOX30vFB1cpw==",
+  "id": "bigdatasla:asia-south1.load_access_logs_20261103_220513",
+  "jobCreationReason": {
+    "code": "REQUESTED"
+  },
+  "jobReference": {
+    "jobId": "load_access_logs_20261103_220513",
+    "location": "asia-south1",
+    "projectId": "bigdatasla"
+  },
+  "kind": "bigquery#job",
+  "principal_subject": "user:swastikphadke098@gmail.com",
+  "selfLink": "https://bigquery.googleapis.com/bigquery/v2/projects/bigdatasla/jobs/load_access_logs_20261103_220513?location=asia-south1",
+  "statistics": {
+    "completionRatio": 1,
+    "creationTime": "1793723723412",
+    "endTime": "1793723729011",
+    "finalExecutionDurationMs": "4399",
+    "load": {
+      "badRecords": "0",
+      "inputFileBytes": "175320143",
+      "inputFiles": "1",
+      "outputBytes": "173190667",
+      "outputRows": "774130",
+      "timeline": [
+        {
+          "activeUnits": "1",
+          "completedUnits": "0",
+          "elapsedMs": "360",
+          "estimatedRunnableUnits": "0",
+          "pendingUnits": "1",
+          "totalSlotMs": "3143"
+        },
+        {
+          "activeUnits": "1",
+          "completedUnits": "0",
+          "elapsedMs": "1360",
+          "estimatedRunnableUnits": "0",
+          "pendingUnits": "1",
+          "shuffleRamUsageRatio": 3.0517578125e-05,
+          "totalSlotMs": "10657"
+        },
+        {
+          "activeUnits": "1",
+          "completedUnits": "0",
+          "elapsedMs": "2360",
+          "estimatedRunnableUnits": "0",
+          "pendingUnits": "1",
+          "shuffleRamUsageRatio": 4.57763671875e-05,
+          "totalSlotMs": "12607"
+        },
+        {
+          "activeUnits": "1",
+          "completedUnits": "0",
+          "elapsedMs": "3360",
+          "estimatedRunnableUnits": "0",
+          "pendingUnits": "1",
+          "shuffleRamUsageRatio": 4.57763671875e-05,
+          "totalSlotMs": "12607"
+        },
+        {
+          "activeUnits": "4",
+          "completedUnits": "211",
+          "elapsedMs": "4491",
+          "estimatedRunnableUnits": "0",
+          "pendingUnits": "0",
+          "shuffleRamUsageRatio": 7.62939453125e-05,
+          "totalSlotMs": "12607"
+        }
+      ]
+    },
+    "reservation_id": "default-pipeline",
+    "startTime": "1793723723640",
+    "totalSlotMs": "12607"
+  },
+  "status": {
+    "state": "DONE"
+  },
+  "user_email": "swastikphadke098@gmail.com"
+}

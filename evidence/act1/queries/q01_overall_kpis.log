@@ -1,0 +1,62 @@
+### 2026-11-03 18:51:11 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q01_overall_kpis.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q1. Overall KPIs: total revenue, invoices, units, average basket value
+0: jdbc:hive2://localhost:10000/> SELECT
+. . . . . . . . . . . . . . . . >     ROUND(SUM(amount), 2)                                   AS total_revenue_inr,
+. . . . . . . . . . . . . . . . >     COUNT(DISTINCT invoice_id)                              AS total_invoices,
+. . . . . . . . . . . . . . . . >     SUM(quantity)                                           AS total_units,
+. . . . . . . . . . . . . . . . >     COUNT(*)                                                AS line_items,
+. . . . . . . . . . . . . . . . >     ROUND(SUM(amount) / COUNT(DISTINCT invoice_id), 2)      AS avg_basket_value_inr
+. . . . . . . . . . . . . . . . > FROM supermarket.sales;
+ROUND(SUM(amount), 2)                                   AS total_revenue_inr,
+COUNT(DISTINCT invoice_id)                              AS total_invoices,
+SUM(quantity)                                           AS total_units,
+COUNT(*)                                                AS line_items,
+ROUND(SUM(amount) / COUNT(DISTINCT invoice_id), 2)      AS avg_basket_value_inr
+FROM supermarket.sales
+ROUND(SUM(amount), 2)                                   AS total_revenue_inr,
+COUNT(DISTINCT invoice_id)                              AS total_invoices,
+SUM(quantity)                                           AS total_units,
+COUNT(*)                                                AS line_items,
+ROUND(SUM(amount) / COUNT(DISTINCT invoice_id), 2)      AS avg_basket_value_inr
+FROM supermarket.sales
+ROUND(SUM(amou......supermarket.sales (Stage-1)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 1.30 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container       RUNNING      1          0        1        0       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [========>>------------------] 33%   ELAPSED TIME: 1.81 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 1.95 s     
+----------------------------------------------------------------------------------------------
++--------------------+-----------------+--------------+-------------+-----------------------+
+| total_revenue_inr  | total_invoices  | total_units  | line_items  | avg_basket_value_inr  |
++--------------------+-----------------+--------------+-------------+-----------------------+
+| 117620095.00       | 200000          | 990094       | 559626      | 588.10                |
++--------------------+-----------------+--------------+-------------+-----------------------+
+1 row selected (2.469 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

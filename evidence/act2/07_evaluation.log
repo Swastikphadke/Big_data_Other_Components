@@ -1,0 +1,46 @@
+### 2026-11-03 19:28:59 India Standard Time | $ python activity2_kafka/evaluate.py --log evidence/act2/07_evaluation.log
+=== 1. DATA INTEGRITY
+generated=11,520  ingested=11,520  matched=11,520  missing=0  unexpected=0  duplicates=0
+each junction on exactly one partition: True;  per-junction order preserved: True
+junctions per partition: {0: ['J01', 'J04', 'J06', 'J07', 'J11'], 1: ['J08'], 2: ['J02', 'J03', 'J05', 'J09', 'J10', 'J12']}
+
+=== 2. END-TO-END LATENCY (producer create -> archiver receive), ms
+min=24  p50=70  p95=95  p99=160  max=304
+
+=== 3a. MINUTE-LEVEL DETECTION (alert open vs ground-truth congested/incident)
+junction_id     junction_name  class  true_congested_min  alerted_min  tp_min  fp_min  fn_min  alerts_opened
+        J01        Silk Board  heavy                 239          267     238      29       1              2
+        J02    Hebbal Flyover  heavy                 209          224     205      19       4              2
+        J03          KR Puram  heavy                 209          229     206      23       3              2
+        J04      Marathahalli medium                 188          205     179      26       9              3
+        J05   Electronic City medium                 101          122      98      24       3              2
+        J06     Mekhri Circle medium                 147          174     144      30       3              2
+        J07   Richmond Circle  light                   0            0       0       0       0              0
+        J08      Banashankari  light                   0            0       0       0       0              0
+        J09      Yeshwanthpur  light                   0           16       0      16       0              1
+        J10    Goraguntepalya  light                   0            0       0       0       0              0
+        J11 Sony World Signal  light                   0            0       0       0       0              0
+        J12    Trinity Circle  light                   0            0       0       0       0              0
+TOTAL  TP=1070  FP=167  FN=23  precision=0.865  recall=0.979
+
+=== 3b. EPISODE-LEVEL
+junction_id true_state          true_start            true_end  detected  detect_delay_min  clear_delay_min
+        J01  CONGESTED 2025-11-03 08:33:00 2025-11-03 10:29:00      True               0.0             14.0
+        J01  CONGESTED 2025-11-03 17:44:00 2025-11-03 19:47:00      True               1.0             15.0
+        J02  CONGESTED 2025-11-03 08:40:00 2025-11-03 10:22:00      True               1.0             10.0
+        J02  CONGESTED 2025-11-03 17:52:00 2025-11-03 19:39:00      True               3.0              9.0
+        J03  CONGESTED 2025-11-03 08:40:00 2025-11-03 10:22:00      True               1.0              9.0
+        J03  CONGESTED 2025-11-03 17:52:00 2025-11-03 19:39:00      True               2.0             14.0
+        J04  CONGESTED 2025-11-03 08:55:00 2025-11-03 10:07:00      True               2.0             12.0
+        J04   INCIDENT 2025-11-03 14:00:00 2025-11-03 14:45:00      True               3.0              2.0
+        J04  CONGESTED 2025-11-03 18:10:00 2025-11-03 19:21:00      True               4.0             12.0
+        J05  CONGESTED 2025-11-03 09:04:00 2025-11-03 09:58:00      True               1.0             10.0
+        J05  CONGESTED 2025-11-03 18:22:00 2025-11-03 19:09:00      True               2.0             14.0
+        J06  CONGESTED 2025-11-03 08:54:00 2025-11-03 10:08:00      True               0.0             15.0
+        J06  CONGESTED 2025-11-03 18:09:00 2025-11-03 19:22:00      True               3.0             15.0
+episodes=13  detected=13  mean detect delay=1.8 min  mean clear delay=11.6 min
+false-alarm alerts (no true congestion during alert): 1
+alert_id junction_id junction_name                open               clear
+  A-0007         J09  Yeshwanthpur 2025-11-03 09:32:00 2025-11-03 09:48:00
+min noise-free speed at those junctions: {'J09': 21.5}
+sensor glitch J07 12:10 -> alerts raised at J07: 0

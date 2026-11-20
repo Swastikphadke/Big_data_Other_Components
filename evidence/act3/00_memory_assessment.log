@@ -1,0 +1,8 @@
+﻿### 2026-11-03 19:49:58 memory assessment - staged startup (Docker VM limit 3.84 GB)
+baseline (no containers)     host free    718 MB | vmmemWSL  1,306 MB
++ kafka                      host free    633 MB | vmmemWSL  1,117 MB
++ jobmanager                 host free    889 MB | vmmemWSL  1,667 MB
++ taskmanager                host free    686 MB | vmmemWSL  1,451 MB
+  docker stats  flink-taskmanager: 299.6MiB / 3.748GiB (7.81%)
+  docker stats  flink-jobmanager: 365.3MiB / 3.748GiB (9.52%)
+  docker stats  kafka: 311.8MiB / 3.748GiB (8.12%)

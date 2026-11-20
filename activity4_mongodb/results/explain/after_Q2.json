@@ -1,0 +1,160 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "$and": [
+        {
+          "category": {
+            "$eq": "Laptops"
+          }
+        },
+        {
+          "price": {
+            "$lte": 80000
+          }
+        },
+        {
+          "price": {
+            "$gte": 50000
+          }
+        }
+      ]
+    },
+    "indexFilterSet": false,
+    "queryHash": "F17CE50C",
+    "planCacheShapeHash": "F17CE50C",
+    "planCacheKey": "B2BBA354",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "FETCH",
+      "inputStage": {
+        "stage": "IXSCAN",
+        "keyPattern": {
+          "category": 1,
+          "price": 1
+        },
+        "indexName": "category_1_price_1",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "category": [],
+          "price": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "category": [
+            "[\"Laptops\", \"Laptops\"]"
+          ],
+          "price": [
+            "[50000, 80000]"
+          ]
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 2124,
+    "executionTimeMillis": 16,
+    "totalKeysExamined": 2124,
+    "totalDocsExamined": 2124,
+    "executionStages": {
+      "isCached": false,
+      "stage": "FETCH",
+      "nReturned": 2124,
+      "executionTimeMillisEstimate": 10,
+      "works": 2125,
+      "advanced": 2124,
+      "needTime": 0,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "docsExamined": 2124,
+      "alreadyHasObj": 0,
+      "inputStage": {
+        "stage": "IXSCAN",
+        "nReturned": 2124,
+        "executionTimeMillisEstimate": 0,
+        "works": 2125,
+        "advanced": 2124,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "keyPattern": {
+          "category": 1,
+          "price": 1
+        },
+        "indexName": "category_1_price_1",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "category": [],
+          "price": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "category": [
+            "[\"Laptops\", \"Laptops\"]"
+          ],
+          "price": [
+            "[50000, 80000]"
+          ]
+        },
+        "keysExamined": 2124,
+        "seeks": 1,
+        "dupsTested": 0,
+        "dupsDropped": 0
+      }
+    }
+  },
+  "queryShapeHash": "55DF1FD719C3629A6E6B4F8B5E652A1977BA60ED0800AE962892CC117356CBD8",
+  "command": {
+    "find": "products",
+    "filter": {
+      "category": "Laptops",
+      "price": {
+        "$gte": 50000,
+        "$lte": 80000
+      }
+    },
+    "sort": {
+      "price": 1
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

@@ -1,0 +1,14 @@
+﻿### 2026-11-03 20:10:50 | REST /jobs/44b55d695062ff14b55c4451995be0ce vertices + watermarks + backpressure (mid-run snapshot, run 2)
+
+vertex                                                  par records_in records_out backpressure busy        watermark_event_time
+------                                                  --- ---------- ----------- ------------ ----        --------------------
+Source: vitals_raw[1] -> (Calc[2] -> StreamRecordTimest   2          0        8050 ok           0.261,0.268                     
+OverAggregate[10] -> Calc[11]                             2       7887        7722 ok           0.103,0.106 10:21:25, 10:21:25  
+StreamRecordTimestampInserter[13] -> Match[13] -> Calc[   2       7662           0 ok           0.124,0.129 10:21:15, 10:21:25  
+StreamRecordTimestampInserter[16] -> Match[16] -> Calc[   2       7662           0 ok           0.151,0.15  10:21:15, 10:21:15  
+GlobalWindowAggregate[22] -> Calc[23] -> patient_summar   2        131           0 ok           0.242,0.235 10:21:25, 10:21:25  
+GlobalWindowAggregate[28] -> Calc[29] -> ward_summaries   1         14           0 ok           0.016       10:21:25            
+
+
+
+[producer] sim 10:40  delivered= 4,800  elapsed=  80.0s

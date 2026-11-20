@@ -1,0 +1,80 @@
+activity,artifact,type,produced_by,status,notes
+1,evidence/act1/01_generate_sales.log,console log,activity1_hive/generate_sales.py,verified,dataset generation (seed 42)
+1,evidence/act1/02_schema_load.log,console log,hql/01_schema.hql via beeline,verified,DDL + dynamic-partition load + DESCRIBE FORMATTED
+1,evidence/act1/queries/q01..q12.log,console log,activity1_hive/run_queries.sh,verified,full beeline output incl. Tez DAG
+1,activity1_hive/results/q01..q11.csv,query result,activity1_hive/run_queries.sh,verified,csv2 output of the same queries
+1,activity1_hive/charts/a1_*.png (6),chart,activity1_hive/charts.py,verified,built only from results/*.csv
+1,evidence/act1/screenshots/hs2_webui.png,screenshot,headless Edge of http://localhost:10002,verified,HiveServer2 UI listing executed queries
+1,evidence/act1/screenshots/docker_ps_hive.png,screenshot,common/capture_console.ps1,verified,real console window capture
+1,evidence/act1/screenshots/beeline_*.png (6),screenshot,common/capture_console.ps1,verified,real console window capture
+2,activity2_kafka/data/traffic_readings.csv + ground_truth.csv + planted_patterns.json,dataset,activity2_kafka/traffic_model.py,verified,11520 readings; noise-free ground truth (seed 7)
+2,evidence/act2/01_setup_topics.log,console log,activity2_kafka/setup_topics.sh,verified,topic creation + describe (3 and 1 partitions)
+2,evidence/act2/02_archiver.log,console log,activity2_kafka/archiver.py (group traffic-archiver),verified,11520 archived; per-partition counts
+2,evidence/act2/03_detector.log,console log,activity2_kafka/congestion_detector.py,verified,50 alert lifecycle events
+2,evidence/act2/04_alert_dashboard.log,console log,activity2_kafka/alert_dashboard.py,verified,control-room view of the 50 alert events
+2,evidence/act2/05_producer.log,console log,activity2_kafka/producer.py --speed 4,verified,11520 acked / 0 failed in 240 s
+2,evidence/act2/06_consumer_groups_midrun.log,console log,kafka-consumer-groups.sh --describe --all-groups (during run),verified,live consumer lag
+2,evidence/act2/07_evaluation.log,console log,activity2_kafka/evaluate.py,verified,integrity + latency + precision/recall + episodes
+2,evidence/act2/08_replay.log,console log,archiver.py --group audit-replay,verified,full replay from offset 0
+2,evidence/act2/09_scaleout_detector_A.log + 09_scaleout_detector_B.log,console log,congestion_detector.py x2 same group,verified,partition assignment [0 1] / [2]
+2,evidence/act2/10_scaleout_group.log,console log,kafka-consumer-groups.sh --describe (scale-out group),verified,two members
+2,evidence/act2/11_scaleout_equivalence.log,console log,inline check script,verified,scaled-out alerts == single-instance alerts; replay == original
+2,evidence/act2/12_consumer_groups_final.log,console log,kafka-consumer-groups.sh --describe --all-groups (after run),verified,lag 0 everywhere
+2,activity2_kafka/results/alerts.csv + ingested_readings.csv + replay_readings.csv + scaleout_alerts_A.csv + scaleout_alerts_B.csv,results,pipeline consumers,verified,raw outputs of the run
+2,activity2_kafka/results/evaluation_by_junction.csv + evaluation_episodes.csv + evaluation_latency.csv,results,activity2_kafka/evaluate.py,verified,evaluation tables
+2,activity2_kafka/charts/a2_*.png (6),chart,activity2_kafka/charts.py,verified,built only from results/ and data/
+2,evidence/act2/screenshots/producer_console.png + detector_console.png,screenshot,common/capture_console.ps1,verified,real console windows of the main run
+2,evidence/act2/screenshots/consumer_groups_midrun.png + kafkaui_consumer_groups_midrun.png + kafkaui_topic_midrun.png,screenshot,capture_console.ps1 / capture_web.ps1,verified,taken ~100 s into the main run
+2,evidence/act2/screenshots/replay_new_group.png,screenshot,common/capture_console.ps1,verified,replay demo
+2,evidence/act2/screenshots/scaleout_detector_A.png + scaleout_detector_B.png + scaleout_group_members.png,screenshot,common/capture_console.ps1,verified,scale-out demo
+2,evidence/act2/screenshots/topics_describe.png + consumer_groups_final.png + console_consumer_alerts.png,screenshot,common/capture_console.ps1,verified,post-run broker state
+2,evidence/act2/screenshots/kafkaui_topic_final.png + kafkaui_consumer_groups_final.png + kafkaui_topics_list.png,screenshot,common/capture_web.ps1 (headless Edge),verified,Kafka-UI post-run
+3,activity3_flink/data/vitals_readings.csv + planted_events.csv + planted_patterns.json,dataset,activity3_flink/patient_model.py,verified,14400 synthetic readings (seed 11) with delivery delays; ground truth
+3,activity3_flink/Dockerfile + thresholds.json + docker-compose.yml (jobmanager/taskmanager),configuration,hand-written,verified,image bigdata/pyflink:1.20.5; tuned memory
+3,evidence/act3/00_memory_assessment.log,console log,staged start-up script,verified,host/VM memory before and after each container
+3,evidence/act3/01_setup_topics.log,console log,activity3_flink/setup_topics.ps1,verified,5 topics (run 2)
+3,evidence/act3/02_job_submit.log,console log,flink run -d -py /opt/activity3/vitals_job.py,verified,job 44b55d695062ff14b55c4451995be0ce
+3,evidence/act3/03_producer.log,console log,activity3_flink/vitals_producer.py --speed 30,verified,14400 delivered; EOS markers
+3,evidence/act3/04_collector.log,console log,activity3_flink/results_collector.py,verified,live review feed; 1240/12/240/8 outputs
+3,evidence/act3/05_memory_during_run.log,console log,memory monitor (10 s),verified,peak ~2.1 GB containers; host free >= 545 MB
+3,evidence/act3/06_midrun_vertices_watermarks.log,console log,Flink REST API,verified,per-operator records/watermarks/back pressure mid-run
+3,evidence/act3/07_final_flink_metrics.log,console log,Flink REST API,verified,43200 in / 43002 out at OVER (198 late rows); checkpoints
+3,evidence/act3/08_job_plan.json,configuration,Flink REST /jobs/<id>/plan,verified,execution plan (run 2)
+3,evidence/act3/09_evaluation.log,console log,activity3_flink/evaluate.py,verified,integrity + late data + windows + episodes 12/12 + latency
+3,activity3_flink/results/*.csv,results,results_collector.py / evaluate.py,verified,Flink outputs and evaluation tables
+3,activity3_flink/charts/a3_*.png (7),chart,activity3_flink/charts.py,verified,from results/ and data/ (P09 score panel recomputed from input; noted on chart)
+3,evidence/act3/screenshots/job_submit_console.png + producer_console.png + collector_console.png + docker_stats_midrun.png,screenshot,common/capture_console.ps1,verified,real console windows (run 2)
+3,evidence/act3/screenshots/flink_*.png (9),screenshot,common/capture_web.ps1 (headless Edge),verified,Flink Web UI: graph mid/final + watermarks + back pressure + subtasks + checkpoints + TM + config
+3,evidence/act3/run1_superseded_backpressure/*,superseded run,run 1 (job 7308cce1...),superseded,kept to document the quadratic CEP back-pressure issue; NOT used for results
+4,activity4_mongodb/data/products.jsonl.gz + sample_products.json + catalog_stats.json,dataset,activity4_mongodb/generate_catalog.py,verified,200000 synthetic products (seed 2024)
+4,activity4_mongodb/run_all.ps1 + docker-compose.yml (mongodb) + setup_db.py validator + relational_schema.sql + mongosh/*.js,configuration,hand-written,verified,clean-start pipeline; schema validator; SQL DDL
+4,evidence/act4/00_clean_start.log,console log,run_all.ps1 (down -v; up -d),verified,fresh volume: only admin/config/local databases
+4,evidence/act4/01_generate.log,console log,generate_catalog.py,verified,200000 products by category
+4,evidence/act4/02_setup_db.log,console log,setup_db.py,verified,validated collection; 200000 inserted; storage stats
+4,evidence/act4/03_benchmark.log,console log,benchmark.py,verified,before/after plans + docs examined + timings; index builds
+4,evidence/act4/04_validation_demo.log,console log,validation_demo.py,verified,6+1 rejected writes; flexible write accepted; E11000
+4,evidence/act4/05_crud_demo.log,console log,crud_demo.py,verified,CRUD + explain of reads + 4 aggregation reports
+4,evidence/act4/06_sql_compare.log,console log,sql_compare.py,verified,SQLite export; matching counts; join row explosion
+4,evidence/act4/07_mongosh_m1..m4.log,console log,mongosh scripts,verified,overview / explain / validator / aggregate from the MongoDB shell
+4,evidence/act4/08_docker_stats.log,console log,docker stats,verified,mongodb 343 MiB
+4,activity4_mongodb/results/benchmark_raw.csv + benchmark_summary.csv + index_build.csv + explain/*.json (12),results,benchmark.py,verified,raw timings (300 runs) and full explain output per phase/query
+4,activity4_mongodb/results/agg_*.csv + relational_comparison.csv + relational_counts.csv,results,crud_demo.py / sql_compare.py,verified,aggregation and comparison tables
+4,activity4_mongodb/charts/a4_*.png (5),chart,activity4_mongodb/charts.py,verified,from results/*.csv of the clean run
+4,evidence/act4/screenshots/setup_db_console.png + validation_console.png + crud_console.png + sql_compare_console.png + docker_stats.png,screenshot,common/capture_console.ps1,verified,real console windows of the clean run
+4,evidence/act4/screenshots/mongosh_m1..m4 (4),screenshot,common/capture_console.ps1,verified,mongosh in real console windows
+4,evidence/act4/screenshots/benchmark_log_console.png,screenshot,common/capture_console.ps1 (Get-Content of 03_benchmark.log),verified,console DISPLAY OF THE BENCHMARK LOG FILE (live capture failed: window wider than screen)
+5,activity5_bigquery/data/raw/access_log_2026-10-26_11-01.log.gz + activity5_bigquery/data/processed/access_logs.csv.gz + activity5_bigquery/data/processed/rejected_lines.txt + activity5_bigquery/data/incidents.json,dataset,generate_logs.py / parse_logs.py,verified,774155 raw lines (seed 55) -> 774130 parsed + 25 rejected; planted incidents
+5,activity5_bigquery/bq/schema_access_logs.json + activity5_bigquery/bq_setup.ps1 + activity5_bigquery/run_all.ps1 + activity5_bigquery/sql/q01..q15.sql (15) + activity5_bigquery/bq_client.py,configuration,hand-written,verified,table schema; partition/cluster design; 15 SQL scripts
+5,activity5_bigquery/pricing/catalog_bigquery.json + catalog_cloud_storage.json,reference data,Cloud Billing Catalog API (read-only),verified,official SKU prices retrieved 2026-11-03
+5,evidence/act5/01_gcloud_check.log,console log,run_all.ps1 step 0,verified,gcloud version/account/project bigdatasla/billingEnabled False
+5,evidence/act5/02_generate.log + 02b_parse.log,console log,generate_logs.py / parse_logs.py,verified,dataset generation and ETL
+5,evidence/act5/03_bq_setup.log + evidence/act5/bq_json/dataset_weblogs.json + evidence/act5/bq_json/table_access_logs.json + evidence/act5/bq_json/job_load_access_logs_20261103_220513.json,console log + BigQuery metadata,bq_setup.ps1 (bq mk / bq load / bq show),verified,dataset + table + batch load job (774130 rows; 0 bad)
+5,evidence/act5/04_sandbox_tests.log,console log,sandbox_tests.py,verified,DML and streaming refused; 60-day expiry
+5,evidence/act5/05_queries.log + activity5_bigquery/results/q01..q15.csv (15) + activity5_bigquery/results/pruning_comparison.csv + activity5_bigquery/results/query_job_stats.csv + activity5_bigquery/results/information_schema_jobs.csv,query results,run_queries.py (BigQuery jobs),verified,20 jobs; result CSVs; job ids; bytes processed/billed
+5,evidence/act5/06_verification.log + activity5_bigquery/results/verification.csv,console log,verify_results.py,verified,23/23 checks (pandas recomputation + planted incidents)
+5,evidence/act5/07_cost_estimate.log + activity5_bigquery/results/cost_estimate_production.csv + activity5_bigquery/results/cost_assumptions.csv,console log,cost_estimate.py,verified (Part A) / HYPOTHETICAL (Part B),actual USD 0; production scenario clearly labelled hypothetical
+5,activity5_bigquery/charts/a5_*.png (10),chart / diagram,charts.py,verified (charts from query CSVs); diagram = design,9 charts from query CSVs + a5_architecture.png (design diagram: used vs proposed services)
+5,evidence/act5/screenshots/gcloud_check.png + generate_console.png + sandbox_tests_console.png + queries_console.png + verification_console.png + cost_console.png,screenshot,common/capture_console.ps1,verified,real console windows of the clean run
+5,evidence/act5/screenshots/bq_show_table.png + bq_cli_query.png + bq_ls_jobs.png,screenshot,common/capture_console.ps1 (bq CLI),verified,live BigQuery responses via bq CLI
+5,evidence/act5/screenshots/bq_setup_log_console.png,screenshot,common/capture_console.ps1 (Get-Content of 03_bq_setup.log),verified,console DISPLAY OF THE SETUP LOG FILE (live capture came out blank)
+5,evidence/act5/screenshots/console_*.png (9),screenshot,captured by the student in the Google Cloud console (browser login),verified,"Sandbox banner, dataset, schema, details (partitioning/clustering/774,130 rows), Q11 results, job information, metrics, execution graph"

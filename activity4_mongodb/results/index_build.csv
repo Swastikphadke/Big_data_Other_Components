@@ -1,0 +1,7 @@
+index,keys,options,purpose,build_s,size_mb
+sku_unique,"[[""sku"", 1]]","{""unique"": true}",point lookups; enforces unique SKU,0.77,2.39
+brand_1,"[[""brand"", 1]]",{},brand filter (single field),0.66,1.13
+category_1_price_1,"[[""category"", 1], [""price"", 1]]",{},equality on category + range/sort on price (ESR rule),0.6,2.17
+name_tags_text,"[[""name"", ""text""], [""tags"", ""text""]]","{""default_language"": ""english""}",keyword search,5.14,10.9
+stock_active_partial,"[[""inventory.stock"", 1]]","{""partialFilterExpression"": {""status"": ""active""}}",low-stock report (partial),0.59,0.96
+rating_desc,"[[""ratings.avg"", -1]]",{},top-rated listings,0.58,1.53

@@ -1,0 +1,150 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "$and": [
+        {
+          "category": {
+            "$eq": "Smartphones"
+          }
+        },
+        {
+          "price": {
+            "$lt": 20000
+          }
+        }
+      ]
+    },
+    "indexFilterSet": false,
+    "queryHash": "95E260FD",
+    "planCacheShapeHash": "95E260FD",
+    "planCacheKey": "46455FA9",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "SORT",
+      "sortPattern": {
+        "price": 1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 20,
+      "type": "simple",
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "$and": [
+            {
+              "category": {
+                "$eq": "Smartphones"
+              }
+            },
+            {
+              "price": {
+                "$lt": 20000
+              }
+            }
+          ]
+        },
+        "direction": "forward"
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 20,
+    "executionTimeMillis": 188,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 200000,
+    "executionStages": {
+      "isCached": false,
+      "stage": "SORT",
+      "nReturned": 20,
+      "executionTimeMillisEstimate": 182,
+      "works": 200022,
+      "advanced": 20,
+      "needTime": 200001,
+      "needYield": 0,
+      "saveState": 9,
+      "restoreState": 9,
+      "isEOF": 1,
+      "sortPattern": {
+        "price": 1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 20,
+      "type": "simple",
+      "totalDataSizeSorted": 10621,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledDataStorageSize": 0,
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "$and": [
+            {
+              "category": {
+                "$eq": "Smartphones"
+              }
+            },
+            {
+              "price": {
+                "$lt": 20000
+              }
+            }
+          ]
+        },
+        "nReturned": 4886,
+        "executionTimeMillisEstimate": 182,
+        "works": 200001,
+        "advanced": 4886,
+        "needTime": 195114,
+        "needYield": 0,
+        "saveState": 9,
+        "restoreState": 9,
+        "isEOF": 1,
+        "direction": "forward",
+        "docsExamined": 200000
+      }
+    }
+  },
+  "queryShapeHash": "EE21D842E36131D049D022F5493E4B635E73F8D28E03684C73FDE388C2C52FB4",
+  "command": {
+    "find": "products",
+    "filter": {
+      "category": "Smartphones",
+      "price": {
+        "$lt": 20000
+      }
+    },
+    "sort": {
+      "price": 1
+    },
+    "limit": 20,
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

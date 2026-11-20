@@ -1,0 +1,119 @@
+{
+  "seed": 7,
+  "date": "2025-11-03",
+  "window": [
+    "06:00",
+    "22:00"
+  ],
+  "junctions": [
+    {
+      "id": "J01",
+      "name": "Silk Board",
+      "free_flow_kmph": 40,
+      "capacity_veh_min": 130,
+      "peak_severity": 1.25,
+      "class": "heavy"
+    },
+    {
+      "id": "J02",
+      "name": "Hebbal Flyover",
+      "free_flow_kmph": 45,
+      "capacity_veh_min": 125,
+      "peak_severity": 1.2,
+      "class": "heavy"
+    },
+    {
+      "id": "J03",
+      "name": "KR Puram",
+      "free_flow_kmph": 40,
+      "capacity_veh_min": 115,
+      "peak_severity": 1.15,
+      "class": "heavy"
+    },
+    {
+      "id": "J04",
+      "name": "Marathahalli",
+      "free_flow_kmph": 42,
+      "capacity_veh_min": 105,
+      "peak_severity": 1.0,
+      "class": "medium"
+    },
+    {
+      "id": "J05",
+      "name": "Electronic City",
+      "free_flow_kmph": 50,
+      "capacity_veh_min": 100,
+      "peak_severity": 0.98,
+      "class": "medium"
+    },
+    {
+      "id": "J06",
+      "name": "Mekhri Circle",
+      "free_flow_kmph": 38,
+      "capacity_veh_min": 90,
+      "peak_severity": 0.97,
+      "class": "medium"
+    },
+    {
+      "id": "J07",
+      "name": "Richmond Circle",
+      "free_flow_kmph": 35,
+      "capacity_veh_min": 80,
+      "peak_severity": 0.7,
+      "class": "light"
+    },
+    {
+      "id": "J08",
+      "name": "Banashankari",
+      "free_flow_kmph": 40,
+      "capacity_veh_min": 85,
+      "peak_severity": 0.78,
+      "class": "light"
+    },
+    {
+      "id": "J09",
+      "name": "Yeshwanthpur",
+      "free_flow_kmph": 42,
+      "capacity_veh_min": 95,
+      "peak_severity": 0.82,
+      "class": "light"
+    },
+    {
+      "id": "J10",
+      "name": "Goraguntepalya",
+      "free_flow_kmph": 45,
+      "capacity_veh_min": 110,
+      "peak_severity": 0.75,
+      "class": "light"
+    },
+    {
+      "id": "J11",
+      "name": "Sony World Signal",
+      "free_flow_kmph": 35,
+      "capacity_veh_min": 75,
+      "peak_severity": 0.7,
+      "class": "light"
+    },
+    {
+      "id": "J12",
+      "name": "Trinity Circle",
+      "free_flow_kmph": 38,
+      "capacity_veh_min": 80,
+      "peak_severity": 0.65,
+      "class": "light"
+    }
+  ],
+  "incident": {
+    "junction_id": "J04",
+    "start": "14:00",
+    "end": "14:45"
+  },
+  "sensor_glitch": {
+    "junction_id": "J07",
+    "time": "12:10"
+  },
+  "peaks": {
+    "morning_center": "09:30",
+    "evening_center": "18:45"
+  }
+}

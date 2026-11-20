@@ -1,0 +1,471 @@
+[
+  {
+    "sku": "SKU-0000001",
+    "name": "The Stars Midnight (Hardcover)",
+    "brand": "Penguin",
+    "department": "Books",
+    "category": "Books",
+    "price": 759.0,
+    "mrp": 970.0,
+    "currency": "INR",
+    "specs": {
+      "author": "Amish Tripathi",
+      "isbn": "978-81-98225-127-2",
+      "pages": 468,
+      "language": "English",
+      "format": "Hardcover"
+    },
+    "ratings": {
+      "avg": 3.1,
+      "count": 26
+    },
+    "inventory": {
+      "stock": 20,
+      "warehouse": "HYD-1",
+      "reorder_level": 10
+    },
+    "status": "active",
+    "tags": [
+      "gift",
+      "premium",
+      "sale"
+    ],
+    "created_at": "2025-04-28T03:52:00+00:00",
+    "updated_at": "2025-04-28T03:52:00+00:00"
+  },
+  {
+    "sku": "SKU-0000002",
+    "name": "LG 43-inch 4K LED Smart TV 27",
+    "brand": "LG",
+    "department": "Electronics",
+    "category": "Televisions",
+    "price": 47769.0,
+    "mrp": 56420.0,
+    "currency": "INR",
+    "specs": {
+      "screen_in": 43,
+      "resolution": "4K",
+      "panel": "LED",
+      "smart_tv": true
+    },
+    "ratings": {
+      "avg": 3.8,
+      "count": 285
+    },
+    "inventory": {
+      "stock": 33,
+      "warehouse": "DEL-1",
+      "reorder_level": 20
+    },
+    "status": "active",
+    "tags": [
+      "eco",
+      "new",
+      "premium"
+    ],
+    "created_at": "2025-03-06T18:20:00+00:00",
+    "updated_at": "2025-03-06T18:20:00+00:00"
+  },
+  {
+    "sku": "SKU-0000003",
+    "name": "Roadster Men Slim Fit Denim Jeans",
+    "brand": "Roadster",
+    "department": "Fashion",
+    "category": "Apparel",
+    "price": 759.0,
+    "mrp": 990.0,
+    "currency": "INR",
+    "specs": {
+      "material": "Denim",
+      "fit": "Slim",
+      "gender": "Men"
+    },
+    "ratings": {
+      "avg": 3.6,
+      "count": 53
+    },
+    "inventory": {
+      "stock": 240,
+      "warehouse": "MUM-2",
+      "reorder_level": 10
+    },
+    "status": "active",
+    "tags": [
+      "bestseller",
+      "eco",
+      "premium"
+    ],
+    "created_at": "2025-06-14T07:02:00+00:00",
+    "updated_at": "2025-06-14T07:02:00+00:00",
+    "variants": [
+      {
+        "size": "S",
+        "color": "Navy",
+        "stock": 6
+      },
+      {
+        "size": "S",
+        "color": "Beige",
+        "stock": 21
+      },
+      {
+        "size": "M",
+        "color": "White",
+        "stock": 31
+      },
+      {
+        "size": "M",
+        "color": "Navy",
+        "stock": 23
+      },
+      {
+        "size": "L",
+        "color": "White",
+        "stock": 36
+      },
+      {
+        "size": "L",
+        "color": "Maroon",
+        "stock": 33
+      },
+      {
+        "size": "XL",
+        "color": "Grey",
+        "stock": 24
+      },
+      {
+        "size": "XL",
+        "color": "Olive",
+        "stock": 18
+      },
+      {
+        "size": "XXL",
+        "color": "Olive",
+        "stock": 22
+      },
+      {
+        "size": "XXL",
+        "color": "Beige",
+        "stock": 26
+      }
+    ]
+  },
+  {
+    "sku": "SKU-0000004",
+    "name": "Maybelline Moisturiser 200ml",
+    "brand": "Maybelline",
+    "department": "Beauty",
+    "category": "Beauty",
+    "price": 229.0,
+    "mrp": 300.0,
+    "currency": "INR",
+    "specs": {
+      "volume_ml": 200,
+      "skin_type": "Sensitive",
+      "cruelty_free": false
+    },
+    "ratings": {
+      "avg": 4.9,
+      "count": 28
+    },
+    "inventory": {
+      "stock": 11,
+      "warehouse": "DEL-1",
+      "reorder_level": 5
+    },
+    "status": "discontinued",
+    "tags": [
+      "bestseller"
+    ],
+    "created_at": "2025-02-21T08:14:00+00:00",
+    "updated_at": "2025-02-21T08:14:00+00:00"
+  },
+  {
+    "sku": "SKU-0000005",
+    "name": "SG Cricket Ball",
+    "brand": "SG",
+    "department": "Sports",
+    "category": "Sports",
+    "price": 349.0,
+    "mrp": 480.0,
+    "currency": "INR",
+    "specs": {
+      "sport": "Cricket",
+      "item": "Ball",
+      "weight_kg": 9.07
+    },
+    "ratings": {
+      "avg": 4.6,
+      "count": 49
+    },
+    "inventory": {
+      "stock": 12,
+      "warehouse": "MUM-2",
+      "reorder_level": 10
+    },
+    "status": "active",
+    "tags": [
+      "gift"
+    ],
+    "created_at": "2025-06-30T12:34:00+00:00",
+    "updated_at": "2025-06-30T12:34:00+00:00"
+  },
+  {
+    "sku": "SKU-0000006",
+    "name": "Skullcandy Hesh 78 Wireless Noise Cancelling On-Ear Headphones",
+    "brand": "Skullcandy",
+    "department": "Electronics",
+    "category": "Headphones",
+    "price": 1459.0,
+    "mrp": 2040.0,
+    "currency": "INR",
+    "specs": {
+      "type": "on-ear",
+      "wireless": true,
+      "anc": true,
+      "battery_h": 39
+    },
+    "ratings": {
+      "avg": 4.4,
+      "count": 14
+    },
+    "inventory": {
+      "stock": 15,
+      "warehouse": "HYD-1",
+      "reorder_level": 20
+    },
+    "status": "active",
+    "tags": [
+      "bestseller",
+      "sale"
+    ],
+    "created_at": "2025-03-22T21:00:00+00:00",
+    "updated_at": "2025-03-22T21:00:00+00:00"
+  },
+  {
+    "sku": "SKU-0000007",
+    "name": "Vivo T 30 5G (12GB/256GB)",
+    "brand": "Vivo",
+    "department": "Electronics",
+    "category": "Smartphones",
+    "price": 139419.0,
+    "mrp": 146350.0,
+    "currency": "INR",
+    "specs": {
+      "ram_gb": 12,
+      "storage_gb": 256,
+      "screen_in": 6.4,
+      "battery_mah": 6000,
+      "os": "Android",
+      "five_g": true
+    },
+    "ratings": {
+      "avg": 4.0,
+      "count": 31
+    },
+    "inventory": {
+      "stock": 21,
+      "warehouse": "BLR-1",
+      "reorder_level": 5
+    },
+    "status": "active",
+    "tags": [
+      "budget",
+      "gift",
+      "premium"
+    ],
+    "created_at": "2025-04-10T09:08:00+00:00",
+    "updated_at": "2025-04-10T09:08:00+00:00"
+  },
+  {
+    "sku": "SKU-0000011",
+    "name": "Bata Women Formal Sneakers",
+    "brand": "Bata",
+    "department": "Fashion",
+    "category": "Footwear",
+    "price": 1319.0,
+    "mrp": 1510.0,
+    "currency": "INR",
+    "specs": {
+      "material": "Leather",
+      "type": "Formal",
+      "gender": "Women"
+    },
+    "ratings": {
+      "avg": 4.7,
+      "count": 457
+    },
+    "inventory": {
+      "stock": 188,
+      "warehouse": "MUM-2",
+      "reorder_level": 5
+    },
+    "status": "active",
+    "tags": [
+      "eco"
+    ],
+    "created_at": "2025-05-09T10:01:00+00:00",
+    "updated_at": "2025-05-09T10:01:00+00:00",
+    "variants": [
+      {
+        "size": "6",
+        "color": "Maroon",
+        "stock": 28
+      },
+      {
+        "size": "6",
+        "color": "Navy",
+        "stock": 3
+      },
+      {
+        "size": "7",
+        "color": "Olive",
+        "stock": 27
+      },
+      {
+        "size": "7",
+        "color": "Blue",
+        "stock": 2
+      },
+      {
+        "size": "8",
+        "color": "White",
+        "stock": 26
+      },
+      {
+        "size": "8",
+        "color": "Maroon",
+        "stock": 27
+      },
+      {
+        "size": "9",
+        "color": "Navy",
+        "stock": 11
+      },
+      {
+        "size": "9",
+        "color": "Beige",
+        "stock": 38
+      },
+      {
+        "size": "10",
+        "color": "Maroon",
+        "stock": 14
+      },
+      {
+        "size": "10",
+        "color": "Grey",
+        "stock": 7
+      },
+      {
+        "size": "11",
+        "color": "Grey",
+        "stock": 0
+      },
+      {
+        "size": "11",
+        "color": "Blue",
+        "stock": 5
+      }
+    ]
+  },
+  {
+    "sku": "SKU-0000013",
+    "name": "Lenovo IdeaPad 24 AMD Ryzen 5 32GB 1024GB SSD",
+    "brand": "Lenovo",
+    "department": "Electronics",
+    "category": "Laptops",
+    "price": 67039.0,
+    "mrp": 71900.0,
+    "currency": "INR",
+    "specs": {
+      "cpu": "AMD Ryzen 5",
+      "ram_gb": 32,
+      "storage_gb": 1024,
+      "screen_in": 15.6,
+      "gpu": "RTX 4050",
+      "weight_kg": 2.16
+    },
+    "ratings": {
+      "avg": 3.4,
+      "count": 2
+    },
+    "inventory": {
+      "stock": 17,
+      "warehouse": "CHN-1",
+      "reorder_level": 10
+    },
+    "status": "active",
+    "tags": [
+      "bestseller",
+      "eco",
+      "sale"
+    ],
+    "created_at": "2025-01-09T22:15:00+00:00",
+    "updated_at": "2025-01-09T22:15:00+00:00"
+  },
+  {
+    "sku": "SKU-0000023",
+    "name": "Whirlpool Microwave 32L 3-Star",
+    "brand": "Whirlpool",
+    "department": "Home",
+    "category": "Home Appliances",
+    "price": 53529.0,
+    "mrp": 67810.0,
+    "currency": "INR",
+    "specs": {
+      "appliance": "Microwave",
+      "capacity": 32,
+      "capacity_unit": "litres",
+      "energy_star": 3,
+      "warranty_years": 5
+    },
+    "ratings": {
+      "avg": 4.0,
+      "count": 8
+    },
+    "inventory": {
+      "stock": 5,
+      "warehouse": "CHN-1",
+      "reorder_level": 5
+    },
+    "status": "active",
+    "tags": [
+      "budget",
+      "new"
+    ],
+    "created_at": "2025-08-17T18:27:00+00:00",
+    "updated_at": "2025-08-17T18:27:00+00:00"
+  },
+  {
+    "sku": "SKU-0000033",
+    "name": "Amul Basmati Rice 500g",
+    "brand": "Amul",
+    "department": "Grocery",
+    "category": "Groceries",
+    "price": 609.0,
+    "mrp": 710.0,
+    "currency": "INR",
+    "specs": {
+      "weight_g": 500,
+      "veg": true,
+      "shelf_life_days": 365
+    },
+    "ratings": {
+      "avg": 4.0,
+      "count": 299
+    },
+    "inventory": {
+      "stock": 18,
+      "warehouse": "DEL-1",
+      "reorder_level": 20
+    },
+    "status": "active",
+    "tags": [
+      "new",
+      "sale"
+    ],
+    "created_at": "2025-08-04T00:44:00+00:00",
+    "updated_at": "2025-08-04T00:44:00+00:00"
+  }
+]

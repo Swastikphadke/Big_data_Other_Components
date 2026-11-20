@@ -1,0 +1,24 @@
+check,result,detail
+Q01 requests / unique IPs / endpoints,PASS,"774,130 / 22,313 / 30"
+Q01 4xx / 5xx counts and GiB sent,PASS,"21,728 / 4,201 / 25.03 GiB"
+Q02 status code counts,PASS,13 rows identical
+"Q03 top-20 endpoints (requests, unique IPs, 4xx, 5xx)",PASS,20 rows identical
+Q03 ranking is the true top 20,PASS,
+"Q04 errors by endpoint (errors, 404, 429, 500)",PASS,26 rows identical
+Q05 hourly requests and 5xx (168 hours),PASS,168 rows identical
+Q06 daily requests and unique IPs,PASS,7 rows identical
+Q07 weekday x hour profile,PASS,168 rows identical
+Q08 10 busiest 5-minute windows,PASS,busiest 2026-10-30 21:55:00 with 1198 requests
+"Q09 top-20 IPs (requests, max requests/minute)",PASS,20 rows identical
+"Q10 5-minute requests and failures (2,016 buckets)",PASS,2016 rows identical
+Q11 spike incidents identical to pandas re-implementation,PASS,4 incidents
+Q12 brute-force rows,PASS,3 rows identical
+Q13 scanner rows,PASS,1 rows identical
+Q14 high-rate client rows,PASS,4 rows identical
+Q15 user-agent classes,PASS,5 rows identical
+I1 payment outage (5xx) detected by Q11,PASS,28 14:10-14:35  (truth 28 14:10-14:35)
+I2 bad deployment (500) detected by Q11,PASS,30 09:10-09:30; 30 09:40-10:25  (truth 30 09:00-10:30)
+I3 credential-stuffing IPs == Q12 IPs,PASS,
+I5 scanner IP == Q13 IPs,PASS,
+I4 scraper IP found by Q14; counts consistent with generator minus parser-rejected lines,PASS,"generated 27020 lines, 3 truncated & rejected -> 27017 loaded; 429s 8733 of 8734 generated; other Q14 IPs: ['203.0.113.17', '203.0.113.18', '203.0.113.19'] (= I3 attackers)"
+I6 sale campaign contains the busiest 5-minute window,PASS,2026-10-30 21:55:00

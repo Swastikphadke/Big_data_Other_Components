@@ -1,0 +1,12 @@
+### 2026-11-03 19:18:49 IST | $ bash activity2_kafka/setup_topics.sh
+Created topic traffic-readings.
+Created topic congestion-alerts.
+__consumer_offsets
+congestion-alerts
+traffic-readings
+Topic: traffic-readings	TopicId: qAJz9AGdS-apbPLRt0_qNg	PartitionCount: 3	ReplicationFactor: 1	Configs: min.insync.replicas=1,retention.ms=604800000
+	Topic: traffic-readings	Partition: 0	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+	Topic: traffic-readings	Partition: 1	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+	Topic: traffic-readings	Partition: 2	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+Topic: congestion-alerts	TopicId: UdtpKkTsQ26wJPNoc_BCww	PartitionCount: 1	ReplicationFactor: 1	Configs: min.insync.replicas=1
+	Topic: congestion-alerts	Partition: 0	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 

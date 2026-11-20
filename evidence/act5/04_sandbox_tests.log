@@ -1,0 +1,17 @@
+### 2026-11-03 22:05:51 India Standard Time | $ python activity5_bigquery\sandbox_tests.py --log evidence\act5\04_sandbox_tests.log
+project bigdatasla: billingEnabled = False  (False => BigQuery Sandbox)
+dataset default table expiration     : 5184000000 ms = 60 days
+dataset default partition expiration : 5184000000 ms = 60 days
+table partition expiration           : 5184000000 ms -> each daily partition is deleted 60 days after its date
+table expires                        : None
+
+ALLOWED   SELECT query (batch analysis)  -> 774130
+ALLOWED   DDL: CREATE TABLE probe table  -> created
+REFUSED   DML: INSERT ... SELECT (zero rows) into probe table
+          Forbidden: 403 Billing has not been enabled for this project. Enable billing at https://console.cloud.google.com/billing. DML queries are not allowed in the free tier. Set up a billing account to remove this restriction.; reason: billingNotEnabled, message: Billing has n
+REFUSED   DML: UPDATE probe table (WHERE FALSE)
+          Forbidden: 403 Billing has not been enabled for this project. Enable billing at https://console.cloud.google.com/billing. DML queries are not allowed in the free tier. Set up a billing account to remove this restriction.; reason: billingNotEnabled, message: Billing has n
+REFUSED   Streaming insert (tabledata.insertAll) into probe table
+          Forbidden: 403 POST https://bigquery.googleapis.com/bigquery/v2/projects/bigdatasla/datasets/weblogs/tables/sandbox_probe/insertAll?prettyPrint=false: Access Denied: BigQuery BigQuery: Streaming insert is not allowed in the free tier
+
+probe table deleted; access_logs untouched: 774130 rows

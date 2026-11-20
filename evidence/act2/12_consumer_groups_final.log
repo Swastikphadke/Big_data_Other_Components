@@ -1,0 +1,23 @@
+﻿
+GROUP           TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+audit-replay    traffic-readings 1          960             960             0               -               -               -
+audit-replay    traffic-readings 2          5760            5760            0               -               -               -
+audit-replay    traffic-readings 0          4800            4800            0               -               -               -
+
+GROUP               TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+congestion-detector traffic-readings 1          960             960             0               -               -               -
+congestion-detector traffic-readings 2          5760            5760            0               -               -               -
+congestion-detector traffic-readings 0          4800            4800            0               -               -               -
+
+GROUP                        TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+congestion-detector-scaleout traffic-readings 1          960             960             0               -               -               -
+congestion-detector-scaleout traffic-readings 2          5760            5760            0               -               -               -
+congestion-detector-scaleout traffic-readings 0          4800            4800            0               -               -               -
+
+GROUP              TOPIC             PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+operator-dashboard congestion-alerts 0          50              50              0               -               -               -
+
+GROUP            TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+traffic-archiver traffic-readings 1          960             960             0               -               -               -
+traffic-archiver traffic-readings 2          5760            5760            0               -               -               -
+traffic-archiver traffic-readings 0          4800            4800            0               -               -               -

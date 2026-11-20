@@ -1,0 +1,29 @@
+### 2026-11-03 22:07:05 India Standard Time | $ python activity5_bigquery\cost_estimate.py --log evidence\act5\07_cost_estimate.log
+OFFICIAL PRICES (Cloud Billing Catalog API, retrieved 2026-11-03, USD):
+  Analysis (asia-south1)                     from 0: 0 per tebibyte; from 1: 7.5 per tebibyte
+  Active Logical Storage (asia-south1)       from 0: 0 per gibibyte month; from 10: 0.023 per gibibyte month
+  Long Term Logical Storage (asia-south1)    from 0: 0 per gibibyte month; from 10: 0.016 per gibibyte month
+  Streaming Insert (asia-south1)             from 0: 6e-05 per mebibyte
+  Standard Storage Mumbai                    from 0: 0.023 per gibibyte month
+  Regional Standard Class A Operations       from 0: 0 per count; from 5000: 5e-06 per count
+
+PART A - ACTUAL USAGE OF THIS PROTOTYPE (BigQuery Sandbox, billing disabled)
+  raw logs: 156.5 MiB uncompressed (14.5 MiB gzip) for 774,130 requests
+  BigQuery table: 165.2 MiB logical (224 B per row) = 1.61 % of the 10 GiB free storage
+  20 query jobs: processed 739.2 MiB, billed 778.0 MiB = 0.0742 % of the 1 TiB monthly free query tier
+  batch load jobs: no charge (no load-job SKU exists in the billing catalog; loading uses the shared slot pool)
+  => actual cost USD 0.00 (sandbox; free tiers not exceeded; no billing account attached)
+
+PART B - HYPOTHETICAL PRODUCTION ESTIMATE (not deployed; requires a billing account)
+  assumptions: {"raw_logs_gib_per_day": 20.0, "retention_days_bigquery": 90, "retention_days_gcs_raw": 365, "dashboard_queries_per_hour": 15, "dashboard_window_hours": 24, "adhoc_full_week_queries_per_day": 4, "upload_objects_per_day": 2880}
+  measured ratios used: BigQuery bytes / raw log bytes = 1.06; raw / gzip = 10.8; average analytic query scans 26.0 % of the table bytes
+  => BigQuery ingest 21.1 GiB/day; dashboards scan 5.49 GiB per query (last 24 h partition only)
+                                      item        quantity  usd_per_month
+             BigQuery analysis (on-demand) 62.36 TiB/month         460.19
+                   BigQuery active storage        1900 GiB          43.46
+                BigQuery long-term storage           0 GiB           0.00
+  Cloud Storage Standard (raw .gz, 1 year)         677 GiB          15.57
+           Cloud Storage Class A (uploads)      86,400 ops           0.41
+BigQuery batch load jobs (GCS -> BigQuery)           daily           0.00
+  TOTAL ~ USD 519.63 per month
+  without partition pruning the dashboards would scan ~5211.8 TiB/month -> analysis ~ USD 39,080.87 per month

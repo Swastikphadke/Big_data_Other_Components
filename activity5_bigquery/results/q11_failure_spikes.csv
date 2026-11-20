@@ -1,0 +1,5 @@
+incident_no,spike_start_ist,spike_end_ist,flagged_buckets,failed_requests_in_flagged_buckets,expected_failures,max_z_score,top_failing_endpoints
+1,2026-10-28 14:10:00,2026-10-28 14:35:00,4,69,10.9,12.8,"/checkout (43), /api/v1/payments (19), /images/products/{id}.jpg (3)"
+2,2026-10-29 15:45:00,2026-10-29 15:50:00,1,8,2.1,4.1,"/products/{id} (3), /images/products/{id}.jpg (2), /cart/add (1)"
+3,2026-10-30 09:10:00,2026-10-30 09:30:00,4,38,8.2,6.1,"/api/v1/recommendations (26), / (3), /cart/add (2)"
+4,2026-10-30 09:40:00,2026-10-30 10:25:00,6,77,13.6,11.5,"/api/v1/recommendations (74), /products (4), /images/products/{id}.jpg (4)"

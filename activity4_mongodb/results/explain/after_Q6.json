@@ -1,0 +1,87 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "price": {
+        "$gte": 500
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "F58D2193",
+    "planCacheShapeHash": "F58D2193",
+    "planCacheKey": "B68BBE6B",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "price": {
+          "$gte": 500
+        }
+      },
+      "direction": "forward"
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 155561,
+    "executionTimeMillis": 154,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 200000,
+    "executionStages": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "price": {
+          "$gte": 500
+        }
+      },
+      "nReturned": 155561,
+      "executionTimeMillisEstimate": 150,
+      "works": 200001,
+      "advanced": 155561,
+      "needTime": 44439,
+      "needYield": 0,
+      "saveState": 7,
+      "restoreState": 7,
+      "isEOF": 1,
+      "direction": "forward",
+      "docsExamined": 200000
+    }
+  },
+  "queryShapeHash": "A53FC6A38F4A3B1FD7FB457C101C8247B8C65252D248C793F2A4B1E7916B2ABD",
+  "command": {
+    "find": "products",
+    "filter": {
+      "price": {
+        "$gte": 500
+      }
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

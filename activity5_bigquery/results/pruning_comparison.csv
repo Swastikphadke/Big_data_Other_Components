@@ -1,0 +1,6 @@
+query,filter,failures,estimated_bytes,bytes_processed,bytes_billed,slot_ms,elapsed_ms
+p1_full_table_1col,no filter: status column of all partitions,4201,6193040,6193040,10485760,66,190
+p2_one_utc_day,partition filter aligned to one UTC day -> 1 partition,598,1723888,1723888,10485760,26,182
+p3_one_ist_day,one IST day spans 2 UTC partitions,600,3378240,3378240,10485760,69,188
+p4_full_table_wide_col,columnar storage: adding the long user_agent column scans more,4201,82237780,82237780,82837504,156,172
+p5_ist_day_plus_cluster,partition + clustered column filter (endpoint column must be read),26,6451595,6451595,10485760,39,160

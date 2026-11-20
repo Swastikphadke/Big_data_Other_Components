@@ -1,0 +1,12 @@
+item,value
+mongodb_documents,196282
+sql_rows_products,196282
+sql_rows_product_specs,783588
+sql_rows_product_variants,628818
+sql_rows_product_tags,356798
+one_product_mongo_docs,1
+one_product_sql_join_rows,60
+nested_filter_mongo,1959
+nested_filter_sql,1959
+array_filter_mongo,9569
+array_filter_sql,9569

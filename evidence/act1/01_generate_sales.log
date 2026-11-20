@@ -1,0 +1,9 @@
+### 2026-11-03 18:50:23 IST | $ python activity1_hive/generate_sales.py
+Wrote 559,626 line items (200,000 invoices) -> C:\Users\Admin\Desktop\Big_data_assignment\activity1_hive\data\raw\sales_transactions.csv
+File size: 57.0 MB
+invoice_id  line_no              txn_ts branch_id branch_name      city product_id        product_name            category  unit_price  quantity payment_mode
+INV0101620        1 2025-01-01 08:00:15       B04  Vidyanagar  Hubballi       P052 Cream Biscuits 150g              Snacks        35.0         4         Card
+INV0101620        2 2025-01-01 08:00:15       B04  Vidyanagar  Hubballi       P072     Kaju Katli 250g Sweets & Dry Fruits       350.0         2         Card
+INV0101620        3 2025-01-01 08:00:15       B04  Vidyanagar  Hubballi       P031     Coriander Bunch Fruits & Vegetables        15.0         1         Card
+INV0020161        1 2025-01-01 08:01:19       B04  Vidyanagar  Hubballi       P065  Frozen Parotta 5pc  Frozen & Ice Cream        95.0         1          UPI
+INV0022829        1 2025-01-01 08:01:53       B01   Jayanagar Bengaluru       P006           Sugar 1kg             Staples        48.0         1          UPI

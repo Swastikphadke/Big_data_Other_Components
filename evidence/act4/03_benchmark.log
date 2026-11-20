@@ -1,0 +1,36 @@
+### 2026-11-03 21:20:20 India Standard Time | $ python activity4_mongodb\benchmark.py --log evidence\act4\03_benchmark.log
+collection products: 200,000 docs; reps=25, warm-up=3
+BEFORE: indexes = ['_id_']
+[before] cache warm-up scan of 200,000 docs took 1.02 s
+[before] Q1 point lookup by SKU                            plan=COLLSCAN                                                returned=     1 keys=      0 docs=200,000 server= 172 ms wall median=  176.23 ms p95=  222.42 ms
+[before] Q2 Laptops priced 50k-80k, sorted by price        plan=SORT > COLLSCAN                                         returned= 2,124 keys=      0 docs=200,000 server= 179 ms wall median=  234.34 ms p95=  265.53 ms
+[before] Q3 all products of brand Sennheiser               plan=COLLSCAN                                                returned= 1,962 keys=      0 docs=200,000 server= 162 ms wall median=  209.00 ms p95=  236.06 ms
+[before] Q4 20 cheapest Smartphones under 20k (listing page) plan=SORT > COLLSCAN                                         returned=    20 keys=      0 docs=200,000 server= 188 ms wall median=  185.71 ms p95=  193.90 ms
+[before] Q5 all Apparel (20 % of collection)               plan=COLLSCAN                                                returned=39,919 keys=      0 docs=200,000 server= 224 ms wall median= 1977.96 ms p95= 2318.30 ms
+[before] Q6 price >= 500 across all categories (~85 %)     plan=COLLSCAN                                                returned=155,561 keys=      0 docs=200,000 server= 141 ms wall median= 5669.58 ms p95= 7552.76 ms
+
+creating indexes ...
+  sku_unique             [('sku', 1)]                                  built in  0.77 s  (point lookups; enforces unique SKU)
+  brand_1                [('brand', 1)]                                built in  0.66 s  (brand filter (single field))
+  category_1_price_1     [('category', 1), ('price', 1)]               built in  0.60 s  (equality on category + range/sort on price (ESR rule))
+  name_tags_text         [('name', 'text'), ('tags', 'text')]          built in  5.14 s  (keyword search)
+  stock_active_partial   [('inventory.stock', 1)]                      built in  0.59 s  (low-stock report (partial))
+  rating_desc            [('ratings.avg', -1)]                         built in  0.58 s  (top-rated listings)
+index sizes MB: {'_id_': 2.09, 'sku_unique': 2.39, 'brand_1': 1.13, 'category_1_price_1': 2.17, 'name_tags_text': 10.9, 'stock_active_partial': 0.96, 'rating_desc': 1.53}  total=21.2 MB vs data storage 42.7 MB
+
+AFTER: indexes = ['_id_', 'sku_unique', 'brand_1', 'category_1_price_1', 'name_tags_text', 'stock_active_partial', 'rating_desc']
+[after] cache warm-up scan of 200,000 docs took 0.97 s
+[after] Q1 point lookup by SKU                            plan=EXPRESS_IXSCAN[sku_unique]                              returned=     1 keys=      1 docs=      1 server=   0 ms wall median=    3.05 ms p95=    4.01 ms
+[after] Q2 Laptops priced 50k-80k, sorted by price        plan=FETCH > IXSCAN[category_1_price_1]                      returned= 2,124 keys=  2,124 docs=  2,124 server=  16 ms wall median=   68.05 ms p95=   90.68 ms
+[after] Q3 all products of brand Sennheiser               plan=FETCH > IXSCAN[brand_1]                                 returned= 1,962 keys=  1,962 docs=  1,962 server=   6 ms wall median=   52.10 ms p95=   62.09 ms
+[after] Q4 20 cheapest Smartphones under 20k (listing page) plan=LIMIT > FETCH > IXSCAN[category_1_price_1]              returned=    20 keys=     20 docs=     20 server=   1 ms wall median=    3.77 ms p95=    4.29 ms
+[after] Q5 all Apparel (20 % of collection)               plan=FETCH > IXSCAN[category_1_price_1]                      returned=39,919 keys= 39,919 docs= 39,919 server= 114 ms wall median= 2127.64 ms p95= 2231.28 ms
+[after] Q6 price >= 500 across all categories (~85 %)     plan=COLLSCAN                                                returned=155,561 keys=      0 docs=200,000 server= 154 ms wall median= 6025.38 ms p95= 8384.52 ms
+
+SUMMARY (ratio = before / after; >1 means faster after indexing)
+  Q1  docs examined 200,000 ->       1   median   176.23 ->    3.05 ms  (x57.8)   same results
+  Q2  docs examined 200,000 ->   2,124   median   234.34 ->   68.05 ms  (x3.4)   same results
+  Q3  docs examined 200,000 ->   1,962   median   209.00 ->   52.10 ms  (x4.0)   same results
+  Q4  docs examined 200,000 ->      20   median   185.71 ->    3.77 ms  (x49.3)   same results
+  Q5  docs examined 200,000 ->  39,919   median  1977.96 -> 2127.64 ms  (x0.9)   same results
+  Q6  docs examined 200,000 -> 200,000   median  5669.58 -> 6025.38 ms  (x0.9)   same results

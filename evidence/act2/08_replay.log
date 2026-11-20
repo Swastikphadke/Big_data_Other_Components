@@ -1,0 +1,8 @@
+### 2026-11-03 19:29:52 India Standard Time | $ python activity2_kafka\archiver.py --group audit-replay --idle-exit 5 --out activity2_kafka\results\replay_readings.csv --log evidence\act2\08_replay.log
+[audit-replay] assigned [0, 1, 2]
+[audit-replay] archived 2,000 (sim 11:33)
+[audit-replay] archived 4,000 (sim 17:06)
+[audit-replay] archived 6,000 (sim 09:59)
+[audit-replay] archived 8,000 (sim 10:15)
+[audit-replay] archived 10,000 (sim 16:55)
+[audit-replay] stopped: archived=11,520 per_partition={0: 4800, 1: 960, 2: 5760}

@@ -1,0 +1,111 @@
+product_id,product_name,category,unit_price
+P001,Sona Masoori Rice 5kg,Staples,365.0
+P002,Basmati Rice 1kg,Staples,155.0
+P003,Wheat Atta 5kg,Staples,245.0
+P004,Toor Dal 1kg,Staples,165.0
+P005,Moong Dal 1kg,Staples,140.0
+P006,Sugar 1kg,Staples,48.0
+P007,Iodised Salt 1kg,Staples,28.0
+P008,Sunflower Oil 1L,Staples,150.0
+P009,Groundnut Oil 1L,Staples,210.0
+P010,Ragi Flour 1kg,Staples,75.0
+P011,Rava 1kg,Staples,62.0
+P012,Poha 500g,Staples,45.0
+P013,Toned Milk 500ml,Dairy,27.0
+P014,Curd 500g,Dairy,35.0
+P015,Paneer 200g,Dairy,95.0
+P016,Butter 100g,Dairy,58.0
+P017,Ghee 500ml,Dairy,345.0
+P018,Cheese Slices 200g,Dairy,140.0
+P019,Buttermilk 200ml,Dairy,15.0
+P020,Flavoured Milk 180ml,Dairy,30.0
+P021,Fresh Cream 200ml,Dairy,70.0
+P022,Milk Powder 500g,Dairy,235.0
+P023,Greek Yogurt 100g,Dairy,50.0
+P024,Khova 250g,Dairy,120.0
+P025,Tomato 1kg,Fruits & Vegetables,40.0
+P026,Onion 1kg,Fruits & Vegetables,45.0
+P027,Potato 1kg,Fruits & Vegetables,38.0
+P028,Banana Robusta 1 dozen,Fruits & Vegetables,60.0
+P029,Apple Shimla 1kg,Fruits & Vegetables,180.0
+P030,Carrot 500g,Fruits & Vegetables,35.0
+P031,Coriander Bunch,Fruits & Vegetables,15.0
+P032,Green Chilli 250g,Fruits & Vegetables,20.0
+P033,Mango Alphonso 1kg,Fruits & Vegetables,250.0
+P034,Watermelon 1pc,Fruits & Vegetables,80.0
+P035,Cucumber 500g,Fruits & Vegetables,25.0
+P036,Lemon 250g,Fruits & Vegetables,30.0
+P037,Filter Coffee Powder 500g,Beverages,285.0
+P038,Tea Leaves 500g,Beverages,260.0
+P039,Cola 750ml,Beverages,40.0
+P040,Orange Juice 1L,Beverages,120.0
+P041,Mineral Water 1L,Beverages,20.0
+P042,Energy Drink 250ml,Beverages,125.0
+P043,Lemon Soda 500ml,Beverages,30.0
+P044,Coconut Water 200ml,Beverages,45.0
+P045,Green Tea 25 bags,Beverages,160.0
+P046,Health Drink 500g,Beverages,255.0
+P047,Mango Drink 600ml,Beverages,38.0
+P048,Iced Tea 300ml,Beverages,50.0
+P049,Potato Chips 52g,Snacks,20.0
+P050,Banana Chips 200g,Snacks,90.0
+P051,Mixture 400g,Snacks,110.0
+P052,Cream Biscuits 150g,Snacks,35.0
+P053,Marie Biscuits 250g,Snacks,40.0
+P054,Instant Noodles 70g,Snacks,15.0
+P055,Chocolate Bar 40g,Snacks,50.0
+P056,Peanut Chikki 100g,Snacks,30.0
+P057,Popcorn 90g,Snacks,45.0
+P058,Cookies 200g,Snacks,70.0
+P059,Murukku 200g,Snacks,60.0
+P060,Nachos 150g,Snacks,85.0
+P061,Vanilla Ice Cream 1L,Frozen & Ice Cream,220.0
+P062,Chocolate Cone,Frozen & Ice Cream,45.0
+P063,Kulfi Stick,Frozen & Ice Cream,30.0
+P064,Frozen Peas 500g,Frozen & Ice Cream,110.0
+P065,Frozen Parotta 5pc,Frozen & Ice Cream,95.0
+P066,Mango Ice Cream 700ml,Frozen & Ice Cream,190.0
+P067,Frozen Nuggets 400g,Frozen & Ice Cream,245.0
+P068,Ice Cream Cup 100ml,Frozen & Ice Cream,30.0
+P069,Frozen Corn 500g,Frozen & Ice Cream,120.0
+P070,Fruit Bar,Frozen & Ice Cream,40.0
+P071,Mysore Pak 500g,Sweets & Dry Fruits,280.0
+P072,Kaju Katli 250g,Sweets & Dry Fruits,350.0
+P073,Almonds 500g,Sweets & Dry Fruits,520.0
+P074,Cashew 500g,Sweets & Dry Fruits,560.0
+P075,Raisins 250g,Sweets & Dry Fruits,140.0
+P076,Dates 500g,Sweets & Dry Fruits,210.0
+P077,Gulab Jamun Tin 1kg,Sweets & Dry Fruits,240.0
+P078,Dry Fruit Gift Box,Sweets & Dry Fruits,950.0
+P079,Pista 250g,Sweets & Dry Fruits,420.0
+P080,Soan Papdi 500g,Sweets & Dry Fruits,150.0
+P081,Bath Soap 4x100g,Personal Care,160.0
+P082,Shampoo 340ml,Personal Care,320.0
+P083,Toothpaste 150g,Personal Care,110.0
+P084,Hair Oil 200ml,Personal Care,130.0
+P085,Face Wash 100ml,Personal Care,175.0
+P086,Body Lotion 400ml,Personal Care,365.0
+P087,Deodorant 150ml,Personal Care,225.0
+P088,Sanitary Pads 20pc,Personal Care,190.0
+P089,Shaving Foam 200g,Personal Care,210.0
+P090,Toothbrush 2pc,Personal Care,75.0
+P091,Sunscreen 50ml,Personal Care,299.0
+P092,Detergent Powder 1kg,Household,125.0
+P093,Dishwash Liquid 750ml,Household,155.0
+P094,Floor Cleaner 1L,Household,199.0
+P095,Toilet Cleaner 500ml,Household,105.0
+P096,Garbage Bags 30pc,Household,99.0
+P097,Agarbatti Pack,Household,60.0
+P098,Camphor 100g,Household,85.0
+P099,Mosquito Repellent Refill,Household,89.0
+P100,Scrub Pad 3pc,Household,45.0
+P101,Aluminium Foil 9m,Household,120.0
+P102,Diya Set 12pc,Household,150.0
+P103,Baby Diapers M 40pc,Baby & Kids,699.0
+P104,Baby Wipes 72pc,Baby & Kids,199.0
+P105,Baby Food 300g,Baby & Kids,285.0
+P106,Baby Shampoo 200ml,Baby & Kids,225.0
+P107,Kids Toothpaste 80g,Baby & Kids,65.0
+P108,Baby Powder 200g,Baby & Kids,170.0
+P109,Feeding Bottle,Baby & Kids,349.0
+P110,Baby Oil 200ml,Baby & Kids,210.0

@@ -1,0 +1,61 @@
+### 2026-11-03 18:53:00 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q07_category_seasonality.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q7. Category revenue by month (seasonality) - pivot with conditional aggregation
+0: jdbc:hive2://localhost:10000/> SELECT sale_month,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(CASE WHEN category = 'Beverages'           THEN amount ELSE 0 END), 0) AS beverages,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(CASE WHEN category = 'Frozen & Ice Cream'  THEN amount ELSE 0 END), 0) AS frozen_icecream,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(CASE WHEN category = 'Sweets & Dry Fruits' THEN amount ELSE 0 END), 0) AS sweets_dryfruits,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(CASE WHEN category = 'Household'           THEN amount ELSE 0 END), 0) AS household,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(CASE WHEN category = 'Staples'             THEN amount ELSE 0 END), 0) AS staples
+. . . . . . . . . . . . . . . . > FROM supermarket.sales
+. . . . . . . . . . . . . . . . > GROUP BY sale_month
+. . . . . . . . . . . . . . . . > ORDER BY sale_month;
+ROUND(SUM(CASE WHEN category = 'Beverages'           THEN amount ELSE 0 END), 0) AS beverages,
+ROUND(SUM(CASE WHEN category = 'Frozen & Ice Cream'  THEN amount ELSE 0 END), 0) AS frozen_icecream,
+ROUND(SUM(CASE WHEN category = 'Sweets & Dry Fruits' THEN amount ELSE 0 END), 0) AS sweets_dryfruits,
+ROUND(SUM(CASE WHEN category = 'Household'           THEN amount ELSE 0 END), 0) AS household,
+ROUND(SUM(CASE WHEN category = 'Staples'             THEN amount ELSE 0 END), 0) AS staples
+FROM supermarket.sales
+GROUP BY sale_month
+ORDER BY sale_month
+ROUND(SUM(CASE WHEN category = 'Beverages'           THEN amount ELSE 0 END), 0) AS beverages,
+ROUND(SUM(CASE WHEN category = 'Frozen & Ice Cream'  THEN amount ELSE 0 END), 0) AS frozen_icecream,
+ROUND(SUM(CASE WHEN category = 'Sweets & Dry Fruits' THEN amount ELSE 0 END), 0) AS sweets_dryfruits,
+ROUND(SUM(CASE WHEN category = 'Household'           THEN amount ELSE 0 END), 0) AS household,
+ROUND(SUM(CASE WHEN category = 'Staples'             THEN amount ELSE 0 END), 0) AS staples
+FROM supermarket.sales
+GROUP BY sale_month
+ORDER BY sale_month
+RO......DER BY sale_month (Stage-1)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 1.23 s     
+----------------------------------------------------------------------------------------------
++-------------+------------+------------------+-------------------+------------+----------+
+| sale_month  | beverages  | frozen_icecream  | sweets_dryfruits  | household  | staples  |
++-------------+------------+------------------+-------------------+------------+----------+
+| 2025-01     | 984150     | 304930           | 1342140           | 569227     | 1517064  |
+| 2025-02     | 798272     | 372125           | 924450            | 521151     | 1328983  |
+| 2025-03     | 1240967    | 708235           | 1015930           | 549324     | 1384681  |
+| 2025-04     | 1382005    | 894995           | 948140            | 509180     | 1307254  |
+| 2025-05     | 1542611    | 1020955          | 953860            | 531245     | 1383526  |
+| 2025-06     | 1064562    | 612660           | 1050320           | 536021     | 1389886  |
+| 2025-07     | 943601     | 402170           | 1019890           | 557894     | 1452494  |
+| 2025-08     | 1002377    | 387875           | 1358080           | 599350     | 1587871  |
+| 2025-09     | 980586     | 373685           | 1513090           | 656715     | 1569626  |
+| 2025-10     | 1167170    | 501570           | 4362260           | 1189034    | 1794100  |
+| 2025-11     | 1045361    | 394615           | 2957050           | 828444     | 1685465  |
+| 2025-12     | 1069857    | 361910           | 1769320           | 675176     | 1750309  |
++-------------+------------+------------------+-------------------+------------+----------+
+12 rows selected (1.763 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

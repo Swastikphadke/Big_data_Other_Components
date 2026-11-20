@@ -1,0 +1,596 @@
+### 2026-11-03 18:50:29 IST | $ docker exec hive4 beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/01_schema.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- =====================================================================
+0: jdbc:hive2://localhost:10000/> -- Activity 1 : Supermarket sales warehouse in Apache Hive
+0: jdbc:hive2://localhost:10000/> -- Step 1 - database, raw (staging) table, curated ORC table
+0: jdbc:hive2://localhost:10000/> -- =====================================================================
+0: jdbc:hive2://localhost:10000/> CREATE DATABASE IF NOT EXISTS supermarket
+. . . . . . . . . . . . . . . . > COMMENT 'Synthetic supermarket chain sales (24CI51 Activity 1)';
+COMMENT 'Synthetic supermarket chain sales (24CI51 Activity 1)'
+COMMENT 'Synthetic supermarket chain sales (24CI51 Activity 1)'
+No rows affected (0.162 seconds)
+0: jdbc:hive2://localhost:10000/> USE supermarket;
+No rows affected (0.035 seconds)
+0: jdbc:hive2://localhost:10000/> 
+0: jdbc:hive2://localhost:10000/> -- ---------------------------------------------------------------------
+0: jdbc:hive2://localhost:10000/> -- 1a. RAW layer: EXTERNAL table over the CSV files (schema-on-read).
+0: jdbc:hive2://localhost:10000/> --     Hive does not copy or own the data; DROP TABLE leaves files intact.
+0: jdbc:hive2://localhost:10000/> -- ---------------------------------------------------------------------
+0: jdbc:hive2://localhost:10000/> DROP TABLE IF EXISTS sales_raw;
+No rows affected (1.647 seconds)
+0: jdbc:hive2://localhost:10000/> CREATE EXTERNAL TABLE sales_raw (
+. . . . . . . . . . . . . . . . >     invoice_id    STRING,
+. . . . . . . . . . . . . . . . >     line_no       INT,
+. . . . . . . . . . . . . . . . >     txn_ts        TIMESTAMP,
+. . . . . . . . . . . . . . . . >     branch_id     STRING,
+. . . . . . . . . . . . . . . . >     branch_name   STRING,
+. . . . . . . . . . . . . . . . >     city          STRING,
+. . . . . . . . . . . . . . . . >     product_id    STRING,
+. . . . . . . . . . . . . . . . >     product_name  STRING,
+. . . . . . . . . . . . . . . . >     category      STRING,
+. . . . . . . . . . . . . . . . >     unit_price    DECIMAL(10,2),
+. . . . . . . . . . . . . . . . >     quantity      INT,
+. . . . . . . . . . . . . . . . >     payment_mode  STRING
+. . . . . . . . . . . . . . . . > )
+. . . . . . . . . . . . . . . . > ROW FORMAT DELIMITED
+. . . . . . . . . . . . . . . . > FIELDS TERMINATED BY ','
+. . . . . . . . . . . . . . . . > STORED AS TEXTFILE
+. . . . . . . . . . . . . . . . > LOCATION 'file:///opt/assignment/data/raw';
+invoice_id    STRING,
+line_no       INT,
+txn_ts        TIMESTAMP,
+branch_id     STRING,
+branch_name   STRING,
+city          STRING,
+product_id    STRING,
+product_name  STRING,
+category      STRING,
+unit_price    DECIMAL(10,2),
+quantity      INT,
+payment_mode  STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION 'file:///opt/assignment/data/raw'
+invoice_id    STRING,
+line_no       INT,
+txn_ts        TIMESTAMP,
+branch_id     STRING,
+branch_name   STRING,
+city          STRING,
+product_id    STRING,
+product_name  STRING,
+category      STRING,
+unit_price    DECIMAL(10,2),
+quantity      INT,
+payment_mode  STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION 'file:///opt/assignment/data/raw'
+No rows affected (0.322 seconds)
+0: jdbc:hive2://localhost:10000/> 
+0: jdbc:hive2://localhost:10000/> -- ---------------------------------------------------------------------
+0: jdbc:hive2://localhost:10000/> -- 1b. CURATED layer: managed table, columnar ORC, partitioned by month.
+0: jdbc:hive2://localhost:10000/> --     Derived columns (amount, sale_hour, day type) are computed once at load.
+0: jdbc:hive2://localhost:10000/> -- ---------------------------------------------------------------------
+0: jdbc:hive2://localhost:10000/> DROP TABLE IF EXISTS sales;
+No rows affected (0.678 seconds)
+0: jdbc:hive2://localhost:10000/> CREATE TABLE sales (
+. . . . . . . . . . . . . . . . >     invoice_id    STRING,
+. . . . . . . . . . . . . . . . >     line_no       INT,
+. . . . . . . . . . . . . . . . >     txn_ts        TIMESTAMP,
+. . . . . . . . . . . . . . . . >     sale_date     DATE,
+. . . . . . . . . . . . . . . . >     sale_hour     INT,
+. . . . . . . . . . . . . . . . >     day_type      STRING,          -- 'Weekday' / 'Weekend'
+. . . . . . . . . . . . . . . . >     branch_id     STRING,
+. . . . . . . . . . . . . . . . >     branch_name   STRING,
+. . . . . . . . . . . . . . . . >     city          STRING,
+. . . . . . . . . . . . . . . . >     product_id    STRING,
+. . . . . . . . . . . . . . . . >     product_name  STRING,
+. . . . . . . . . . . . . . . . >     category      STRING,
+. . . . . . . . . . . . . . . . >     unit_price    DECIMAL(10,2),
+. . . . . . . . . . . . . . . . >     quantity      INT,
+. . . . . . . . . . . . . . . . >     amount        DECIMAL(12,2),   -- unit_price * quantity
+. . . . . . . . . . . . . . . . >     payment_mode  STRING
+. . . . . . . . . . . . . . . . > )
+. . . . . . . . . . . . . . . . > PARTITIONED BY (sale_month STRING)  -- e.g. '2025-10'
+. . . . . . . . . . . . . . . . > STORED AS ORC
+. . . . . . . . . . . . . . . . > TBLPROPERTIES ('orc.compress'='ZLIB');
+invoice_id    STRING,
+line_no       INT,
+txn_ts        TIMESTAMP,
+sale_date     DATE,
+sale_hour     INT,
+day_type      STRING,
+branch_id     STRING,
+branch_name   STRING,
+city          STRING,
+product_id    STRING,
+product_name  STRING,
+category      STRING,
+unit_price    DECIMAL(10,2),
+quantity      INT,
+amount        DECIMAL(12,2),
+payment_mode  STRING
+)
+PARTITIONED BY (sale_month STRING)
+STORED AS ORC
+TBLPROPERTIES ('orc.compress'='ZLIB')
+invoice_id    STRING,
+line_no       INT,
+txn_ts        TIMESTAMP,
+sale_date     DATE,
+sale_hour     INT,
+day_type      STRING,
+branch_id     STRING,
+branch_name   STRING,
+city          STRING,
+product_id    STRING,
+product_name  STRING,
+category      STRING,
+unit_price    DECIMAL(10,2),
+quantity      INT,
+amount        DECIMAL(12,2),
+payment_mode  STRING
+)
+PARTITIONED BY (sale_month STRING)
+STORED AS ORC
+TBLPROPERTIES ('orc.compress'='ZLIB')
+No rows affected (0.108 seconds)
+0: jdbc:hive2://localhost:10000/> 
+0: jdbc:hive2://localhost:10000/> -- Dynamic partitioning: Hive creates one partition per distinct sale_month
+0: jdbc:hive2://localhost:10000/> SET hive.exec.dynamic.partition=true;
+No rows affected (0.01 seconds)
+0: jdbc:hive2://localhost:10000/> SET hive.exec.dynamic.partition.mode=nonstrict;
+No rows affected (0.009 seconds)
+0: jdbc:hive2://localhost:10000/> 
+0: jdbc:hive2://localhost:10000/> INSERT OVERWRITE TABLE sales PARTITION (sale_month)
+. . . . . . . . . . . . . . . . > SELECT
+. . . . . . . . . . . . . . . . >     invoice_id, line_no, txn_ts,
+. . . . . . . . . . . . . . . . >     to_date(txn_ts)                                   AS sale_date,
+. . . . . . . . . . . . . . . . >     hour(txn_ts)                                      AS sale_hour,
+. . . . . . . . . . . . . . . . >     CASE WHEN dayofweek(txn_ts) IN (1, 7) THEN 'Weekend' ELSE 'Weekday' END AS day_type,
+. . . . . . . . . . . . . . . . >     branch_id, branch_name, city,
+. . . . . . . . . . . . . . . . >     product_id, product_name, category,
+. . . . . . . . . . . . . . . . >     unit_price, quantity,
+. . . . . . . . . . . . . . . . >     CAST(unit_price * quantity AS DECIMAL(12,2))      AS amount,
+. . . . . . . . . . . . . . . . >     payment_mode,
+. . . . . . . . . . . . . . . . >     date_format(txn_ts, 'yyyy-MM')                    AS sale_month
+. . . . . . . . . . . . . . . . > FROM sales_raw;
+SELECT
+invoice_id, line_no, txn_ts,
+to_date(txn_ts)                                   AS sale_date,
+hour(txn_ts)                                      AS sale_hour,
+CASE WHEN dayofweek(txn_ts) IN (1, 7) THEN 'Weekend' ELSE 'Weekday' END AS day_type,
+branch_id, branch_name, city,
+product_id, product_name, category,
+unit_price, quantity,
+CAST(unit_price * quantity AS DECIMAL(12,2))      AS amount,
+payment_mode,
+date_format(txn_ts, 'yyyy-MM')                    AS sale_month
+FROM sales_raw
+SELECT
+invoice_id, line_no, txn_ts,
+to_date(txn_ts)                                   AS sale_date,
+hour(txn_ts)                                      AS sale_hour,
+CASE WHEN dayofweek(txn_ts) IN (1, 7) THEN 'Weekend' ELSE 'Weekday' END AS day_type,
+branch_id, branch_name, city,
+product_id, product_name, category,
+unit_price, quantity,
+CAST(unit_price * quantity AS DECIMAL(12,2))      AS amount,
+payment_mode,
+date_format(txn_ts, 'yyyy-MM')                    AS sale_month
+FROM sales_raw
+FROM sales_raw (Stage-1)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container        INITED      1          0        0        1       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 0.56 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container        INITED      1          0        0        1       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 1.06 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 1.57 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 2.07 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 2.58 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 6.11 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 6.62 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 7.12 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 7.62 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 8.13 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 8.63 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 9.13 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 10.14 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 11.14 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 12.14 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 13.15 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 14.15 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 15.15 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container        INITED      3          0        0        3       0       0  
+Reducer 3        container        INITED      3          0        0        3       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [===>>-----------------------] 14%   ELAPSED TIME: 16.15 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container       RUNNING      3          0        1        2       0       0  
+Reducer 3 ..     container       RUNNING      3          1        0        2       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [=======>>-------------------] 28%   ELAPSED TIME: 17.16 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container       RUNNING      3          0        1        2       0       0  
+Reducer 3 ..     container       RUNNING      3          1        0        2       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [=======>>-------------------] 28%   ELAPSED TIME: 18.16 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ..     container       RUNNING      3          1        1        1       0       0  
+Reducer 3 ..     container       RUNNING      3          1        0        2       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [===========>>---------------] 42%   ELAPSED TIME: 19.16 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ....   container       RUNNING      3          2        1        0       0       0  
+Reducer 3 ..     container       RUNNING      3          1        0        2       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [==============>>------------] 57%   ELAPSED TIME: 20.68 s    
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      3          3        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      3          3        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 22.18 s    
+----------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      3          3        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      3          3        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 23.06 s    
+----------------------------------------------------------------------------------------------
+559,626 rows affected (24.39 seconds)
+0: jdbc:hive2://localhost:10000/> 
+0: jdbc:hive2://localhost:10000/> -- Verification
+0: jdbc:hive2://localhost:10000/> SHOW TABLES;
++------------+
+|  tab_name  |
++------------+
+| sales      |
+| sales_raw  |
++------------+
+2 rows selected (0.157 seconds)
+0: jdbc:hive2://localhost:10000/> SHOW PARTITIONS sales;
++---------------------+
+|      partition      |
++---------------------+
+| sale_month=2025-01  |
+| sale_month=2025-02  |
+| sale_month=2025-03  |
+| sale_month=2025-04  |
+| sale_month=2025-05  |
+| sale_month=2025-06  |
+| sale_month=2025-07  |
+| sale_month=2025-08  |
+| sale_month=2025-09  |
+| sale_month=2025-10  |
+| sale_month=2025-11  |
+| sale_month=2025-12  |
++---------------------+
+12 rows selected (0.118 seconds)
+0: jdbc:hive2://localhost:10000/> SELECT COUNT(*) AS raw_rows     FROM sales_raw;
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 1.43 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 1.93 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 2.44 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 2.94 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 3.44 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 3.94 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 4.45 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/02  [>>--------------------------] 0%    ELAPSED TIME: 4.95 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 5.31 s     
+----------------------------------------------------------------------------------------------
++-----------+
+| raw_rows  |
++-----------+
+| 559626    |
++-----------+
+1 row selected (5.526 seconds)
+0: jdbc:hive2://localhost:10000/> SELECT COUNT(*) AS curated_rows FROM sales;
+
++---------------+
+| curated_rows  |
++---------------+
+| 559626        |
++---------------+
+1 row selected (0.824 seconds)
+0: jdbc:hive2://localhost:10000/> DESCRIBE FORMATTED sales;
++-------------------------------+----------------------------------------------------+-----------------------------+
+|           col_name            |                     data_type                      |           comment           |
++-------------------------------+----------------------------------------------------+-----------------------------+
+| invoice_id                    | string                                             |                             |
+| line_no                       | int                                                |                             |
+| txn_ts                        | timestamp                                          |                             |
+| sale_date                     | date                                               |                             |
+| sale_hour                     | int                                                |                             |
+| day_type                      | string                                             |                             |
+| branch_id                     | string                                             |                             |
+| branch_name                   | string                                             |                             |
+| city                          | string                                             |                             |
+| product_id                    | string                                             |                             |
+| product_name                  | string                                             |                             |
+| category                      | string                                             |                             |
+| unit_price                    | decimal(10,2)                                      |                             |
+| quantity                      | int                                                |                             |
+| amount                        | decimal(12,2)                                      |                             |
+| payment_mode                  | string                                             |                             |
+|                               | NULL                                               | NULL                        |
+| # Partition Information       | NULL                                               | NULL                        |
+| # col_name                    | data_type                                          | comment                     |
+| sale_month                    | string                                             |                             |
+|                               | NULL                                               | NULL                        |
+| # Detailed Table Information  | NULL                                               | NULL                        |
+| Database:                     | supermarket                                        | NULL                        |
+| OwnerType:                    | USER                                               | NULL                        |
+| Owner:                        | hive                                               | NULL                        |
+| CreateTime:                   | Tue Nov 03 13:20:39 UTC 2026                       | NULL                        |
+| LastAccessTime:               | UNKNOWN                                            | NULL                        |
+| Retention:                    | 0                                                  | NULL                        |
+| Location:                     | file:/opt/hive/data/warehouse/supermarket.db/sales | NULL                        |
+| Table Type:                   | EXTERNAL_TABLE                                     | NULL                        |
+| Table Parameters:             | NULL                                               | NULL                        |
+|                               | COLUMN_STATS_ACCURATE                              | {\"BASIC_STATS\":\"true\"}  |
+|                               | EXTERNAL                                           | TRUE                        |
+|                               | TRANSLATED_TO_EXTERNAL                             | TRUE                        |
+|                               | bucketing_version                                  | 2                           |
+|                               | external.table.purge                               | TRUE                        |
+|                               | numFiles                                           | 12                          |
+|                               | numPartitions                                      | 12                          |
+|                               | numRows                                            | 559626                      |
+|                               | orc.compress                                       | ZLIB                        |
+|                               | rawDataSize                                        | 647130844                   |
+|                               | totalSize                                          | 5509651                     |
+|                               | transient_lastDdlTime                              | 1793712039                  |
+|                               | NULL                                               | NULL                        |
+| # Storage Information         | NULL                                               | NULL                        |
+| SerDe Library:                | org.apache.hadoop.hive.ql.io.orc.OrcSerde          | NULL                        |
+| InputFormat:                  | org.apache.hadoop.hive.ql.io.orc.OrcInputFormat    | NULL                        |
+| OutputFormat:                 | org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat   | NULL                        |
+| Compressed:                   | No                                                 | NULL                        |
+| Num Buckets:                  | -1                                                 | NULL                        |
+| Bucket Columns:               | []                                                 | NULL                        |
+| Sort Columns:                 | []                                                 | NULL                        |
+| Storage Desc Params:          | NULL                                               | NULL                        |
+|                               | serialization.format                               | 1                           |
++-------------------------------+----------------------------------------------------+-----------------------------+
+54 rows selected (0.089 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

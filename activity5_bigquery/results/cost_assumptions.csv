@@ -1,0 +1,12 @@
+assumption,value
+raw_logs_gib_per_day,20.0
+retention_days_bigquery,90.0
+retention_days_gcs_raw,365.0
+dashboard_queries_per_hour,15.0
+dashboard_window_hours,24.0
+adhoc_full_week_queries_per_day,4.0
+upload_objects_per_day,2880.0
+bq_bytes_per_raw_byte (measured),1.055
+raw_to_gzip_ratio (measured),10.78
+avg_fraction_of_table_scanned_per_query (measured),0.2599
+no_partition_pruning_tib_per_month,5211.78

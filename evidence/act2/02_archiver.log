@@ -1,0 +1,8 @@
+### 2026-11-03 19:20:02 IST | $ python -u activity2_kafka/archiver.py
+[traffic-archiver] assigned [0, 1, 2]
+[traffic-archiver] archived 2,000 (sim 08:46)
+[traffic-archiver] archived 4,000 (sim 11:33)
+[traffic-archiver] archived 6,000 (sim 14:19)
+[traffic-archiver] archived 8,000 (sim 17:06)
+[traffic-archiver] archived 10,000 (sim 19:53)
+[traffic-archiver] stopped: archived=11,520 per_partition={0: 4800, 1: 960, 2: 5760}

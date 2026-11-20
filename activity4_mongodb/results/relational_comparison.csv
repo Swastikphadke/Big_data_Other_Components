@@ -1,0 +1,8 @@
+aspect,mongodb_document_model,relational_model
+Read one complete product,1 find_one -> 1 nested document,"1 query + 3 LEFT JOINs -> 60 rows, or 4 queries"
+Filter on nested / category-specific attributes,"dot notation on specs.*, typed values","self-join per attribute on EAV table, values stored as TEXT and CAST"
+Query inside a list (variants),$elemMatch on embedded array,JOIN product_variants + DISTINCT
+Aggregation report,$match + $group pipeline,GROUP BY (equally simple)
+Add a new attribute,just write it (validator keeps core fields consistent),migration: ALTER TABLE / EAV rows / new table
+Integrity guarantees,"validator ($jsonSchema, $expr) + unique index; multi-document ACID needs a replica set","foreign keys, CHECK constraints, ACID transactions across tables by default"
+Storage of one product,1 document,1 + 4.0 spec + 3.2 variant + 1.8 tag rows (average)

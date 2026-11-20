@@ -1,0 +1,31 @@
+### 2026-11-03 22:06:49 India Standard Time | $ python activity5_bigquery\verify_results.py --log evidence\act5\06_verification.log
+local dataset: 774,130 rows
+
+PASS  Q01 requests / unique IPs / endpoints   (774,130 / 22,313 / 30)
+PASS  Q01 4xx / 5xx counts and GiB sent   (21,728 / 4,201 / 25.03 GiB)
+PASS  Q02 status code counts   (13 rows identical)
+PASS  Q03 top-20 endpoints (requests, unique IPs, 4xx, 5xx)   (20 rows identical)
+PASS  Q03 ranking is the true top 20
+PASS  Q04 errors by endpoint (errors, 404, 429, 500)   (26 rows identical)
+PASS  Q05 hourly requests and 5xx (168 hours)   (168 rows identical)
+PASS  Q06 daily requests and unique IPs   (7 rows identical)
+PASS  Q07 weekday x hour profile   (168 rows identical)
+PASS  Q08 10 busiest 5-minute windows   (busiest 2026-10-30 21:55:00 with 1198 requests)
+PASS  Q09 top-20 IPs (requests, max requests/minute)   (20 rows identical)
+PASS  Q10 5-minute requests and failures (2,016 buckets)   (2016 rows identical)
+PASS  Q11 spike incidents identical to pandas re-implementation   (4 incidents)
+PASS  Q12 brute-force rows   (3 rows identical)
+PASS  Q13 scanner rows   (1 rows identical)
+PASS  Q14 high-rate client rows   (4 rows identical)
+PASS  Q15 user-agent classes   (5 rows identical)
+
+DETECTIONS vs PLANTED INCIDENTS (data/incidents.json)
+PASS  I1 payment outage (5xx) detected by Q11   (28 14:10-14:35  (truth 28 14:10-14:35))
+PASS  I2 bad deployment (500) detected by Q11   (30 09:10-09:30; 30 09:40-10:25  (truth 30 09:00-10:30))
+INFO  Q11 incidents not matching a planted 5xx incident (false positives): 1 29 15:45-15:50 (8 failures, z=4.1)
+PASS  I3 credential-stuffing IPs == Q12 IPs
+PASS  I5 scanner IP == Q13 IPs
+PASS  I4 scraper IP found by Q14; counts consistent with generator minus parser-rejected lines   (generated 27020 lines, 3 truncated & rejected -> 27017 loaded; 429s 8733 of 8734 generated; other Q14 IPs: ['203.0.113.17', '203.0.113.18', '203.0.113.19'] (= I3 attackers))
+PASS  I6 sale campaign contains the busiest 5-minute window   (2026-10-30 21:55:00)
+
+23/23 checks passed

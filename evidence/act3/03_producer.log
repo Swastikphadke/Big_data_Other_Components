@@ -1,0 +1,17 @@
+### 2026-11-03 20:09:19 India Standard Time | $ python activity3_flink\vitals_producer.py --speed 30 --log evidence\act3\03_producer.log
+[producer] EDUCATIONAL DEMONSTRATION ONLY. All patient data is synthetic and these thresholds are illustrative teaching values, NOT clinical diagnostic criteria. This system must not be used for patient care.
+[producer] topic=patient-vitals readings=14,400 speed=30.0x  out-of-order=1420 very-late=66
+[producer] sim 10:10  delivered= 1,197  elapsed=  20.0s
+[producer] sim 10:20  delivered= 2,369  elapsed=  40.0s
+[producer] sim 10:30  delivered= 3,594  elapsed=  60.0s
+[producer] sim 10:40  delivered= 4,800  elapsed=  80.0s
+[producer] sim 10:50  delivered= 5,995  elapsed= 100.0s
+[producer] sim 11:00  delivered= 7,195  elapsed= 120.0s
+[producer] sim 11:10  delivered= 8,397  elapsed= 140.0s
+[producer] sim 11:20  delivered= 9,596  elapsed= 160.0s
+[producer] sim 11:30  delivered=10,797  elapsed= 180.0s
+[producer] sim 11:40  delivered=11,992  elapsed= 200.0s
+[producer] sim 11:50  delivered=13,197  elapsed= 220.0s
+[producer] sim 12:00  delivered=14,396  elapsed= 240.1s
+[producer] DONE delivered=14,400/14,400 in 241.0s; end-of-stream markers sent to partitions 0..1 (event_time 2025-11-03T12:14:55.000)
+[producer] readings per partition: {0: 7200, 1: 7200}

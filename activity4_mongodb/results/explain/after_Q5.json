@@ -1,0 +1,139 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "category": {
+        "$eq": "Apparel"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "421A7F3B",
+    "planCacheShapeHash": "421A7F3B",
+    "planCacheKey": "60F9014F",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "FETCH",
+      "inputStage": {
+        "stage": "IXSCAN",
+        "keyPattern": {
+          "category": 1,
+          "price": 1
+        },
+        "indexName": "category_1_price_1",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "category": [],
+          "price": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "category": [
+            "[\"Apparel\", \"Apparel\"]"
+          ],
+          "price": [
+            "[MinKey, MaxKey]"
+          ]
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 39919,
+    "executionTimeMillis": 114,
+    "totalKeysExamined": 39919,
+    "totalDocsExamined": 39919,
+    "executionStages": {
+      "isCached": false,
+      "stage": "FETCH",
+      "nReturned": 39919,
+      "executionTimeMillisEstimate": 105,
+      "works": 39920,
+      "advanced": 39919,
+      "needTime": 0,
+      "needYield": 0,
+      "saveState": 6,
+      "restoreState": 6,
+      "isEOF": 1,
+      "docsExamined": 39919,
+      "alreadyHasObj": 0,
+      "inputStage": {
+        "stage": "IXSCAN",
+        "nReturned": 39919,
+        "executionTimeMillisEstimate": 13,
+        "works": 39920,
+        "advanced": 39919,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 6,
+        "restoreState": 6,
+        "isEOF": 1,
+        "keyPattern": {
+          "category": 1,
+          "price": 1
+        },
+        "indexName": "category_1_price_1",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "category": [],
+          "price": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "category": [
+            "[\"Apparel\", \"Apparel\"]"
+          ],
+          "price": [
+            "[MinKey, MaxKey]"
+          ]
+        },
+        "keysExamined": 39919,
+        "seeks": 1,
+        "dupsTested": 0,
+        "dupsDropped": 0
+      }
+    }
+  },
+  "queryShapeHash": "E72CDEBFCA9E2C3AE6624E7A4CEC49E3EBD3ED29D820D02FA1D4859F517F2221",
+  "command": {
+    "find": "products",
+    "filter": {
+      "category": "Apparel"
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

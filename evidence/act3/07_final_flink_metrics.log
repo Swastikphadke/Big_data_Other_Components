@@ -1,0 +1,9 @@
+﻿### 2026-11-03 20:16:39 | REST /jobs/44b55d695062ff14b55c4451995be0ce  job-level I/O counters (run 2, ~6 min after input ended)
+Source: vitals_raw[1] -> (Calc[2] -> StreamRecordTimestampInse par=2 records_in=     0 records_out= 44004 status=RUNNING
+OverAggregate[10] -> Calc[11]                                  par=2 records_in= 43200 records_out= 43002 status=RUNNING
+StreamRecordTimestampInserter[13] -> Match[13] -> Calc[14] ->  par=2 records_in= 43002 records_out=     0 status=RUNNING
+StreamRecordTimestampInserter[16] -> Match[16] -> Calc[17] ->  par=2 records_in= 43002 records_out=     0 status=RUNNING
+GlobalWindowAggregate[22] -> Calc[23] -> patient_summaries[24] par=2 records_in=   722 records_out=     0 status=RUNNING
+GlobalWindowAggregate[28] -> Calc[29] -> ward_summaries[30]: W par=1 records_in=    82 records_out=     0 status=RUNNING
+checkpoints: completed=45 failed=1; state size min/avg/max = 131378/312649/1221695 B; end-to-end duration min/avg/max = 79/260/2489 ms
+note: per-subtask metric store (numLateRecordsDropped etc.) returned no data in this setup; late-data effects are measured from the outputs in 09_evaluation.log instead.

@@ -1,0 +1,31 @@
+### 2026-11-03 19:30:02 India Standard Time | $ python activity2_kafka\congestion_detector.py --group congestion-detector-scaleout --instance A --no-publish --idle-exit 25 --out activity2_kafka\results\scaleout_alerts_A.csv --log evidence\act2\09_scaleout_detector_A.log
+[detector-A] group=congestion-detector-scaleout topic=traffic-readings window=5 rules: CONGESTION speed<20.0 & count>=45.0; INCIDENT speed<15.0 & count<30.0; CLEAR speed>25.0
+[detector-A] partitions ASSIGNED: [0, 1]
+[detector-A] OPEN     CONGESTION MODERATE J01 Silk Board         sim 08:33  avg_speed= 19.7  avg_count=101.4
+[detector-A] ESCALATE CONGESTION HEAVY    J01 Silk Board         sim 08:43  avg_speed= 14.3  avg_count=116.4
+[detector-A] ESCALATE CONGESTION SEVERE   J01 Silk Board         sim 08:50  avg_speed=  9.1  avg_count=124.0
+[detector-A] OPEN     CONGESTION MODERATE J06 Mekhri Circle      sim 08:54  avg_speed= 19.8  avg_count= 68.6
+[detector-A] OPEN     CONGESTION MODERATE J04 Marathahalli       sim 08:57  avg_speed= 19.8  avg_count= 94.8
+[detector-A] ESCALATE CONGESTION HEAVY    J06 Mekhri Circle      sim 09:04  avg_speed= 14.9  avg_count= 74.8
+[detector-A] ESCALATE CONGESTION HEAVY    J04 Marathahalli       sim 09:08  avg_speed= 14.9  avg_count=101.0
+[detector-A] ESCALATE CONGESTION SEVERE   J04 Marathahalli       sim 09:19  avg_speed=  9.9  avg_count=103.0
+[detector-A] ESCALATE CONGESTION SEVERE   J06 Mekhri Circle      sim 09:23  avg_speed=  9.9  avg_count= 87.2
+[detector-A] CLEAR    CONGESTION SEVERE   J04 Marathahalli       sim 10:19  avg_speed= 25.4  avg_count= 85.0  duration=82 min
+[detector-A] CLEAR    CONGESTION SEVERE   J06 Mekhri Circle      sim 10:23  avg_speed= 25.9  avg_count= 65.2  duration=89 min
+[detector-A] CLEAR    CONGESTION SEVERE   J01 Silk Board         sim 10:43  avg_speed= 26.0  avg_count= 90.6  duration=130 min
+[detector-A] OPEN     INCIDENT   HEAVY    J04 Marathahalli       sim 14:03  avg_speed= 13.4  avg_count= 17.6
+[detector-A] ESCALATE INCIDENT   SEVERE   J04 Marathahalli       sim 14:04  avg_speed=  7.5  avg_count= 13.0
+[detector-A] CLEAR    INCIDENT   SEVERE   J04 Marathahalli       sim 14:47  avg_speed= 26.9  avg_count= 24.8  duration=44 min
+[detector-A] OPEN     CONGESTION MODERATE J01 Silk Board         sim 17:45  avg_speed= 19.9  avg_count=109.4
+[detector-A] ESCALATE CONGESTION HEAVY    J01 Silk Board         sim 17:56  avg_speed= 14.5  avg_count=118.2
+[detector-A] ESCALATE CONGESTION SEVERE   J01 Silk Board         sim 18:05  avg_speed=  9.1  avg_count=127.8
+[detector-A] OPEN     CONGESTION MODERATE J06 Mekhri Circle      sim 18:12  avg_speed= 19.6  avg_count= 75.6
+[detector-A] OPEN     CONGESTION MODERATE J04 Marathahalli       sim 18:14  avg_speed= 19.9  avg_count= 87.6
+[detector-A] ESCALATE CONGESTION HEAVY    J04 Marathahalli       sim 18:22  avg_speed= 14.6  avg_count= 99.6
+[detector-A] ESCALATE CONGESTION HEAVY    J06 Mekhri Circle      sim 18:26  avg_speed= 15.0  avg_count= 78.4
+[detector-A] ESCALATE CONGESTION SEVERE   J04 Marathahalli       sim 18:39  avg_speed=  9.9  avg_count=107.8
+[detector-A] CLEAR    CONGESTION SEVERE   J04 Marathahalli       sim 19:33  avg_speed= 25.1  avg_count= 81.2  duration=79 min
+[detector-A] CLEAR    CONGESTION HEAVY    J06 Mekhri Circle      sim 19:37  avg_speed= 25.1  avg_count= 65.6  duration=85 min
+[detector-A] CLEAR    CONGESTION SEVERE   J01 Silk Board         sim 20:02  avg_speed= 25.4  avg_count= 84.6  duration=137 min
+[detector-A] partitions REVOKED: [0, 1]
+[detector-A] stopped: consumed=5,760 alert_events=26 still_open=[]

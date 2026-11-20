@@ -1,0 +1,15 @@
+﻿### 2026-11-03 20:01:05 | REST /jobs/7308cce1f85b5c92ad86b8374045b4af + /vertices/*/watermarks (mid-run snapshot; watermark shown as simulated event time)
+note: a first snapshot at 19:58:55 returned all-zero metrics because the Web UI metric fetcher had not refreshed yet; it was discarded.
+
+vertex                                                     par records_in records_out watermark_event_time
+------                                                     --- ---------- ----------- --------------------
+Source: vitals_raw[1] -> (Calc[2] -> StreamRecordTimestamp   2          0       38411                     
+OverAggregate[10] -> Calc[11]                                2      35939       35427 11:44:50, 11:31:55  
+StreamRecordTimestampInserter[13] -> Match[13] -> Calc[14]   2      35427           0 11:31:55, 11:31:55  
+StreamRecordTimestampInserter[16] -> Match[16] -> Calc[17]   2      32018           0 11:31:55, 11:14:55  
+GlobalWindowAggregate[22] -> Calc[23] -> patient_summaries   2        426           0 11:53:30, 11:53:30  
+GlobalWindowAggregate[28] -> Calc[29] -> ward_summaries[30   1         47           0 11:53:30            
+
+
+
+[producer] sim 11:50  delivered=13,197  elapsed= 220.0s

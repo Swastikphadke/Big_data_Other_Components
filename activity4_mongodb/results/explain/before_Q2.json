@@ -1,0 +1,163 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "$and": [
+        {
+          "category": {
+            "$eq": "Laptops"
+          }
+        },
+        {
+          "price": {
+            "$lte": 80000
+          }
+        },
+        {
+          "price": {
+            "$gte": 50000
+          }
+        }
+      ]
+    },
+    "indexFilterSet": false,
+    "queryHash": "F17CE50C",
+    "planCacheShapeHash": "F17CE50C",
+    "planCacheKey": "5629B964",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "SORT",
+      "sortPattern": {
+        "price": 1
+      },
+      "memLimit": 104857600,
+      "type": "simple",
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "$and": [
+            {
+              "category": {
+                "$eq": "Laptops"
+              }
+            },
+            {
+              "price": {
+                "$lte": 80000
+              }
+            },
+            {
+              "price": {
+                "$gte": 50000
+              }
+            }
+          ]
+        },
+        "direction": "forward"
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 2124,
+    "executionTimeMillis": 179,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 200000,
+    "executionStages": {
+      "isCached": false,
+      "stage": "SORT",
+      "nReturned": 2124,
+      "executionTimeMillisEstimate": 162,
+      "works": 202126,
+      "advanced": 2124,
+      "needTime": 200001,
+      "needYield": 0,
+      "saveState": 9,
+      "restoreState": 9,
+      "isEOF": 1,
+      "sortPattern": {
+        "price": 1
+      },
+      "memLimit": 104857600,
+      "type": "simple",
+      "totalDataSizeSorted": 1183725,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledDataStorageSize": 0,
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "$and": [
+            {
+              "category": {
+                "$eq": "Laptops"
+              }
+            },
+            {
+              "price": {
+                "$lte": 80000
+              }
+            },
+            {
+              "price": {
+                "$gte": 50000
+              }
+            }
+          ]
+        },
+        "nReturned": 2124,
+        "executionTimeMillisEstimate": 162,
+        "works": 200001,
+        "advanced": 2124,
+        "needTime": 197876,
+        "needYield": 0,
+        "saveState": 9,
+        "restoreState": 9,
+        "isEOF": 1,
+        "direction": "forward",
+        "docsExamined": 200000
+      }
+    }
+  },
+  "queryShapeHash": "55DF1FD719C3629A6E6B4F8B5E652A1977BA60ED0800AE962892CC117356CBD8",
+  "command": {
+    "find": "products",
+    "filter": {
+      "category": "Laptops",
+      "price": {
+        "$gte": 50000,
+        "$lte": 80000
+      }
+    },
+    "sort": {
+      "price": 1
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

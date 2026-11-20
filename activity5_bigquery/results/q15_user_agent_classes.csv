@@ -1,0 +1,6 @@
+ua_class,requests,pct_of_traffic,unique_ips,error_pct
+browser,330794,42.73,11135,1.26
+mobile_browser,256652,33.15,8278,1.27
+mobile_app,98633,12.74,2443,1.34
+search_bot,53882,6.96,452,1.84
+script_or_tool,34169,4.41,5,47.31

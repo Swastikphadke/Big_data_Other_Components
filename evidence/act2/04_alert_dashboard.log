@@ -1,0 +1,55 @@
+### 2026-11-03 19:23:44 India Standard Time | $ python activity2_kafka/alert_dashboard.py --idle-exit 90 --log evidence/act2/04_alert_dashboard.log
+================================================================================================
+ SMART-CITY TRAFFIC CONTROL ROOM - live congestion alerts  (topic: congestion-alerts)
+================================================================================================
+!! ALERT  08:33  CONGESTION MODERATE J01 Silk Board         avg 19.7 km/h, 101.4 veh/min
+!! ALERT  08:41  CONGESTION MODERATE J02 Hebbal Flyover     avg 19.8 km/h, 105.0 veh/min
+!! ALERT  08:41  CONGESTION MODERATE J03 KR Puram           avg 19.8 km/h, 97.8 veh/min
+^^ WORSE  08:43  CONGESTION HEAVY    J01 Silk Board         avg 14.3 km/h, 116.4 veh/min
+^^ WORSE  08:48  CONGESTION HEAVY    J02 Hebbal Flyover     avg 13.9 km/h, 115.8 veh/min
+^^ WORSE  08:48  CONGESTION HEAVY    J03 KR Puram           avg 14.8 km/h, 100.4 veh/min
+^^ WORSE  08:50  CONGESTION SEVERE   J01 Silk Board         avg 9.1 km/h, 124.0 veh/min
+!! ALERT  08:54  CONGESTION MODERATE J06 Mekhri Circle      avg 19.8 km/h, 68.6 veh/min
+^^ WORSE  08:55  CONGESTION SEVERE   J02 Hebbal Flyover     avg 9.3 km/h, 127.6 veh/min
+!! ALERT  08:57  CONGESTION MODERATE J04 Marathahalli       avg 19.8 km/h, 94.8 veh/min
+^^ WORSE  08:59  CONGESTION SEVERE   J03 KR Puram           avg 8.8 km/h, 117.2 veh/min
+^^ WORSE  09:04  CONGESTION HEAVY    J06 Mekhri Circle      avg 14.9 km/h, 74.8 veh/min
+!! ALERT  09:05  CONGESTION MODERATE J05 Electronic City    avg 19.7 km/h, 89.4 veh/min
+^^ WORSE  09:08  CONGESTION HEAVY    J04 Marathahalli       avg 14.9 km/h, 101.0 veh/min
+^^ WORSE  09:17  CONGESTION HEAVY    J05 Electronic City    avg 14.1 km/h, 93.6 veh/min
+^^ WORSE  09:19  CONGESTION SEVERE   J04 Marathahalli       avg 9.9 km/h, 103.0 veh/min
+^^ WORSE  09:23  CONGESTION SEVERE   J06 Mekhri Circle      avg 9.9 km/h, 87.2 veh/min
+!! ALERT  09:32  CONGESTION MODERATE J09 Yeshwanthpur       avg 19.8 km/h, 81.8 veh/min
+-- CLEAR  09:48  CONGESTION MODERATE J09 Yeshwanthpur       lasted 16 min, worst avg 19.8 km/h
+-- CLEAR  10:08  CONGESTION HEAVY    J05 Electronic City    lasted 63 min, worst avg 11.5 km/h
+-- CLEAR  10:19  CONGESTION SEVERE   J04 Marathahalli       lasted 82 min, worst avg 7.6 km/h
+-- CLEAR  10:23  CONGESTION SEVERE   J06 Mekhri Circle      lasted 89 min, worst avg 8.6 km/h
+-- CLEAR  10:31  CONGESTION SEVERE   J03 KR Puram           lasted 110 min, worst avg 5.4 km/h
+-- CLEAR  10:32  CONGESTION SEVERE   J02 Hebbal Flyover     lasted 111 min, worst avg 6.7 km/h
+-- CLEAR  10:43  CONGESTION SEVERE   J01 Silk Board         lasted 130 min, worst avg 5.5 km/h
+!! ALERT  14:03  INCIDENT   HEAVY    J04 Marathahalli       avg 13.4 km/h, 17.6 veh/min
+^^ WORSE  14:04  INCIDENT   SEVERE   J04 Marathahalli       avg 7.5 km/h, 13.0 veh/min
+-- CLEAR  14:47  INCIDENT   SEVERE   J04 Marathahalli       lasted 44 min, worst avg 5.4 km/h
+!! ALERT  17:45  CONGESTION MODERATE J01 Silk Board         avg 19.9 km/h, 109.4 veh/min
+!! ALERT  17:54  CONGESTION MODERATE J03 KR Puram           avg 19.8 km/h, 96.6 veh/min
+!! ALERT  17:55  CONGESTION MODERATE J02 Hebbal Flyover     avg 19.8 km/h, 112.6 veh/min
+^^ WORSE  17:56  CONGESTION HEAVY    J01 Silk Board         avg 14.5 km/h, 118.2 veh/min
+^^ WORSE  18:01  CONGESTION HEAVY    J02 Hebbal Flyover     avg 14.9 km/h, 117.4 veh/min
+^^ WORSE  18:03  CONGESTION HEAVY    J03 KR Puram           avg 14.2 km/h, 107.0 veh/min
+^^ WORSE  18:05  CONGESTION SEVERE   J01 Silk Board         avg 9.1 km/h, 127.8 veh/min
+^^ WORSE  18:11  CONGESTION SEVERE   J03 KR Puram           avg 10.0 km/h, 113.8 veh/min
+^^ WORSE  18:12  CONGESTION SEVERE   J02 Hebbal Flyover     avg 9.8 km/h, 120.2 veh/min
+!! ALERT  18:12  CONGESTION MODERATE J06 Mekhri Circle      avg 19.6 km/h, 75.6 veh/min
+!! ALERT  18:14  CONGESTION MODERATE J04 Marathahalli       avg 19.9 km/h, 87.6 veh/min
+^^ WORSE  18:22  CONGESTION HEAVY    J04 Marathahalli       avg 14.6 km/h, 99.6 veh/min
+!! ALERT  18:24  CONGESTION MODERATE J05 Electronic City    avg 19.9 km/h, 87.4 veh/min
+^^ WORSE  18:26  CONGESTION HEAVY    J06 Mekhri Circle      avg 15.0 km/h, 78.4 veh/min
+^^ WORSE  18:39  CONGESTION SEVERE   J04 Marathahalli       avg 9.9 km/h, 107.8 veh/min
+^^ WORSE  18:43  CONGESTION HEAVY    J05 Electronic City    avg 14.4 km/h, 96.0 veh/min
+-- CLEAR  19:23  CONGESTION HEAVY    J05 Electronic City    lasted 59 min, worst avg 14.0 km/h
+-- CLEAR  19:33  CONGESTION SEVERE   J04 Marathahalli       lasted 79 min, worst avg 9.8 km/h
+-- CLEAR  19:37  CONGESTION HEAVY    J06 Mekhri Circle      lasted 85 min, worst avg 10.9 km/h
+-- CLEAR  19:48  CONGESTION SEVERE   J02 Hebbal Flyover     lasted 113 min, worst avg 6.7 km/h
+-- CLEAR  19:53  CONGESTION SEVERE   J03 KR Puram           lasted 119 min, worst avg 5.0 km/h
+-- CLEAR  20:02  CONGESTION SEVERE   J01 Silk Board         lasted 137 min, worst avg 5.4 km/h
+[dashboard] 50 alert events received

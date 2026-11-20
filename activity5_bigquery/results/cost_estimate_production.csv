@@ -1,0 +1,7 @@
+item,quantity,usd_per_month
+BigQuery analysis (on-demand),62.36 TiB/month,460.19
+BigQuery active storage,1900 GiB,43.46
+BigQuery long-term storage,0 GiB,0.0
+"Cloud Storage Standard (raw .gz, 1 year)",677 GiB,15.57
+Cloud Storage Class A (uploads),"86,400 ops",0.41
+BigQuery batch load jobs (GCS -> BigQuery),daily,0.0

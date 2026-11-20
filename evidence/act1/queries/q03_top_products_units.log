@@ -1,0 +1,53 @@
+### 2026-11-03 18:51:46 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q03_top_products_units.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q3. Top 10 best-selling products by units sold (volume movers)
+0: jdbc:hive2://localhost:10000/> SELECT product_id, product_name, category,
+. . . . . . . . . . . . . . . . >        SUM(quantity)            AS units_sold,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(amount), 2)    AS revenue_inr
+. . . . . . . . . . . . . . . . > FROM supermarket.sales
+. . . . . . . . . . . . . . . . > GROUP BY product_id, product_name, category
+. . . . . . . . . . . . . . . . > ORDER BY units_sold DESC
+. . . . . . . . . . . . . . . . > LIMIT 10;
+SUM(quantity)            AS units_sold,
+ROUND(SUM(amount), 2)    AS revenue_inr
+FROM supermarket.sales
+GROUP BY product_id, product_name, category
+ORDER BY units_sold DESC
+LIMIT 10
+SUM(quantity)            AS units_sold,
+ROUND(SUM(amount), 2)    AS revenue_inr
+FROM supermarket.sales
+GROUP BY product_id, product_name, category
+ORDER BY units_sold DESC
+LIMIT 10
+LIMIT 10 (Stage-1)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 1.26 s     
+----------------------------------------------------------------------------------------------
++-------------+--------------------+----------------------+-------------+--------------+
+| product_id  |    product_name    |       category       | units_sold  | revenue_inr  |
++-------------+--------------------+----------------------+-------------+--------------+
+| P031        | Coriander Bunch    | Fruits & Vegetables  | 40049       | 600735.00    |
+| P023        | Greek Yogurt 100g  | Dairy                | 27254       | 1362700.00   |
+| P014        | Curd 500g          | Dairy                | 25807       | 903245.00    |
+| P036        | Lemon 250g         | Fruits & Vegetables  | 22959       | 688770.00    |
+| P019        | Buttermilk 200ml   | Dairy                | 22782       | 341730.00    |
+| P058        | Cookies 200g       | Snacks               | 20739       | 1451730.00   |
+| P015        | Paneer 200g        | Dairy                | 18117       | 1721115.00   |
+| P035        | Cucumber 500g      | Fruits & Vegetables  | 17486       | 437150.00    |
+| P017        | Ghee 500ml         | Dairy                | 17151       | 5917095.00   |
+| P011        | Rava 1kg           | Staples              | 16413       | 1017606.00   |
++-------------+--------------------+----------------------+-------------+--------------+
+10 rows selected (1.757 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

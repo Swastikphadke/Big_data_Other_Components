@@ -1,0 +1,17 @@
+{
+  "seed": 2024,
+  "n": 200000,
+  "by_category": {
+    "Books": 36337,
+    "Televisions": 6148,
+    "Apparel": 39919,
+    "Beauty": 19846,
+    "Sports": 7941,
+    "Headphones": 14080,
+    "Smartphones": 15849,
+    "Footwear": 20119,
+    "Laptops": 9992,
+    "Home Appliances": 14023,
+    "Groceries": 15746
+  }
+}

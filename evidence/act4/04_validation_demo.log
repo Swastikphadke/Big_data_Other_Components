@@ -1,0 +1,25 @@
+### 2026-11-03 21:28:46 India Standard Time | $ python activity4_mongodb\validation_demo.py --log evidence\act4\04_validation_demo.log
+documents before demo: 200,000
+
+REJECTED  1. negative price (price = -10)
+          code=121 -> price: minimum {'minimum': 0} (got -10.0)
+REJECTED  2. missing required field 'sku'
+          code=121 -> document: missing required ['sku']
+REJECTED  3. status not in enum ('sold-out')
+          code=121 -> status: enum {'enum': ['active', 'discontinued']} (got sold-out)
+REJECTED  4. negative stock (inventory.stock = -5)
+          code=121 -> inventory.stock: minimum {'minimum': 0} (got -5)
+REJECTED  5. price greater than MRP (cross-field $expr rule)
+          code=121 -> $expr {'$gte': ['$mrp', '$price']} -> expression did not match
+REJECTED  6. price stored as a string ('1499')
+          code=121 -> price: bsonType {'bsonType': ['double', 'int', 'long', 'decimal']} (got 1499) | $expr {'$gte': ['$mrp', '$price']} -> expression did not match
+
+ACCEPTED  7. valid product with NEW attributes (sustainability, specs.bluetooth_version, specs.ip_rating) - no schema migration needed
+REJECTED  8. duplicate SKU (same sku inserted again) - unique index
+          code=11000 -> E11000 duplicate key error collection: ecommerce.products index: sku_unique dup key: { sku: "SKU-9000001" }
+REJECTED  9. UPDATE that breaks the schema ($set price = -1) - validation applies to updates too
+          code=121 -> price: minimum {'minimum': 0} (got -1.0)
+ACCEPTED  10. valid UPDATE ($set price = 1299, $inc stock -2)
+
+stored test document: {'sku': 'SKU-9000001', 'price': 1299.0, 'inventory': {'stock': 48}, 'sustainability': {'recycled_packaging': True, 'carbon_g': 420}}
+test document removed; documents after demo: 200,000 (unchanged: True)

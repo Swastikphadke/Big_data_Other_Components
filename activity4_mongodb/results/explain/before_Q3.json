@@ -1,0 +1,85 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "brand": {
+        "$eq": "Sennheiser"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "D75F3C01",
+    "planCacheShapeHash": "D75F3C01",
+    "planCacheKey": "D96942F5",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "brand": {
+          "$eq": "Sennheiser"
+        }
+      },
+      "direction": "forward"
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1962,
+    "executionTimeMillis": 162,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 200000,
+    "executionStages": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "brand": {
+          "$eq": "Sennheiser"
+        }
+      },
+      "nReturned": 1962,
+      "executionTimeMillisEstimate": 161,
+      "works": 200001,
+      "advanced": 1962,
+      "needTime": 198038,
+      "needYield": 0,
+      "saveState": 8,
+      "restoreState": 8,
+      "isEOF": 1,
+      "direction": "forward",
+      "docsExamined": 200000
+    }
+  },
+  "queryShapeHash": "09C88D776C3EB9A17B535A45B8EC52300B42AB359EA6FEC7A96D1C4EF55F16B4",
+  "command": {
+    "find": "products",
+    "filter": {
+      "brand": "Sennheiser"
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

@@ -1,0 +1,85 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "sku": {
+        "$eq": "SKU-0123456"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "05509EF5",
+    "planCacheShapeHash": "05509EF5",
+    "planCacheKey": "44038E51",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "sku": {
+          "$eq": "SKU-0123456"
+        }
+      },
+      "direction": "forward"
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1,
+    "executionTimeMillis": 172,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 200000,
+    "executionStages": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "sku": {
+          "$eq": "SKU-0123456"
+        }
+      },
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 162,
+      "works": 200001,
+      "advanced": 1,
+      "needTime": 199999,
+      "needYield": 0,
+      "saveState": 9,
+      "restoreState": 9,
+      "isEOF": 1,
+      "direction": "forward",
+      "docsExamined": 200000
+    }
+  },
+  "queryShapeHash": "2B309615F4AD12D6753CD4B28FF311013C1AC86E417F28BC554C12F249F6DEA2",
+  "command": {
+    "find": "products",
+    "filter": {
+      "sku": "SKU-0123456"
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

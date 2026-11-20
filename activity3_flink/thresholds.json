@@ -1,0 +1,15 @@
+{
+  "DISCLAIMER": "EDUCATIONAL DEMONSTRATION ONLY. All patient data is synthetic and these thresholds are illustrative teaching values, NOT clinical diagnostic criteria. This system must not be used for patient care.",
+  "heart_rate_high_bpm": 120,
+  "heart_rate_low_bpm": 50,
+  "spo2_low_pct": 92,
+  "temperature_high_c": 38.0,
+  "temperature_low_c": 35.5,
+  "reading_interval_s": 5,
+  "watermark_max_out_of_orderness_s": 30,
+  "patient_summary_window_min": 5,
+  "ward_summary_window_min": 15,
+  "episode_score_window_readings": 12,
+  "episode_onset_min_abnormal": 9,
+  "episode_resolve_max_abnormal": 3
+}

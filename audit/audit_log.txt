@@ -1,0 +1,145 @@
+### 2026-11-03 22:49:20 India Standard Time | $ python audit/audit.py --log audit/audit_log.txt
+=== A. INVENTORY
+[OK   ] inventory   Activity 1 activity1_hive  -- README=yes py=2 data_files=3 result_files=11 charts=6 config_missing=[]
+[OK   ] inventory   Activity 2 activity2_kafka  -- README=yes py=8 data_files=3 result_files=10 charts=6 config_missing=[]
+[OK   ] inventory   Activity 3 activity3_flink  -- README=yes py=6 data_files=3 result_files=9 charts=7 config_missing=[]
+[OK   ] inventory   Activity 4 activity4_mongodb  -- README=yes py=8 data_files=3 result_files=20 charts=5 config_missing=[]
+[OK   ] inventory   Activity 5 activity5_bigquery  -- README=yes py=8 data_files=4 result_files=21 charts=10 config_missing=[]
+[OK   ] inventory   docker-compose.yml (Hive, Kafka, Kafka-UI, Flink JM/TM, MongoDB)
+[OK   ] inventory   common/ helpers (chartstyle, teelog, capture_console, capture_web)
+
+=== B. MANIFEST
+
+manifest entries: 79
+[OK   ] manifest    act1 evidence/act1/01_generate_sales.log
+[OK   ] manifest    act1 evidence/act1/02_schema_load.log
+[OK   ] manifest    act1 evidence/act1/queries/q01..q12.log
+[OK   ] manifest    act1 activity1_hive/results/q01..q11.csv
+[OK   ] manifest    act1 activity1_hive/charts/a1_*.png (6)
+[OK   ] manifest    act1 evidence/act1/screenshots/hs2_webui.png
+[OK   ] manifest    act1 evidence/act1/screenshots/docker_ps_hive.png
+[OK   ] manifest    act1 evidence/act1/screenshots/beeline_*.png (6)
+[OK   ] manifest    act2 activity2_kafka/data/traffic_readings.csv + ground_truth.csv + planted_patterns.json
+[OK   ] manifest    act2 evidence/act2/01_setup_topics.log
+[OK   ] manifest    act2 evidence/act2/02_archiver.log
+[OK   ] manifest    act2 evidence/act2/03_detector.log
+[OK   ] manifest    act2 evidence/act2/04_alert_dashboard.log
+[OK   ] manifest    act2 evidence/act2/05_producer.log
+[OK   ] manifest    act2 evidence/act2/06_consumer_groups_midrun.log
+[OK   ] manifest    act2 evidence/act2/07_evaluation.log
+[OK   ] manifest    act2 evidence/act2/08_replay.log
+[OK   ] manifest    act2 evidence/act2/09_scaleout_detector_A.log + 09_scaleout_detector_B.log
+[OK   ] manifest    act2 evidence/act2/10_scaleout_group.log
+[OK   ] manifest    act2 evidence/act2/11_scaleout_equivalence.log
+[OK   ] manifest    act2 evidence/act2/12_consumer_groups_final.log
+[OK   ] manifest    act2 activity2_kafka/results/alerts.csv + ingested_readings.csv + replay_readings.csv + scaleou
+[OK   ] manifest    act2 activity2_kafka/results/evaluation_by_junction.csv + evaluation_episodes.csv + evaluation_
+[OK   ] manifest    act2 activity2_kafka/charts/a2_*.png (6)
+[OK   ] manifest    act2 evidence/act2/screenshots/producer_console.png + detector_console.png
+[OK   ] manifest    act2 evidence/act2/screenshots/consumer_groups_midrun.png + kafkaui_consumer_groups_midrun.png 
+[OK   ] manifest    act2 evidence/act2/screenshots/replay_new_group.png
+[OK   ] manifest    act2 evidence/act2/screenshots/scaleout_detector_A.png + scaleout_detector_B.png + scaleout_gro
+[OK   ] manifest    act2 evidence/act2/screenshots/topics_describe.png + consumer_groups_final.png + console_consum
+[OK   ] manifest    act2 evidence/act2/screenshots/kafkaui_topic_final.png + kafkaui_consumer_groups_final.png + ka
+[OK   ] manifest    act3 activity3_flink/data/vitals_readings.csv + planted_events.csv + planted_patterns.json
+[OK   ] manifest    act3 activity3_flink/Dockerfile + thresholds.json + docker-compose.yml (jobmanager/taskmanager)
+[OK   ] manifest    act3 evidence/act3/00_memory_assessment.log
+[OK   ] manifest    act3 evidence/act3/01_setup_topics.log
+[OK   ] manifest    act3 evidence/act3/02_job_submit.log
+[OK   ] manifest    act3 evidence/act3/03_producer.log
+[OK   ] manifest    act3 evidence/act3/04_collector.log
+[OK   ] manifest    act3 evidence/act3/05_memory_during_run.log
+[OK   ] manifest    act3 evidence/act3/06_midrun_vertices_watermarks.log
+[OK   ] manifest    act3 evidence/act3/07_final_flink_metrics.log
+[OK   ] manifest    act3 evidence/act3/08_job_plan.json
+[OK   ] manifest    act3 evidence/act3/09_evaluation.log
+[OK   ] manifest    act3 activity3_flink/results/*.csv
+[OK   ] manifest    act3 activity3_flink/charts/a3_*.png (7)
+[OK   ] manifest    act3 evidence/act3/screenshots/job_submit_console.png + producer_console.png + collector_consol
+[OK   ] manifest    act3 evidence/act3/screenshots/flink_*.png (9)
+[OK   ] manifest    act3 evidence/act3/run1_superseded_backpressure/*
+[OK   ] manifest    act4 activity4_mongodb/data/products.jsonl.gz + sample_products.json + catalog_stats.json
+[OK   ] manifest    act4 activity4_mongodb/run_all.ps1 + docker-compose.yml (mongodb) + setup_db.py validator + rel
+[OK   ] manifest    act4 evidence/act4/00_clean_start.log
+[OK   ] manifest    act4 evidence/act4/01_generate.log
+[OK   ] manifest    act4 evidence/act4/02_setup_db.log
+[OK   ] manifest    act4 evidence/act4/03_benchmark.log
+[OK   ] manifest    act4 evidence/act4/04_validation_demo.log
+[OK   ] manifest    act4 evidence/act4/05_crud_demo.log
+[OK   ] manifest    act4 evidence/act4/06_sql_compare.log
+[OK   ] manifest    act4 evidence/act4/07_mongosh_m1..m4.log
+[OK   ] manifest    act4 evidence/act4/08_docker_stats.log
+[OK   ] manifest    act4 activity4_mongodb/results/benchmark_raw.csv + benchmark_summary.csv + index_build.csv + ex
+[OK   ] manifest    act4 activity4_mongodb/results/agg_*.csv + relational_comparison.csv + relational_counts.csv
+[OK   ] manifest    act4 activity4_mongodb/charts/a4_*.png (5)
+[OK   ] manifest    act4 evidence/act4/screenshots/setup_db_console.png + validation_console.png + crud_console.png
+[OK   ] manifest    act4 evidence/act4/screenshots/mongosh_m1..m4 (4)
+[OK   ] manifest    act4 evidence/act4/screenshots/benchmark_log_console.png
+[OK   ] manifest    act5 activity5_bigquery/data/raw/access_log_2026-10-26_11-01.log.gz + activity5_bigquery/data/p
+[OK   ] manifest    act5 activity5_bigquery/bq/schema_access_logs.json + activity5_bigquery/bq_setup.ps1 + activity
+[OK   ] manifest    act5 activity5_bigquery/pricing/catalog_bigquery.json + catalog_cloud_storage.json
+[OK   ] manifest    act5 evidence/act5/01_gcloud_check.log
+[OK   ] manifest    act5 evidence/act5/02_generate.log + 02b_parse.log
+[OK   ] manifest    act5 evidence/act5/03_bq_setup.log + evidence/act5/bq_json/dataset_weblogs.json + evidence/act5
+[OK   ] manifest    act5 evidence/act5/04_sandbox_tests.log
+[OK   ] manifest    act5 evidence/act5/05_queries.log + activity5_bigquery/results/q01..q15.csv (15) + activity5_bi
+[OK   ] manifest    act5 evidence/act5/06_verification.log + activity5_bigquery/results/verification.csv
+[OK   ] manifest    act5 evidence/act5/07_cost_estimate.log + activity5_bigquery/results/cost_estimate_production.c
+[OK   ] manifest    act5 activity5_bigquery/charts/a5_*.png (10)
+[OK   ] manifest    act5 evidence/act5/screenshots/gcloud_check.png + generate_console.png + sandbox_tests_console.
+[OK   ] manifest    act5 evidence/act5/screenshots/bq_show_table.png + bq_cli_query.png + bq_ls_jobs.png
+[OK   ] manifest    act5 evidence/act5/screenshots/bq_setup_log_console.png
+[OK   ] manifest    act5 evidence/act5/screenshots/console_*.png (9)
+
+=== C. NUMBERS (source value -> README)
+[OK   ] numbers     Activity 1: total revenue (Indian grouping) = ₹11,76,20,095  -- found in README
+[OK   ] numbers     Activity 1: average basket = 588.10  -- found in README
+[OK   ] numbers     Activity 1: top branch share = 26.39 %  -- found in README
+[OK   ] numbers     Activity 1: 19:00 invoices = 26,369  -- found in README
+[OK   ] numbers     Activity 1: 18:00 invoices = 24,066  -- found in README
+[OK   ] numbers     Activity 1: October MoM growth = 47.83  -- found in README
+[OK   ] numbers     Activity 1: weekend avg daily revenue = ₹3.95 L  -- found in README
+[OK   ] numbers     Activity 1: weekday avg daily revenue = ₹2.93 L  -- found in README
+[OK   ] numbers     Activity 1: rows loaded = 559,626  -- found in README
+[OK   ] numbers     Activity 2: precision = 0.865  -- found in README
+[OK   ] numbers     Activity 2: recall = 0.979  -- found in README
+[OK   ] numbers     Activity 2: latency p50/p95/p99 = p50 70 ms, p95 95 ms, p99 160 ms  -- found in README
+[OK   ] numbers     Activity 2: episodes detected = 13 / 13  -- found in README
+[OK   ] numbers     Activity 2: mean detection delay = 1.8 min  -- found in README
+[OK   ] numbers     Activity 2: alert events = 50 = 14 OPEN  -- found in README
+[OK   ] numbers     Activity 2: messages per partition = 4,800 / 960 / 5,760  -- found in README
+[OK   ] numbers     Activity 3: reading alerts = 1,240 / 1,240  -- found in README
+[OK   ] numbers     Activity 3: episode events identical to reference = 12 / 12  -- found in README
+[OK   ] numbers     Activity 3: latency reading alert p50/p95 = 45 / 95 ms  -- found in README
+[OK   ] numbers     Activity 3: latency episode p50/p95 = 1,304 / 2,703 ms  -- found in README
+[OK   ] numbers     Activity 3: OVER rows in = 43,200  -- found in README
+[OK   ] numbers     Activity 3: OVER rows out/dropped = 198 =   -- found in README
+[OK   ] numbers     Activity 3: min host free memory = 545 MB  -- found in README
+[OK   ] numbers     Activity 4: benchmark Q1 ratio = ×57.8  -- found in README
+[OK   ] numbers     Activity 4: benchmark Q2 ratio = ×3.4  -- found in README
+[OK   ] numbers     Activity 4: benchmark Q3 ratio = ×4.0  -- found in README
+[OK   ] numbers     Activity 4: benchmark Q4 ratio = ×49.3  -- found in README
+[OK   ] numbers     Activity 4: benchmark Q5 ratio = ×0.9  -- found in README
+[OK   ] numbers     Activity 4: benchmark Q6 ratio = ×0.9  -- found in README
+[OK   ] numbers     Activity 4: Q1 medians = 176.23 → 3.05  -- found in README
+[OK   ] numbers     Activity 4: SQL rows = 1,965,486  -- found in README
+[OK   ] numbers     Activity 4: join rows for one product = 60 joined rows  -- found in README
+[OK   ] numbers     Activity 4: nested filter counts = 1,959 = 1,959  -- found in README
+[OK   ] numbers     Activity 5: requests / IPs = 774,130 requests, 22,313 IPs  -- found in README
+[OK   ] numbers     Activity 5: GiB served = 25.03 GiB  -- found in README
+[OK   ] numbers     Activity 5: busiest window = max 1,198 req = 3.99 req/s  -- found in README
+[OK   ] numbers     Activity 5: scraper = 27,017 req, 720 minutes ≥ 20 req/min, 8,733 × 429  -- found in README
+[OK   ] numbers     Activity 5: query jobs processed = 739 MiB  -- found in README
+[OK   ] numbers     Activity 5: hypothetical total = ≈ 520  -- found in README
+[OK   ] numbers     Activity 5: verification = 23/23  -- found in README
+[OK   ] numbers     Activity 5: pruning one UTC day = 1.64  -- found in README
+
+=== D. SCREENSHOTS
+[OK   ] screenshots act1: 8 screenshots within final-run window 18:50-19:05
+[OK   ] screenshots act2: 15 screenshots within final-run window 19:18-19:40
+[OK   ] screenshots act3: 13 screenshots within final-run window 20:08-20:20
+[OK   ] screenshots act3/run1_superseded_backpressure: 12 screenshots within final-run window 19:51-20:07
+[OK   ] screenshots act4: 10 screenshots within final-run window 21:18-21:35
+[OK   ] screenshots act5: 19 screenshots within final-run window 22:03-22:45
+
+133 OK, 0 ISSUE

@@ -1,0 +1,97 @@
+### 2026-11-03 18:52:41 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q06_monthly_trend.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q6. Monthly sales trend with month-over-month growth (LAG window function)
+0: jdbc:hive2://localhost:10000/> SELECT sale_month, revenue_inr, invoices,
+. . . . . . . . . . . . . . . . >        ROUND(100 * (revenue_inr - LAG(revenue_inr) OVER (ORDER BY sale_month))
+. . . . . . . . . . . . . . . . >              / LAG(revenue_inr) OVER (ORDER BY sale_month), 2) AS mom_growth_pct
+. . . . . . . . . . . . . . . . > FROM (
+. . . . . . . . . . . . . . . . >     SELECT sale_month,
+. . . . . . . . . . . . . . . . >            ROUND(SUM(amount), 2)        AS revenue_inr,
+. . . . . . . . . . . . . . . . >            COUNT(DISTINCT invoice_id)   AS invoices
+. . . . . . . . . . . . . . . . >     FROM supermarket.sales
+. . . . . . . . . . . . . . . . >     GROUP BY sale_month
+. . . . . . . . . . . . . . . . > ) m
+. . . . . . . . . . . . . . . . > ORDER BY sale_month;
+ROUND(100 * (revenue_inr - LAG(revenue_inr) OVER (ORDER BY sale_month))
+/ LAG(revenue_inr) OVER (ORDER BY sale_month), 2) AS mom_growth_pct
+FROM (
+SELECT sale_month,
+ROUND(SUM(amount), 2)        AS revenue_inr,
+COUNT(DISTINCT invoice_id)   AS invoices
+FROM supermarket.sales
+GROUP BY sale_month
+) m
+ORDER BY sale_month
+ROUND(100 * (revenue_inr - LAG(revenue_inr) OVER (ORDER BY sale_month))
+/ LAG(revenue_inr) OVER (ORDER BY sale_month), 2) AS mom_growth_pct
+FROM (
+SELECT sale_month,
+ROUND(SUM(amount), 2)        AS revenue_inr,
+COUNT(DISTINCT invoice_id)   AS invoices
+FROM supermarket.sales
+GROUP BY sale_month
+) m
+ORDER BY sale_month
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/04  [>>--------------------------] 0%    ELAPSED TIME: 1.90 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container       RUNNING      1          0        1        0       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/04  [======>>--------------------] 25%   ELAPSED TIME: 2.40 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/04  [===================>>-------] 75%   ELAPSED TIME: 2.90 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 04/04  [==========================>>] 100%  ELAPSED TIME: 3.15 s     
+----------------------------------------------------------------------------------------------
++-------------+--------------+-----------+-----------------+
+| sale_month  | revenue_inr  | invoices  | mom_growth_pct  |
++-------------+--------------+-----------+-----------------+
+| 2025-01     | 9040908.00   | 15593     | NULL            |
+| 2025-02     | 7731438.00   | 13556     | -14.48          |
+| 2025-03     | 9126437.00   | 16272     | 18.04           |
+| 2025-04     | 8923195.00   | 16071     | -2.23           |
+| 2025-05     | 9373159.00   | 16471     | 5.04            |
+| 2025-06     | 8758005.00   | 15486     | -6.56           |
+| 2025-07     | 8571999.00   | 15228     | -2.12           |
+| 2025-08     | 9618740.00   | 16512     | 12.21           |
+| 2025-09     | 9666878.00   | 16299     | 0.50            |
+| 2025-10     | 14290309.00  | 21568     | 47.83           |
+| 2025-11     | 11814754.00  | 18661     | -17.32          |
+| 2025-12     | 10704273.00  | 18283     | -9.40           |
++-------------+--------------+-----------+-----------------+
+12 rows selected (3.673 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

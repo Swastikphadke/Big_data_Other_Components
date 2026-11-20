@@ -1,0 +1,32 @@
+### 2026-11-03 21:29:11 India Standard Time | $ python activity4_mongodb\sql_compare.py --log evidence\act4\06_sql_compare.log
+exported 196,282 MongoDB documents into 4 tables in 15.1 s (+ 3.4 s to build secondary indexes):
+   products            196,282 rows
+   product_specs       783,588 rows
+   product_variants    628,818 rows
+   product_tags        356,798 rows
+   total rows 1,965,486 to represent 196,282 documents
+
+1. READ ONE COMPLETE PRODUCT (apparel item with variants, specs and tags)
+   MongoDB : 1 find_one, 1 document returned (3 specs, 10 variants, 2 tags embedded)
+   SQL     : 1 statement with 3 LEFT JOINs returns 60 rows (= 3 x 10 x 2 combinations) that the application must de-duplicate
+             alternative: 4 separate statements (products, specs, variants, tags)
+   observed median per product: MongoDB 3.045 ms (over TCP) | SQLite 0.459 ms (in-process, 4 statements)
+
+2. FILTER ON CATEGORY-SPECIFIC ATTRIBUTES: 5G smartphones, RAM >= 12 GB, price < 30,000
+   MongoDB : {'category': 'Smartphones', 'specs.ram_gb': {'$gte': 12}, 'specs.five_g': True, 'price': {'$lt': 30000}}
+   SQL     : two self-joins on the EAV table + CAST of TEXT values
+   results : MongoDB 1,959 | SQL 1,959  -> MATCH
+
+3. ARRAY ELEMENT FILTER: apparel in size M, Black, in stock
+   results : MongoDB 9,569 | SQL 9,569  -> MATCH
+
+4. GROUP-BY REPORT: active products and average price per category
+   per-category counts identical: True   (both systems express this easily: $group vs GROUP BY)
+
+5. SCHEMA EVOLUTION: headphones gain 'ip_rating'; products gain 'sustainability' object
+   MongoDB : write the new fields; validator allows extra properties; existing documents untouched
+   SQL     : either ALTER TABLE ADD COLUMN (nullable for every non-headphone row) or new EAV rows;
+             a nested 'sustainability' object needs a new table or JSON column
+   (SQLite ALTER TABLE ADD COLUMN took 0.6 ms - a metadata change; the cost of schema change is mostly coordination/migrations, not execution time)
+
+saved results/relational_comparison.csv (temporary SQLite file removed)

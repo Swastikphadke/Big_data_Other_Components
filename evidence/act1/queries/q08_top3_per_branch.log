@@ -1,0 +1,83 @@
+### 2026-11-03 18:53:15 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q08_top3_per_branch.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q8. Top 3 products in each branch (RANK window function)
+0: jdbc:hive2://localhost:10000/> SELECT branch_name, rnk, product_name, units_sold, revenue_inr
+. . . . . . . . . . . . . . . . > FROM (
+. . . . . . . . . . . . . . . . >     SELECT branch_name, product_name,
+. . . . . . . . . . . . . . . . >            SUM(quantity)          AS units_sold,
+. . . . . . . . . . . . . . . . >            ROUND(SUM(amount), 2)  AS revenue_inr,
+. . . . . . . . . . . . . . . . >            RANK() OVER (PARTITION BY branch_name ORDER BY SUM(amount) DESC) AS rnk
+. . . . . . . . . . . . . . . . >     FROM supermarket.sales
+. . . . . . . . . . . . . . . . >     GROUP BY branch_name, product_name
+. . . . . . . . . . . . . . . . > ) t
+. . . . . . . . . . . . . . . . > WHERE rnk <= 3
+. . . . . . . . . . . . . . . . > ORDER BY branch_name, rnk;
+FROM (
+SELECT branch_name, product_name,
+SUM(quantity)          AS units_sold,
+ROUND(SUM(amount), 2)  AS revenue_inr,
+RANK() OVER (PARTITION BY branch_name ORDER BY SUM(amount) DESC) AS rnk
+FROM supermarket.sales
+GROUP BY branch_name, product_name
+) t
+WHERE rnk <= 3
+ORDER BY branch_name, rnk
+FROM (
+SELECT branch_name, product_name,
+SUM(quantity)          AS units_sold,
+ROUND(SUM(amount), 2)  AS revenue_inr,
+RANK() OVER (PARTITION BY branch_name ORDER BY SUM(amount) DESC) AS rnk
+FROM supermarket.sales
+GROUP BY branch_name, product_name
+) t
+WHERE rnk <= 3
+ORDER BY branch_name, rnk
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 02/04  [=============>>-------------] 50%   ELAPSED TIME: 1.36 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 04/04  [==========================>>] 100%  ELAPSED TIME: 1.85 s     
+----------------------------------------------------------------------------------------------
++---------------+------+------------------------+-------------+--------------+
+|  branch_name  | rnk  |      product_name      | units_sold  | revenue_inr  |
++---------------+------+------------------------+-------------+--------------+
+| Gokulam       | 1    | Ghee 500ml             | 1537        | 530265.00    |
+| Gokulam       | 2    | Dry Fruit Gift Box     | 521         | 494950.00    |
+| Gokulam       | 3    | Sona Masoori Rice 5kg  | 1028        | 375220.00    |
+| Jayanagar     | 1    | Ghee 500ml             | 4444        | 1533180.00   |
+| Jayanagar     | 2    | Dry Fruit Gift Box     | 1464        | 1390800.00   |
+| Jayanagar     | 3    | Sona Masoori Rice 5kg  | 3225        | 1177125.00   |
+| Kadri         | 1    | Ghee 500ml             | 2147        | 740715.00    |
+| Kadri         | 2    | Dry Fruit Gift Box     | 749         | 711550.00    |
+| Kadri         | 3    | Sona Masoori Rice 5kg  | 1567        | 571955.00    |
+| Kuvempunagar  | 1    | Ghee 500ml             | 2889        | 996705.00    |
+| Kuvempunagar  | 2    | Dry Fruit Gift Box     | 870         | 826500.00    |
+| Kuvempunagar  | 3    | Sona Masoori Rice 5kg  | 1919        | 700435.00    |
+| Vidyanagar    | 1    | Ghee 500ml             | 2157        | 744165.00    |
+| Vidyanagar    | 2    | Dry Fruit Gift Box     | 759         | 721050.00    |
+| Vidyanagar    | 3    | Cashew 500g            | 975         | 546000.00    |
+| Whitefield    | 1    | Ghee 500ml             | 3977        | 1372065.00   |
+| Whitefield    | 2    | Dry Fruit Gift Box     | 1134        | 1077300.00   |
+| Whitefield    | 3    | Sona Masoori Rice 5kg  | 2587        | 944255.00    |
++---------------+------+------------------------+-------------+--------------+
+18 rows selected (2.419 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

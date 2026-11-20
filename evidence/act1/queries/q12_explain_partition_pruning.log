@@ -1,0 +1,19 @@
+### 2026-11-03 18:54:20 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q12_explain_partition_pruning.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q12. Partition pruning: revenue for October only.
+0: jdbc:hive2://localhost:10000/> -- EXPLAIN shows Hive reads only the sale_month='2025-10' partition.
+0: jdbc:hive2://localhost:10000/> EXPLAIN DEPENDENCY
+. . . . . . . . . . . . . . . . > SELECT ROUND(SUM(amount), 2) FROM supermarket.sales WHERE sale_month = '2025-10';
+SELECT ROUND(SUM(amount), 2) FROM supermarket.sales WHERE sale_month = '2025-10'
+SELECT ROUND(SUM(amount), 2) FROM supermarket.sales WHERE sale_month = '2025-10'
++----------------------------------------------------+
+|                      Explain                       |
++----------------------------------------------------+
+| {"input_tables":[{"tablename":"supermarket@sales","tabletype":"EXTERNAL_TABLE"}],"input_partitions":[{"partitionName":"supermarket@sales@sale_month=2025-10"}]} |
++----------------------------------------------------+
+1 row selected (0.426 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

@@ -1,0 +1,3 @@
+### 2026-11-03 21:18:14 India Standard Time | $ python activity4_mongodb\generate_catalog.py --log evidence\act4\01_generate.log
+generated 200,000 products (seed 2024) -> data/products.jsonl.gz (14.7 MB gzip)
+by category: {'Books': 36337, 'Televisions': 6148, 'Apparel': 39919, 'Beauty': 19846, 'Sports': 7941, 'Headphones': 14080, 'Smartphones': 15849, 'Footwear': 20119, 'Laptops': 9992, 'Home Appliances': 14023, 'Groceries': 15746}

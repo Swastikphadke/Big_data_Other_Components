@@ -1,0 +1,20 @@
+﻿### 2026-11-03 21:29:46 | docker exec mongodb mongosh --quiet /scripts/m1_overview.js
+MongoDB server 8.0.34   collection ecommerce.products   documents: 196282
+
+--- one Laptop document (nested specs) ---
+{"sku":"SKU-0010401","name":"MSI Modern 64 Intel Core i7 32GB 1024GB SSD","brand":"MSI","price":28009,"specs":{"cpu":"Intel Core i7","ram_gb":32,"storage_gb":1024,"screen_in":14,"gpu":"RTX 3050","weight_kg":1.33},"ratings":{"avg":5,"count":328},"inventory":{"stock":16,"warehouse":"BLR-1","reorder_level":10}}
+
+--- one Book document (completely different specs) ---
+{"sku":"SKU-0000523","name":"The Learning Garden (Kindle)","price":149,"specs":{"author":"Amish Tripathi","isbn":"978-81-36311-345-4","pages":459,"language":"English","format":"Kindle"}}
+
+--- one Apparel document (embedded variants array, first 3 shown) ---
+{"sku":"SKU-0000152","name":"Roadster Unisex Relaxed Fit Linen Jeans","price":299,"inventory":{"stock":215},"variants":[{"size":"S","color":"Black","stock":14},{"size":"S","color":"White","stock":1},{"size":"M","color":"Beige","stock":18}]}
+
+--- indexes ---
+_id_                  {"_id":1}
+sku_unique            {"sku":1}  unique
+brand_1               {"brand":1}
+category_1_price_1    {"category":1,"price":1}
+name_tags_text        {"_fts":"text","_ftsx":1}
+stock_active_partial  {"inventory.stock":1}  partial {"status":"active"}
+rating_desc           {"ratings.avg":-1}

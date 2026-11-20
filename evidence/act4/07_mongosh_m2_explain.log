@@ -1,0 +1,5 @@
+﻿### 2026-11-03 21:29:55 | docker exec mongodb mongosh --quiet /scripts/m2_explain.js
+query: {"category":"Laptops","price":{"$gte":50000,"$lte":80000}}  sort: {price: 1}
+
+forced collection scan ($natural) plan=SORT > COLLSCAN                            nReturned=2082 keysExamined=0 docsExamined=196282 timeMs=213
+planner choice (compound index)   plan=FETCH > IXSCAN[category_1_price_1]         nReturned=2082 keysExamined=2082 docsExamined=2082 timeMs=9

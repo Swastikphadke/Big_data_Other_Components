@@ -1,0 +1,27 @@
+﻿### 2026-11-03 22:04:39 | activity5_bigquery\bq_setup.ps1  project=bigdatasla dataset=weblogs location=asia-south1
+
+> gcloud config get-value project / account
+bigdatasla
+swastikphadke098@gmail.com
+> billing enabled? False
+
+> bq rm -r -f -d bigdatasla:weblogs   (clean start, ignore 'not found')
+
+> bq mk --dataset --location=asia-south1 bigdatasla:weblogs
+  Dataset 'bigdatasla:weblogs' successfully created.
+  location=asia-south1  defaultTableExpirationMs=5184000000 (60 days)  defaultPartitionExpirationMs=5184000000
+
+> bq mk --table (partitioned by DAY on ts, clustered by endpoint,status)
+  Table 'bigdatasla:weblogs.access_logs' successfully created.
+
+> bq load (batch load job load_access_logs_20261103_220513) data\processed\access_logs.csv.gz
+  Upload complete.
+  wall time 16.3 s
+  job state=DONE errors= inputFiles=1 inputFileBytes=175,320,143 outputRows=774,130 badRecords=0
+
+  table: numRows=774,130  logical bytes=173,190,667 (165.2 MiB)  partitioning={"expirationMs":"5184000000","field":"ts","type":"DAY"}  clustering=endpoint,status  expirationTime=none
+
+> bq ls weblogs
+      tableId     Type    Labels               Time Partitioning               Clustered Fields  
+   ------------- ------- -------- ------------------------------------------- ------------------ 
+    access_logs   TABLE            DAY (field: ts, expirationMs: 5184000000)   endpoint, status  

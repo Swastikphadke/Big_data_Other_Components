@@ -1,0 +1,139 @@
+### 2026-11-03 21:28:58 India Standard Time | $ python activity4_mongodb\crud_demo.py --log evidence\act4\05_crud_demo.log
+products: 200,000   indexes: ['_id_', 'sku_unique', 'brand_1', 'category_1_price_1', 'name_tags_text', 'stock_active_partial', 'rating_desc']
+
+====================================================================================================
+C1  insert_one - a new smartphone
+====================================================================================================
+inserted _id: 6aea04c3860a3c884d666b45
+
+====================================================================================================
+C2  insert_many - three products with DIFFERENT shapes in one call
+====================================================================================================
+inserted: 3 documents
+
+====================================================================================================
+R1  find by _id
+====================================================================================================
+{"_id": "6aea04c3860a3c884d666b45", "sku": "SKU-9100001", "name": "OnePlus Nord 99 5G (12GB/256GB)", "price": 29999.0}
+
+====================================================================================================
+R2  find by SKU (unique index)
+====================================================================================================
+{"sku": "SKU-0123456", "name": "Mamaearth Face Wash 200ml", "category": "Beauty", "price": 4929.0, "inventory": {"stock": 21, "warehouse": "CHN-1", "reorder_level": 20}}
+plan: EXPRESS_IXSCAN[sku_unique]   keysExamined=1 docsExamined=1
+
+====================================================================================================
+R3  category + price range: Laptops 50,000-80,000 INR with rating >= 4.5, cheapest first (top 5)
+====================================================================================================
+  {"sku": "SKU-0074218", "name": "Lenovo IdeaPad 12 AMD Ryzen 7 8GB 512GB SSD", "price": 50129.0, "ratings": {"avg": 4.7}}
+  {"sku": "SKU-0099143", "name": "Acer Nitro 88 AMD Ryzen 7 32GB 256GB SSD", "price": 50359.0, "ratings": {"avg": 4.8}}
+  {"sku": "SKU-0032676", "name": "Apple MacBook Pro 22 Apple M3 32GB 512GB SSD", "price": 50369.0, "ratings": {"avg": 5.0}}
+  {"sku": "SKU-0061354", "name": "Asus ZenBook 13 Intel Core i7 8GB 1024GB SSD", "price": 50419.0, "ratings": {"avg": 4.5}}
+  {"sku": "SKU-0185892", "name": "Dell Vostro 64 AMD Ryzen 5 8GB 256GB SSD", "price": 50569.0, "ratings": {"avg": 4.5}}
+  plan: LIMIT > FETCH > IXSCAN[category_1_price_1]   keysExamined=40 docsExamined=40
+
+====================================================================================================
+R4  query INSIDE nested specs: 5G Smartphones with >= 12 GB RAM under 30,000 INR
+====================================================================================================
+matching: 2000
+  {"name": "Oppo Reno 79 5G (12GB/64GB)", "price": 8019.0, "specs": {"ram_gb": 12}}
+  {"name": "Motorola Moto G 18 5G (12GB/256GB)", "price": 8029.0, "specs": {"ram_gb": 12}}
+  {"name": "OnePlus Open 38 5G (12GB/64GB)", "price": 8029.0, "specs": {"ram_gb": 12}}
+
+====================================================================================================
+R5  query INSIDE an embedded array: Apparel with size M in Black, in stock ($elemMatch)
+====================================================================================================
+matching: 9744
+  {"name": "Roadster Unisex Relaxed Fit Linen Jeans", "variants": [{"size": "M", "color": "Black", "stock": 38}]}
+
+====================================================================================================
+R6  full-text search: 'wireless noise cancelling' ranked by text score (text index)
+====================================================================================================
+  {"name": "Noise Buds 37 Wireless Noise Cancelling In-Ear Earbuds", "price": 3399.0, "score": 2.0625}
+  {"name": "Noise Buds 17 Wireless Noise Cancelling On-Ear Headphones", "price": 14349.0, "score": 2.0625}
+  {"name": "Noise Buds 21 Wireless Noise Cancelling On-Ear Headphones", "price": 759.0, "score": 2.0625}
+  plan: LIMIT > TEXT_MATCH[name_tags_text] > FETCH > OR > IXSCAN[name_tags_text]   keysExamined=3 docsExamined=3
+
+====================================================================================================
+R7  tags array: products tagged BOTH 'premium' and 'bestseller' ($all)
+====================================================================================================
+matching: 9896
+
+====================================================================================================
+U1  stock update on a sale - atomic conditional decrement (never oversells)
+====================================================================================================
+sold 3 -> {"sku": "SKU-9100001", "inventory": {"stock": 117}}
+try to sell 500 -> matched=0 modified=0 (rejected: not enough stock)
+
+====================================================================================================
+U2  product details update - price change, new tag, timestamp
+====================================================================================================
+matched=1 modified=1 -> {"price": 27999.0, "mrp": 34999.0, "tags": ["new", "sale"]}
+
+====================================================================================================
+U3  update ONE element of an embedded array (arrayFilters) + recompute total stock (pipeline update)
+====================================================================================================
+{"variants": [{"size": "M", "color": "Navy", "stock": 12}, {"size": "L", "color": "Navy", "stock": 25}], "inventory": {"stock": 37}}
+
+====================================================================================================
+U4  bulk restock - every ACTIVE product below 3 units gets +50 (update_many, partial index)
+====================================================================================================
+   plan: FETCH > IXSCAN[stock_active_partial]   keysExamined=2723 docsExamined=2723
+   low-stock active products before: 2,723
+   update_many matched=2,723 modified=2,723; low-stock after: 0
+
+====================================================================================================
+D1  delete discontinued products that have no stock left (delete_many)
+====================================================================================================
+   discontinued before: 6,114 (of which stock 0: 3,718)
+   deleted 3,718; discontinued items still holding stock (kept to sell off): 2,396
+
+====================================================================================================
+D2  delete_many by SKU list - remove the demo products inserted above
+====================================================================================================
+   deleted 4; products now: 196,282
+
+====================================================================================================
+A1  category report: products, average price, average rating, inventory value
+====================================================================================================
+       category  products  avg_price  avg_rating   units  inventory_value
+        Laptops      9699  102185.85        4.00  314805     3.211629e+10
+    Smartphones     15327   49031.63        4.00  491905     2.414105e+10
+       Footwear     19534    4220.94        3.99 4571203     1.930655e+10
+    Televisions      5962   82154.89        3.99  190594     1.554003e+10
+        Apparel     38670    1660.46        3.99 7542103     1.251891e+10
+Home Appliances     13617   24461.10        3.99  443574     1.087424e+10
+     Headphones     13668    8503.83        4.00  440540     3.702975e+09
+          Books     35210     830.72        3.99 1144798     9.534144e+08
+         Sports      7689    3367.71        3.99  251374     8.525034e+08
+         Beauty     19249    1270.11        3.99  620912     7.927611e+08
+      Groceries     15261     357.46        4.00  491733     1.747401e+08
+
+====================================================================================================
+A2  top 5 brands by average rating (brands with >= 1,000 active products)
+====================================================================================================
+   Asus           products= 1,340 avg_rating=4.030 reviews=220,798
+   Oppo           products= 1,702 avg_rating=4.025 reviews=272,805
+   HP             products= 1,372 avg_rating=4.015 reviews=213,126
+   TCL            products= 1,019 avg_rating=4.012 reviews=165,794
+   Sennheiser     products= 1,912 avg_rating=4.012 reviews=315,361
+
+====================================================================================================
+A3  low-stock report per warehouse (active, stock <= reorder level)
+====================================================================================================
+warehouse  low_stock_products
+    BLR-1                4860
+    CHN-1                4988
+    DEL-1                5022
+    HYD-1                4950
+    MUM-2                4946
+
+====================================================================================================
+A4  Smartphone price bands ($bucket)
+====================================================================================================
+ price_from  phones  avg_rating
+          0    3229       4.012
+      15000    3616       3.996
+      30000    2675       3.982
+      50000    2422       4.016
+      80000    3385       3.996

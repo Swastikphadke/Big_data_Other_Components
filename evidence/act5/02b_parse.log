@@ -1,0 +1,3 @@
+### 2026-11-03 22:04:14 India Standard Time | $ python activity5_bigquery\parse_logs.py --log evidence\act5\02b_parse.log
+parsed 774,130 lines, rejected 25 malformed lines -> data/processed/access_logs.csv.gz (15.4 MB gzip)
+columns: ['ts', 'client_ip', 'method', 'endpoint', 'path', 'query_string', 'protocol', 'status', 'bytes_sent', 'response_ms', 'referrer', 'user_agent', 'ua_class']

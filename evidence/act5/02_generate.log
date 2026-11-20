@@ -1,0 +1,11 @@
+### 2026-11-03 22:03:27 India Standard Time | $ python activity5_bigquery\generate_logs.py --log evidence\act5\02_generate.log
+wrote 774,155 log lines (739,983 normal + 34,172 incident; 25 malformed) -> data\raw\access_log_2026-10-26_11-01.log.gz (15.2 MB gzip)
+  I1 payment outage (5xx)               2026-10-28T14:10 - 14:35  
+  I2 bad deployment (500)               2026-10-30T09:00 - 10:30  
+  I3 credential stuffing                2026-10-29T02:00 - 03:00  requests=5949
+  I4 scraper                            2026-10-31T06:00 - 18:00  requests=27020
+  I5 vulnerability scan                 2026-10-27T22:00 - 22:20  requests=1203
+  I6 sale campaign traffic peak (x1.7)  2026-10-30T20:00 - 22:00  
+sample lines:
+  106.125.25.171 - - [26/Oct/2026:00:00:00 +0530] "GET /static/js/app.js HTTP/1.1" 304 0 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1" 20
+  182.143.183.109 - - [29/Oct/2026:19:40:12 +0530] "GET /products/48556 HTTP/1.1" 200 32636 "https://shop.example.in/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36" 119

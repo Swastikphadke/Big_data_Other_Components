@@ -1,0 +1,5 @@
+﻿
+GROUP                        TOPIC            PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID
+congestion-detector-scaleout traffic-readings 1          960             960             0               detector-A-54121bbd-ff57-454d-b714-69147d868197 /172.18.0.1     detector-A
+congestion-detector-scaleout traffic-readings 0          4800            4800            0               detector-A-54121bbd-ff57-454d-b714-69147d868197 /172.18.0.1     detector-A
+congestion-detector-scaleout traffic-readings 2          5760            5760            0               detector-B-e4e6bdef-1921-40c0-9dc7-208075c0c89a /172.18.0.1     detector-B

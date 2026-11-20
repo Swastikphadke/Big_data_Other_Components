@@ -1,0 +1,70 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "sku": {
+        "$eq": "SKU-0123456"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "05509EF5",
+    "planCacheShapeHash": "05509EF5",
+    "planCacheKey": "DABA3251",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "EXPRESS_IXSCAN",
+      "keyPattern": "{ sku: 1 }",
+      "indexName": "sku_unique"
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 1,
+    "totalDocsExamined": 1,
+    "executionStages": {
+      "isCached": false,
+      "stage": "EXPRESS_IXSCAN",
+      "keyPattern": "{ sku: 1 }",
+      "indexName": "sku_unique",
+      "keysExamined": 1,
+      "docsExamined": 1,
+      "nReturned": 1
+    }
+  },
+  "queryShapeHash": "2B309615F4AD12D6753CD4B28FF311013C1AC86E417F28BC554C12F249F6DEA2",
+  "command": {
+    "find": "products",
+    "filter": {
+      "sku": "SKU-0123456"
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

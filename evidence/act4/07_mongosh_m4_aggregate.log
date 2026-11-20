@@ -1,0 +1,13 @@
+﻿### 2026-11-03 21:30:09 | docker exec mongodb mongosh --quiet /scripts/m4_aggregate.js
+category          products   avg_price      units
+Apparel              38670        1660    7542103
+Books                35210         831    1144798
+Footwear             19534        4221    4571203
+Beauty               19249        1270     620912
+Smartphones          15327       49032     491905
+Groceries            15261         357     491733
+Headphones           13668        8504     440540
+Home Appliances      13617       24461     443574
+Laptops               9699      102186     314805
+Sports                7689        3368     251374
+Televisions           5962       82155     190594

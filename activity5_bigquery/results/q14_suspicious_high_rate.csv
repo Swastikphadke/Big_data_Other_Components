@@ -1,0 +1,5 @@
+client_ip,requests,max_rpm,minutes_at_20plus_rpm,distinct_paths,pct_product_pages,rate_limited_429,ua_class,user_agent
+198.51.100.77,27017,41,720,27017,100.0,8733,script_or_tool,Mozilla/5.0 (compatible; DataHarvester/2.1; +http://bot.example.net)
+203.0.113.17,1983,37,60,1,0.0,0,script_or_tool,python-requests/2.31.0
+203.0.113.18,1983,37,60,1,0.0,0,script_or_tool,python-requests/2.31.0
+203.0.113.19,1983,37,60,1,0.0,0,script_or_tool,python-requests/2.31.0

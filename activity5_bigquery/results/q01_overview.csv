@@ -1,0 +1,2 @@
+requests,unique_ips,distinct_endpoints,first_request_ist,last_request_ist,gib_sent,avg_response_ms,client_errors_4xx,server_errors_5xx,error_pct
+774130,22313,30,2026-10-26,2026-11-01 23:59:58,25.03,130.7,21728,4201,3.349

@@ -1,0 +1,102 @@
+### 2026-11-03 18:52:00 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q04_branch_revenue.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q4. Branch-wise revenue and share of chain revenue
+0: jdbc:hive2://localhost:10000/> SELECT branch_id, branch_name, city,
+. . . . . . . . . . . . . . . . >        COUNT(DISTINCT invoice_id)                                   AS invoices,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(amount), 2)                                        AS revenue_inr,
+. . . . . . . . . . . . . . . . >        ROUND(100 * SUM(amount) / SUM(SUM(amount)) OVER (), 2)       AS revenue_share_pct,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(amount) / COUNT(DISTINCT invoice_id), 2)           AS avg_basket_inr
+. . . . . . . . . . . . . . . . > FROM supermarket.sales
+. . . . . . . . . . . . . . . . > GROUP BY branch_id, branch_name, city
+. . . . . . . . . . . . . . . . > ORDER BY revenue_inr DESC;
+COUNT(DISTINCT invoice_id)                                   AS invoices,
+ROUND(SUM(amount), 2)                                        AS revenue_inr,
+ROUND(100 * SUM(amount) / SUM(SUM(amount)) OVER (), 2)       AS revenue_share_pct,
+ROUND(SUM(amount) / COUNT(DISTINCT invoice_id), 2)           AS avg_basket_inr
+FROM supermarket.sales
+GROUP BY branch_id, branch_name, city
+ORDER BY revenue_inr DESC
+COUNT(DISTINCT invoice_id)                                   AS invoices,
+ROUND(SUM(amount), 2)                                        AS revenue_inr,
+ROUND(100 * SUM(amount) / SUM(SUM(amount)) OVER (), 2)       AS revenue_share_pct,
+ROUND(SUM(amount) / COUNT(DISTINCT invoice_id), 2)           AS avg_basket_inr
+FROM supermarket.sales
+GROUP BY branch_id, branch_name, city
+ORDER BY revenue_inr DESC
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      2          0        0        2       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/04  [>>--------------------------] 0%    ELAPSED TIME: 1.80 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container        INITED      2          0        0        2       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/04  [=====>>---------------------] 20%   ELAPSED TIME: 2.31 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...    container       RUNNING      2          1        0        1       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/04  [==========>>----------------] 40%   ELAPSED TIME: 2.82 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 02/04  [===============>>-----------] 60%   ELAPSED TIME: 3.32 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 4        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/04  [====================>>------] 80%   ELAPSED TIME: 3.82 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      2          2        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 4 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 04/04  [==========================>>] 100%  ELAPSED TIME: 3.86 s     
+----------------------------------------------------------------------------------------------
++------------+---------------+------------+-----------+--------------+--------------------+-----------------+
+| branch_id  |  branch_name  |    city    | invoices  | revenue_inr  | revenue_share_pct  | avg_basket_inr  |
++------------+---------------+------------+-----------+--------------+--------------------+-----------------+
+| B01        | Jayanagar     | Bengaluru  | 53012     | 31035190.00  | 26.39              | 585.44          |
+| B02        | Whitefield    | Bengaluru  | 44525     | 26203567.00  | 22.28              | 588.51          |
+| B03        | Kuvempunagar  | Mysuru     | 33096     | 19438159.00  | 16.53              | 587.33          |
+| B04        | Vidyanagar    | Hubballi   | 26362     | 15542039.00  | 13.21              | 589.56          |
+| B05        | Kadri         | Mangaluru  | 24934     | 14835846.00  | 12.61              | 595.00          |
+| B06        | Gokulam       | Mysuru     | 18071     | 10565294.00  | 8.98               | 584.65          |
++------------+---------------+------------+-----------+--------------+--------------------+-----------------+
+6 rows selected (4.514 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

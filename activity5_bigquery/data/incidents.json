@@ -1,0 +1,72 @@
+{
+  "seed": 55,
+  "site": "shop.example.in",
+  "period_ist": [
+    "2026-10-26T00:00:00+05:30",
+    "2026-11-02T00:00:00+05:30"
+  ],
+  "lines": 774155,
+  "normal_requests": 739983,
+  "malformed_lines": 25,
+  "client_ips": 24000,
+  "incidents": [
+    {
+      "id": "I1",
+      "type": "payment outage (5xx)",
+      "endpoints": [
+        "/api/v1/payments",
+        "/checkout"
+      ],
+      "start": "2026-10-28T14:10:00+05:30",
+      "end": "2026-10-28T14:35:00+05:30"
+    },
+    {
+      "id": "I2",
+      "type": "bad deployment (500)",
+      "endpoints": [
+        "/api/v1/recommendations"
+      ],
+      "start": "2026-10-30T09:00:00+05:30",
+      "end": "2026-10-30T10:30:00+05:30"
+    },
+    {
+      "id": "I3",
+      "type": "credential stuffing",
+      "ips": [
+        "203.0.113.17",
+        "203.0.113.18",
+        "203.0.113.19"
+      ],
+      "start": "2026-10-29T02:00:00+05:30",
+      "end": "2026-10-29T03:00:00+05:30",
+      "requests": 5949
+    },
+    {
+      "id": "I4",
+      "type": "scraper",
+      "ips": [
+        "198.51.100.77"
+      ],
+      "start": "2026-10-31T06:00:00+05:30",
+      "end": "2026-10-31T18:00:00+05:30",
+      "requests": 27020,
+      "throttled_429": 8734
+    },
+    {
+      "id": "I5",
+      "type": "vulnerability scan",
+      "ips": [
+        "198.51.100.200"
+      ],
+      "start": "2026-10-27T22:00:00+05:30",
+      "end": "2026-10-27T22:20:00+05:30",
+      "requests": 1203
+    },
+    {
+      "id": "I6",
+      "type": "sale campaign traffic peak (x1.7)",
+      "start": "2026-10-30T20:00:00+05:30",
+      "end": "2026-10-30T22:00:00+05:30"
+    }
+  ]
+}

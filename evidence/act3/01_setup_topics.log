@@ -1,0 +1,9 @@
+﻿### 2026-11-03 20:06:38 | powershell -File activity3_flink\setup_topics.ps1   (run 2)
+Created topic patient-vitals.
+Created topic vital-alerts.
+Created topic episode-alerts.
+Created topic patient-summaries.
+Created topic ward-summaries.
+Topic: patient-vitals	TopicId: 7-fNCHr1Q7-NZp1YjG2Ouw	PartitionCount: 2	ReplicationFactor: 1	Configs: min.insync.replicas=1
+	Topic: patient-vitals	Partition: 0	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+	Topic: patient-vitals	Partition: 1	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 

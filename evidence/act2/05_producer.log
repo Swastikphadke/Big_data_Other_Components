@@ -1,0 +1,20 @@
+### 2026-11-03 19:23:53 India Standard Time | $ python activity2_kafka\producer.py --speed 4 --log evidence\act2\05_producer.log
+[producer] topic=traffic-readings events=11,520 window=06:00-22:00 speed=4.0 sim-min/s
+[producer] sim 06:00  sent=    12 acked=     0  elapsed=   0.0s
+[producer] sim 07:00  sent=   732 acked=   720  elapsed=  15.0s
+[producer] sim 08:00  sent= 1,452 acked= 1,440  elapsed=  30.0s
+[producer] sim 09:00  sent= 2,172 acked= 2,160  elapsed=  45.0s
+[producer] sim 10:00  sent= 2,892 acked= 2,880  elapsed=  60.0s
+[producer] sim 11:00  sent= 3,612 acked= 3,600  elapsed=  75.0s
+[producer] sim 12:00  sent= 4,332 acked= 4,320  elapsed=  90.0s
+[producer] sim 13:00  sent= 5,052 acked= 5,040  elapsed= 105.0s
+[producer] sim 14:00  sent= 5,772 acked= 5,760  elapsed= 120.0s
+[producer] sim 15:00  sent= 6,492 acked= 6,480  elapsed= 135.0s
+[producer] sim 16:00  sent= 7,212 acked= 7,200  elapsed= 150.0s
+[producer] sim 17:00  sent= 7,932 acked= 7,920  elapsed= 165.0s
+[producer] sim 18:00  sent= 8,652 acked= 8,640  elapsed= 180.0s
+[producer] sim 19:00  sent= 9,372 acked= 9,360  elapsed= 195.0s
+[producer] sim 20:00  sent=10,092 acked=10,080  elapsed= 210.0s
+[producer] sim 21:00  sent=10,812 acked=10,800  elapsed= 225.0s
+[producer] DONE  acked=11,520  failed=0  elapsed=240.0s  rate=48.0 msg/s
+[producer] messages per partition: p0=4,800, p1=960, p2=5,760

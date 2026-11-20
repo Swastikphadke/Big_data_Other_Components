@@ -1,0 +1,85 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "category": {
+        "$eq": "Apparel"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "421A7F3B",
+    "planCacheShapeHash": "421A7F3B",
+    "planCacheKey": "0AB69667",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "category": {
+          "$eq": "Apparel"
+        }
+      },
+      "direction": "forward"
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 39919,
+    "executionTimeMillis": 224,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 200000,
+    "executionStages": {
+      "isCached": false,
+      "stage": "COLLSCAN",
+      "filter": {
+        "category": {
+          "$eq": "Apparel"
+        }
+      },
+      "nReturned": 39919,
+      "executionTimeMillisEstimate": 203,
+      "works": 200001,
+      "advanced": 39919,
+      "needTime": 160081,
+      "needYield": 0,
+      "saveState": 11,
+      "restoreState": 11,
+      "isEOF": 1,
+      "direction": "forward",
+      "docsExamined": 200000
+    }
+  },
+  "queryShapeHash": "E72CDEBFCA9E2C3AE6624E7A4CEC49E3EBD3ED29D820D02FA1D4859F517F2221",
+  "command": {
+    "find": "products",
+    "filter": {
+      "category": "Apparel"
+    },
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

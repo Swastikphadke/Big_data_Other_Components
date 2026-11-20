@@ -1,0 +1,172 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ecommerce.products",
+    "parsedQuery": {
+      "$and": [
+        {
+          "category": {
+            "$eq": "Smartphones"
+          }
+        },
+        {
+          "price": {
+            "$lt": 20000
+          }
+        }
+      ]
+    },
+    "indexFilterSet": false,
+    "queryHash": "95E260FD",
+    "planCacheShapeHash": "95E260FD",
+    "planCacheKey": "994C6DD0",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "FETCH",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "keyPattern": {
+            "category": 1,
+            "price": 1
+          },
+          "indexName": "category_1_price_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "category": [],
+            "price": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "category": [
+              "[\"Smartphones\", \"Smartphones\"]"
+            ],
+            "price": [
+              "[-inf.0, 20000)"
+            ]
+          }
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 20,
+    "executionTimeMillis": 1,
+    "totalKeysExamined": 20,
+    "totalDocsExamined": 20,
+    "executionStages": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "nReturned": 20,
+      "executionTimeMillisEstimate": 0,
+      "works": 21,
+      "advanced": 20,
+      "needTime": 0,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "FETCH",
+        "nReturned": 20,
+        "executionTimeMillisEstimate": 0,
+        "works": 20,
+        "advanced": 20,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 0,
+        "docsExamined": 20,
+        "alreadyHasObj": 0,
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nReturned": 20,
+          "executionTimeMillisEstimate": 0,
+          "works": 20,
+          "advanced": 20,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 0,
+          "keyPattern": {
+            "category": 1,
+            "price": 1
+          },
+          "indexName": "category_1_price_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "category": [],
+            "price": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "category": [
+              "[\"Smartphones\", \"Smartphones\"]"
+            ],
+            "price": [
+              "[-inf.0, 20000)"
+            ]
+          },
+          "keysExamined": 20,
+          "seeks": 1,
+          "dupsTested": 0,
+          "dupsDropped": 0
+        }
+      }
+    }
+  },
+  "queryShapeHash": "EE21D842E36131D049D022F5493E4B635E73F8D28E03684C73FDE388C2C52FB4",
+  "command": {
+    "find": "products",
+    "filter": {
+      "category": "Smartphones",
+      "price": {
+        "$lt": 20000
+      }
+    },
+    "sort": {
+      "price": 1
+    },
+    "limit": 20,
+    "$db": "ecommerce"
+  },
+  "serverInfo": {
+    "host": "ea793c0b6a06",
+    "port": 27017,
+    "version": "8.0.34",
+    "gitVersion": "51db4515a6597aedcf6188ee4e48a27e65b065ae"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

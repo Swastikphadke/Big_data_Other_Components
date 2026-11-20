@@ -1,0 +1,6 @@
+### 2026-11-03 19:30:43 | scale-out equivalence check
+instance A junctions: ['J01', 'J04', 'J06'] events: 26
+instance B junctions: ['J02', 'J03', 'J05', 'J09'] events: 24
+single-instance events: 50 | scaled-out events: 50
+IDENTICAL alert sets: True
+replay rows: 11520 | replay identical to original ingestion (same partition+offset+payload): True

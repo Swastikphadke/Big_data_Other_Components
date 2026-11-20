@@ -1,0 +1,30 @@
+### 2026-11-03 21:19:55 India Standard Time | $ python activity4_mongodb\setup_db.py --log evidence\act4\02_setup_db.log
+server version 8.0.34  database=ecommerce
+created collection with validationLevel=strict validationAction=error
+required fields: ['sku', 'name', 'brand', 'category', 'price', 'mrp', 'currency', 'inventory', 'status', 'created_at']
+inserted 200,000 documents in 16.7 s (12,000 docs/s) via insert_many batches of 5,000
+count=200,000  data size=127.7 MB  avg document=638 B  storage (compressed)=40.3 MB  indexes=['_id_']
+documents per category:
+  Apparel           39,919
+  Books             36,337
+  Footwear          20,119
+  Beauty            19,846
+  Smartphones       15,849
+  Groceries         15,746
+  Headphones        14,080
+  Home Appliances   14,023
+  Laptops            9,992
+  Sports             7,941
+  Televisions        6,148
+distinct top-level field sets (schema flexibility):
+  Apparel          specs keys=['material', 'fit', 'gender']  embedded variants=yes
+  Beauty           specs keys=['volume_ml', 'skin_type', 'cruelty_free']  embedded variants=no
+  Books            specs keys=['author', 'isbn', 'pages', 'language', 'format']  embedded variants=no
+  Footwear         specs keys=['material', 'type', 'gender']  embedded variants=yes
+  Groceries        specs keys=['weight_g', 'veg', 'shelf_life_days']  embedded variants=no
+  Headphones       specs keys=['type', 'wireless', 'anc', 'battery_h']  embedded variants=no
+  Home Appliances  specs keys=['appliance', 'capacity', 'capacity_unit', 'energy_star', 'warranty_years']  embedded variants=no
+  Laptops          specs keys=['cpu', 'ram_gb', 'storage_gb', 'screen_in', 'gpu', 'weight_kg']  embedded variants=no
+  Smartphones      specs keys=['ram_gb', 'storage_gb', 'screen_in', 'battery_mah', 'os', 'five_g']  embedded variants=no
+  Sports           specs keys=['sport', 'item', 'weight_kg']  embedded variants=no
+  Televisions      specs keys=['screen_in', 'resolution', 'panel', 'smart_tv']  embedded variants=no

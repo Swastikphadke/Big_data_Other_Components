@@ -1,0 +1,81 @@
+### 2026-11-03 18:52:22 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q05_peak_hours.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q5. Peak sales hours (all branches, full year)
+0: jdbc:hive2://localhost:10000/> SELECT sale_hour,
+. . . . . . . . . . . . . . . . >        COUNT(DISTINCT invoice_id)   AS invoices,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(amount), 2)        AS revenue_inr
+. . . . . . . . . . . . . . . . > FROM supermarket.sales
+. . . . . . . . . . . . . . . . > GROUP BY sale_hour
+. . . . . . . . . . . . . . . . > ORDER BY sale_hour;
+COUNT(DISTINCT invoice_id)   AS invoices,
+ROUND(SUM(amount), 2)        AS revenue_inr
+FROM supermarket.sales
+GROUP BY sale_hour
+ORDER BY sale_hour
+COUNT(DISTINCT invoice_id)   AS invoices,
+ROUND(SUM(amount), 2)        AS revenue_inr
+FROM supermarket.sales
+GROUP BY sale_hour
+ORDER BY sale_hour
+COU......RDER BY sale_hour (Stage-1)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1            container       RUNNING      1          0        1        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 00/03  [>>--------------------------] 0%    ELAPSED TIME: 2.11 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container       RUNNING      1          0        1        0       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [========>>------------------] 33%   ELAPSED TIME: 2.61 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 02/03  [=================>>---------] 66%   ELAPSED TIME: 3.12 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 3.27 s     
+----------------------------------------------------------------------------------------------
++------------+-----------+--------------+
+| sale_hour  | invoices  | revenue_inr  |
++------------+-----------+--------------+
+| 8          | 6631      | 3891334.00   |
+| 9          | 11054     | 6502674.00   |
+| 10         | 13203     | 7795119.00   |
+| 11         | 17357     | 10320465.00  |
+| 12         | 15458     | 9094539.00   |
+| 13         | 11100     | 6467165.00   |
+| 14         | 8803      | 5191751.00   |
+| 15         | 8826      | 5280912.00   |
+| 16         | 11175     | 6616036.00   |
+| 17         | 17532     | 10274104.00  |
+| 18         | 24066     | 14150408.00  |
+| 19         | 26369     | 15245095.00  |
+| 20         | 19692     | 11701479.00  |
+| 21         | 8734      | 5089014.00   |
++------------+-----------+--------------+
+14 rows selected (3.866 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/

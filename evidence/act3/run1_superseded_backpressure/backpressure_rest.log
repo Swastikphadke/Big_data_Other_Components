@@ -1,0 +1,7 @@
+﻿### 2026-11-03 20:05:00 | REST backpressure + metrics of run 1 (job 7308cce1f85b5c92ad86b8374045b4af), ~3 min after the producer finished
+Source: vitals_raw[1] -> (Calc[2] -> StreamRecordTimest in=     0 out= 43756 backpressure=ok   busy=[0.001,0.001] wm=[]
+OverAggregate[10] -> Calc[11]                           in= 40610 out= 39744 backpressure=high busy=[0.0,0.002] wm=[12:14:25,11:42:25]
+StreamRecordTimestampInserter[13] -> Match[13] -> Calc[ in= 36884 out=     0 backpressure=ok   busy=[0.002,0.002] wm=[11:42:25,11:42:25]
+StreamRecordTimestampInserter[16] -> Match[16] -> Calc[ in= 33965 out=     0 backpressure=ok   busy=[0.001,1.0] wm=[11:42:25,11:24:00]
+GlobalWindowAggregate[22] -> Calc[23] -> patient_summar in=   500 out=     0 backpressure=ok   busy=[0.0,0.001] wm=[12:14:25,12:14:25]
+GlobalWindowAggregate[28] -> Calc[29] -> ward_summaries in=    56 out=     0 backpressure=ok   busy=[0.0] wm=[12:14:25]

@@ -1,0 +1,62 @@
+### 2026-11-03 18:51:29 IST | beeline -u jdbc:hive2://localhost:10000/ -f /opt/assignment/hql/queries/q02_top_products_revenue.hql
+Connecting to jdbc:hive2://localhost:10000/
+Connected to: Apache Hive (version 4.0.1)
+Driver: Hive JDBC (version 4.0.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://localhost:10000/> -- Q2. Top 10 best-selling products by revenue
+0: jdbc:hive2://localhost:10000/> SELECT product_id, product_name, category,
+. . . . . . . . . . . . . . . . >        SUM(quantity)            AS units_sold,
+. . . . . . . . . . . . . . . . >        ROUND(SUM(amount), 2)    AS revenue_inr
+. . . . . . . . . . . . . . . . > FROM supermarket.sales
+. . . . . . . . . . . . . . . . > GROUP BY product_id, product_name, category
+. . . . . . . . . . . . . . . . > ORDER BY revenue_inr DESC
+. . . . . . . . . . . . . . . . > LIMIT 10;
+SUM(quantity)            AS units_sold,
+ROUND(SUM(amount), 2)    AS revenue_inr
+FROM supermarket.sales
+GROUP BY product_id, product_name, category
+ORDER BY revenue_inr DESC
+LIMIT 10
+SUM(quantity)            AS units_sold,
+ROUND(SUM(amount), 2)    AS revenue_inr
+FROM supermarket.sales
+GROUP BY product_id, product_name, category
+ORDER BY revenue_inr DESC
+LIMIT 10
+LIMIT 10 (Stage-1)
+
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2        container        INITED      1          0        0        1       0       0  
+Reducer 3        container        INITED      1          0        0        1       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 01/03  [========>>------------------] 33%   ELAPSED TIME: 2.47 s     
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+----------------------------------------------------------------------------------------------
+Map 1 .......... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 2 ...... container     SUCCEEDED      1          1        0        0       0       0  
+Reducer 3 ...... container     SUCCEEDED      1          1        0        0       0       0  
+----------------------------------------------------------------------------------------------
+VERTICES: 03/03  [==========================>>] 100%  ELAPSED TIME: 2.91 s     
+----------------------------------------------------------------------------------------------
++-------------+------------------------+----------------------+-------------+--------------+
+| product_id  |      product_name      |       category       | units_sold  | revenue_inr  |
++-------------+------------------------+----------------------+-------------+--------------+
+| P017        | Ghee 500ml             | Dairy                | 17151       | 5917095.00   |
+| P078        | Dry Fruit Gift Box     | Sweets & Dry Fruits  | 5497        | 5222150.00   |
+| P001        | Sona Masoori Rice 5kg  | Staples              | 11819       | 4313935.00   |
+| P074        | Cashew 500g            | Sweets & Dry Fruits  | 6808        | 3812480.00   |
+| P003        | Wheat Atta 5kg         | Staples              | 15178       | 3718610.00   |
+| P086        | Body Lotion 400ml      | Personal Care        | 8493        | 3099945.00   |
+| P079        | Pista 250g             | Sweets & Dry Fruits  | 7098        | 2981160.00   |
+| P029        | Apple Shimla 1kg       | Fruits & Vegetables  | 15539       | 2797020.00   |
+| P004        | Toor Dal 1kg           | Staples              | 16380       | 2702700.00   |
+| P091        | Sunscreen 50ml         | Personal Care        | 8791        | 2628509.00   |
++-------------+------------------------+----------------------+-------------+--------------+
+10 rows selected (3.498 seconds)
+0: jdbc:hive2://localhost:10000/> 
+Closing: 0: jdbc:hive2://localhost:10000/
